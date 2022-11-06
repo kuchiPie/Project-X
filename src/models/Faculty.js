@@ -4,7 +4,16 @@ const Schema = _Schema;
 
 let FacultyTest = new Schema({
   name: {
-    type: String
+    type: String,
+    required: true
+  },
+  email: {
+    type: String,
+    required: true
+  },
+  password: {
+    type: String,
+    required: true
   },
   age: {
     type: Number
@@ -12,6 +21,7 @@ let FacultyTest = new Schema({
   department: {
     type: String
   }
+  
 });
 
 export default model("FacultyTest", FacultyTest);
