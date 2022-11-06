@@ -7,12 +7,12 @@ const config = require('config');
 //Load Input Validation
 const validateLoginInput = require('../validation/login');
 
-// Load Faculty model
-const Faculty = require('../models/Faculty');
+// Load Admin model
+const Admin = require('../models/Admin');
 
-//Post Router api/faculty/login
+//Post Router api/admin/login
 
-Router.post('/faculty/login', (req, res) => {
+Router.post('/admin/login', (req, res) => {
     //Login Validation
     const {
         errors,
@@ -28,7 +28,7 @@ Router.post('/faculty/login', (req, res) => {
     const password = req.body.password;
 
     //Find User By Email
-    Faculty.findOne({
+    Admin.findOne({
         email:email
     }).then(user => {
         //Check if Your Exists
