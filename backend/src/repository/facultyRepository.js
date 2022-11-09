@@ -29,7 +29,7 @@ export const getFaculty = async(keyword, limit, skip) => {
 export const createFaculty = async(body) => {
     
     bcrypt.genSalt(10, (err, salt) => {
-        bcrypt.hash(newUser.password, salt, (err, hash) => {
+        bcrypt.hash(body.password, salt, (err, hash) => {
             if (err) throw err;
 
             let faculty = new Faculty({ name : `${body.name}`, email : `${body.email}`, password : hash, dob : `${body.dob}`, department : `${body.department}` });
