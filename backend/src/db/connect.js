@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 function connectDB(){
     try {
-        mongoose.connect('mongodb://localhost:27017/project-x',
+        mongoose.connect('mongodb+srv://projectx:projectx@cluster0.qnuohoz.mongodb.net/?retryWrites=true&w=majority',
         { 
             useNewUrlParser: true, 
             useUnifiedTopology: true
