@@ -1,34 +1,38 @@
 {
   "name": "project-x",
-  "type": "module",
-  "version": "1.0.0",
-  "description": "a platform for ease of students errands in college",
-  "main": "index.js",
-  "scripts": {
-    "start": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/kuchiPie/Project-X.git"
-  },
-  "author": "vipul",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/kuchiPie/Project-X/issues"
-  },
-  "homepage": "https://github.com/kuchiPie/Project-X#readme",
+  "version": "0.1.0",
+  "private": true,
   "dependencies": {
-    "bcryptjs": "^2.4.3",
-    "config": "^3.3.8",
-    "dotenv": "^16.0.3",
-    "express": "^4.18.2",
-    "is-empty": "^1.2.0",
-    "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.7.0",
-    "validator": "^13.7.0"
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "5.0.1",
+    "web-vitals": "^2.1.4"
   },
-  "devDependencies": {
-    "nodemon": "^2.0.20"
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
