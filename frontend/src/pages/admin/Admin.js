@@ -1,6 +1,10 @@
+import Navbar from "../../widgets/NavBar";
 function Admin(){
     return (
-        <h1>Admin page</h1>
+        <>
+            <Navbar/>
+            <h1>Admin page</h1>
+        </>
     );
 }
 
