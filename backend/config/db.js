@@ -1,7 +1,8 @@
 import mongoose from 'mongoose';
-function connectDB(){
+function connectDB (){
     try {
-        mongoose.connect('mongodb+srv://projectx:projectx@cluster0.qnuohoz.mongodb.net/?retryWrites=true&w=majority',
+        // console.log(process.env.MONGO_URI)
+        mongoose.connect(process.env.MONGO_URI,
         { 
             useNewUrlParser: true, 
             useUnifiedTopology: true
