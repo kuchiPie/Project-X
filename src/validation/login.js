@@ -1,7 +1,7 @@
-const validator = require('validator');
-const isEmpty = require('is-empty');
+import validator from 'validator';
+import isEmpty from 'is-empty';
 
-module.exports = validateLoginInput = data => {
+export const validateLoginInput = data => {
     let errors = {};
 
     // Convert empty fields to an empty string so we can use validator functions

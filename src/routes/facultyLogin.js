@@ -1,18 +1,19 @@
-import { Router } from 'express';
-const router = new Router();
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const config = require('config');
+import { Router as expressRouter } from 'express';
+
+const router = expressRouter();
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import config from 'config';
 
 //Load Input Validation
-const validateLoginInput = require('../validation/login');
+import { validateLoginInput } from '../validation/login.js';
 
 // Load Faculty model
-const Faculty = require('../models/Faculty');
+import Faculty from '../models/Faculty.js';
 
 //Post Router api/faculty/login
 
-Router.post('/faculty/login', (req, res) => {
+router.post('/faculty/login', (req, res) => {
     //Login Validation
     const {
         errors,

@@ -1,6 +1,6 @@
 {
   "name": "project-x",
-  "type":"module",
+  "type": "module",
   "version": "1.0.0",
   "description": "a platform for ease of students errands in college",
   "main": "index.js",
@@ -19,9 +19,14 @@
   },
   "homepage": "https://github.com/kuchiPie/Project-X#readme",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "config": "^3.3.8",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
-    "mongoose": "^6.7.0"
+    "is-empty": "^1.2.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.7.0",
+    "validator": "^13.7.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.20"

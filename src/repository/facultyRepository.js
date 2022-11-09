@@ -1,4 +1,5 @@
 import Faculty from "../models/Faculty.js";
+import bcrypt from 'bcryptjs';
 
 //get and search,pagination, may add sort 
 export const getFaculty = async(keyword, limit, skip) => {
@@ -26,7 +27,8 @@ export const getFaculty = async(keyword, limit, skip) => {
 
 //create
 export const createFaculty = async(body) => {
-    let faculty = new Faculty({ name : `${body.name}`, age : `${body.age}`, department : `${body.department}` });
+    const password = await bcrypt.hash(body.password, salt);
+    let faculty = new Faculty({ name : `${body.name}`, dob : `${body.dob}`, department : `${body.department}` });
  
     faculty.save(function (err, faculty) {
       if (err) return console.error(err);

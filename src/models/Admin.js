@@ -15,7 +15,7 @@ let FacultyTest = new Schema({
     type: String,
     required: true
   },
-  age: {
+  dob: {
     type: Number
   },
   department: {
