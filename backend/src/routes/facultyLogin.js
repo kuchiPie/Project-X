@@ -6,7 +6,7 @@ import jwt from 'jsonwebtoken';
 import config from 'config';
 
 //Load Input Validation
-import { validateLoginInput } from '../validation/login.js';
+import validateLoginInput from '../validation/login.js';
 
 // Load Faculty model
 import Faculty from '../models/Faculty.js';

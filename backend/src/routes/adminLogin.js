@@ -1,18 +1,15 @@
 import { Router } from 'express';
 const router = new Router();
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const config = require('config');
+import Admin from '../models/Admin.js';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import config from 'config';
 
 //Load Input Validation
-const validateLoginInput = require('../validation/login');
-
-// Load Admin model
-const Admin = require('../models/Admin');
+import validateLoginInput from '../validation/login.js';
 
 //Post Router api/admin/login
-
-Router.post('/admin/login', (req, res) => {
+router.post('/admin/login', (req, res) => {
     //Login Validation
     const {
         errors,
@@ -61,7 +58,7 @@ Router.post('/admin/login', (req, res) => {
                         // console.log(user)
                         res.json({
                             success: true,
-                            token: "Bearer" + token,
+                            token: token,
                             user: user.name
                         });
                     });

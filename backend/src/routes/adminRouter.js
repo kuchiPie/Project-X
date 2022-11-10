@@ -2,8 +2,9 @@ import { Router } from 'express';
 import Student from '../models/Student.js';
 const router = new Router();
 import generator from 'generate-password';
+import adminAuth from '../middleware/adminAuth.js'
 
-router.post('/createStudentProfiles', async (req, res) => {
+router.post('/createStudentProfiles', adminAuth, async (req, res) => {
     const userdata = req.body
 
     for(let i=1; i<=userdata.num; i++){
@@ -31,7 +32,7 @@ router.post('/createStudentProfiles', async (req, res) => {
     res.send()
 })
 
-router.patch('/editStudentAdmin/:id', async (req, res) => {
+router.patch('/editStudentAdmin/:id', adminAuth, async (req, res) => {
     const updates = Object.keys(req.body)
     const allowedUpdates = ['altEmail', 'mobileNo']
     const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
@@ -47,7 +48,7 @@ router.patch('/editStudentAdmin/:id', async (req, res) => {
     res.send(student)
 })
 
-router.delete('/deleteStudent/:id', async (req, res) => {
+router.delete('/deleteStudent/:id', adminAuth, async (req, res) => {
     const studentid = req.params.id
     let student = await Student.findById(req.params.id)
     try{

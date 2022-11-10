@@ -24,7 +24,6 @@ let Admin = new Schema({
   token: {
     type: String
   }
-  
 });
 
 export default model("Admin", Admin);
