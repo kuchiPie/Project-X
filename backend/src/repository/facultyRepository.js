@@ -34,7 +34,7 @@ export const createFaculty = async(body) => {
 
             let faculty = new Faculty({ name : `${body.name}`, email : `${body.email}`, password : hash, dob : `${body.dob}`, department : `${body.department}` });
             
-            faculty.save(function (err, faculty) {
+            faculty.save(function (err) {
             if (err) return console.error(err);
             console.log("saved to faculty collection.");
             });
