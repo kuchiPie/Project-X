@@ -50,12 +50,19 @@ Router.post('/admin/login', (req, res) => {
                     };
 
                     //Sign Token
-                    jwt.sign(payload, config.get('secretOrKey'), {
+                    jwt.sign(payload, process.env.SECRET, {
+
                         expiresIn: 172800 //2 days in seconds    ‬
-                    }, (err, token) => {
+                    }, async(err, token) => {
+
+                        user.token = token
+                        await user.save()
+
+                        // console.log(user)
                         res.json({
                             success: true,
-                            token: "Bearer" + token
+                            token: "Bearer" + token,
+                            user: user.name
                         });
                     });
                 } else {

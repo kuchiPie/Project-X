@@ -20,6 +20,9 @@ let Admin = new Schema({
   },
   department: {
     type: String
+  },
+  token: {
+    type: String
   }
   
 });
