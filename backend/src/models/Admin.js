@@ -2,7 +2,7 @@ import { Schema as _Schema, model } from 'mongoose';
 
 const Schema = _Schema;
 
-let FacultyTest = new Schema({
+let Admin = new Schema({
   name: {
     type: String,
     required: true
@@ -24,4 +24,4 @@ let FacultyTest = new Schema({
   
 });
 
-export default model("FacultyTest", FacultyTest);
+export default model("Admin", Admin);

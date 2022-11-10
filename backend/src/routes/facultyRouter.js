@@ -6,7 +6,7 @@ router.post('/faculty', insertFacultyController)
 
 router.get('/faculty', getFacultyController)
 
-router.put('/faculty/:id', updateFacultyController)
+router.patch('/faculty/:id', updateFacultyController)
 
 router.delete('/faculty/:id', deleteFacultyController)
 
