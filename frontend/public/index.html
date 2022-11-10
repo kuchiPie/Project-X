@@ -25,29 +25,6 @@
 </head>
 <body style="margin: 0;">
     <div id="root"></div>
-
-    <script type="text/babel">
-
-        const { useEffect, useState } = React;
-        const { Slider } = primereact.slider;
-
-        const SliderDemo = () => {
-            const [value, setValue] = useState(null);
-
-            return (
-                <div className="slider-demo">
-                    <div className="card">
-                        <h5>Basic: {value}</h5>
-                        <Slider value={value} onChange={(e) => setValue(e.value)} />
-                    </div>
-                </div>
-            );
-        }
-
-        const rootElement = document.getElementById("root");
-        ReactDOM.render(<SliderDemo />, rootElement);
-
-    </script>
 </body>
 </html>
  

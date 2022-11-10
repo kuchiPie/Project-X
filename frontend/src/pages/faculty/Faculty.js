@@ -1,6 +1,13 @@
+import Navbar from "../../widgets/NavBar";
+import Navbar2 from "../../widgets/Navbar2";
+
 function Faculty(){
     return (
-        <h1>Faculty page</h1>
+        <>
+            <Navbar/>
+            <Navbar2/>
+            <h1>Faculty page</h1>
+        </>
     );
 }
 
