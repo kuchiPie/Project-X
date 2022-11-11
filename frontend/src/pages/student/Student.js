@@ -3,13 +3,14 @@ import { TabView, TabPanel } from 'primereact/tabview';
 import { Image } from "primereact/image";
 import { Button } from 'primereact/button';
 import { Divider } from 'primereact/divider';
+import { Card } from 'primereact/card';
 
 function Student(){
     return (
         <><h3>STUDENT PROFILE</h3>
             <div className="grid">
-                <div className="col-12 lg:col-6 xl:col-3">
-                    <div className="card flex justify-content-center">
+                <div className="col-12 lg:col-3 xl:col-3">
+                    <Card className=" flex justify-content-center">
                         <div className="flex flex-column">
                             <Image src="/images/shin.jpg" alt="profile-photo" width={250} preview />
                             <h4 className="flex justify-content-center my-1">Shinchan Nohara</h4>
@@ -17,10 +18,10 @@ function Student(){
                             <h5 className="flex justify-content-center my-1">DSAI</h5>
                             <Button label="Edit Profile" icon="pi pi-pencil" />
                         </div>
-                    </div>
+                    </Card>
                 </div>
-                <div className="col-12 lg:col-6 xl:col-9">
-                    <div className="card mb-0">
+                <div className="col-12 lg:col-9 xl:col-9">
+                    <Card className="mb-0">
                         <TabView className='font-bold text-xl'>
                             <TabPanel header="Personal" width="100%">
                                 <div className="grid p-fluid">
@@ -139,7 +140,7 @@ function Student(){
                                 <p>dkvalkfnvkonokafkvmapkvmpkmv</p>
                             </TabPanel>
                         </TabView>
-                    </div>
+                    </Card>
                 </div>
             </div>
 
