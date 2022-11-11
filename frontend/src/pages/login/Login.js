@@ -4,15 +4,17 @@ import { Password } from 'primereact/password';
 import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
 import { Checkbox } from 'primereact/checkbox';
+import { Card } from 'primereact/card';
 
 const Login = () => {
     const [checked, setChecked] = useState(false);
 
     return (
         <>
-            <div className="card flex justify-content-end ">
-                <div className="card w-5 ">
-                    <div className="p-fluid">
+            <div className="flex justify-content-end ">
+                <Image src="/images/iiit-dharwad.jpg" h="100vw" alt="college" />
+                <div className="w-5">
+                    <Card className="p-fluid">
                         <div className="flex justify-content-between my-3 ">
                             <Image src="/images/logon.png" alt="college-logo" width={230} />
                             <h1 className='font-bold'> Project X</h1>
@@ -39,7 +41,7 @@ const Login = () => {
                             <label htmlFor="rememberme1">Remember me</label>
                         </div>
                         <Button className="my-4" label="Login"></Button>
-                    </div>
+                    </Card>
                 </div>
             </div></>
 
