@@ -31,7 +31,8 @@ router.post('/faculty/login', (req, res) => {
     //Find User By Email
     Faculty.findOne({
         email:email
-    }).then(user => {
+    }).then(async user => {
+
         //Check if Your Exists
         if (!user) {
             return res.status(404).json({
@@ -39,39 +40,37 @@ router.post('/faculty/login', (req, res) => {
             });
         }
 
-        //Match Password
-        bcrypt.compare(password, user.password)
-            .then(isMatch => {
-                if (isMatch) {
-                    //User Matched
-                    //Create JWT Payload
-                    const payload = {
-                        id: user.id,
-                        name: user.name
-                    };
+        // Check Hash
+        var isPasswordCorrect = bcrypt.compareSync(password, user.password);
 
-                    //Sign Token
-                    jwt.sign(payload, process.env.SECRET, {
-
-                        expiresIn: 172800 //2 days in seconds    ‬
-                    }, async(err, token) => {
-
-                        user.token = token
-                        await user.save()
-
-                        // console.log(user)
-                        res.json({
-                            success: true,
-                            token: "Bearer" + token,
-                            user: user.name
-                        });
-                    });
-                } else {
-                    return res.status(400).json({
-                        passwordIncorrect: "Password incorrect"
-                    });
-                }
+        // If password is incorrect send Error 400
+        if (isPasswordCorrect == false){
+            return res.status(400).json({
+                passwordIncorrect: "Password incorrect"
             });
+        }
+        
+        // Payload for the token
+        const payload = {
+            id: user.id,
+            name: user.name
+        };
+
+        // Generating jwt token
+        var token = jwt.sign(payload, process.env.SECRET,{expiresIn:172800});
+
+        // Assiginig jwt token to user object
+        user.token = token
+
+        // Updating latest token to database
+        await user.save()
+
+        // returning final json as response
+        res.json({
+            success: true,
+            token: "Bearer" + token,
+            user: user.name
+        });
     });
 });
 
