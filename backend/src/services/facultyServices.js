@@ -9,7 +9,7 @@ export default class FacultyService{
     async getFacultyService(req) {
         const {keyword, limit, skip} = req.query;
         const data = await getFaculty(keyword? keyword: '', limit? limit: null, skip? skip:null);
-        return { success: true, data: data};
+        return { success: true, data: data.data};
     }
 
     async createFacultyService(req) {
