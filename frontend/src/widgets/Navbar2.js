@@ -1,21 +1,17 @@
 import React from 'react';
-import { Menubar } from 'primereact/menubar';
-import {Link} from 'react-router-dom';
 import './Navbar2.css'
 
 const Navbar2 = () => {
 
-    const start = <h2>Project X</h2>;
-    const end = <div style={{'display':'flex','flexDirection':'row','width':'50%'}}>
-        <Link style={{'padding':'5%','fontSize':'1.5rem'}}>Notifications</Link>
-        <Link style={{'padding':'5%','fontSize':'1.5rem'}}>Profile</Link>
-    </div>;
 
     return (
-        <div>
-            <div className="card2">
-                <Menubar start={start} end={end} />
+        <div className='flex h-6rem shadow-2 py-2 px-5'>
+            <span className='my-2 border-solid h-2'></span>
+            <div className='ml-2'>
+                <h1 className='m-0 mt-2'>Dashboard</h1>
+                <p className='m-0' style={{'textDecoration':'underline'}}>Home/Dashboard</p>
             </div>
+            
         </div>
     );
 }

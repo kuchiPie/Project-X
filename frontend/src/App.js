@@ -3,7 +3,7 @@ import {BrowserRouter,Routes,Route} from "react-router-dom";
 import Admin from './pages/admin/Admin'
 import Student from './pages/student/Student'
 import Faculty from './pages/faculty/Faculty'
-import Login from './pages/login/Login'
+import Login from './pages/Login'
 
 function App(){
     return (
