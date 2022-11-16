@@ -5,8 +5,6 @@ import Student from './pages/student/Student'
 import Faculty from './pages/faculty/Faculty'
 import Login from './pages/Login'
 import Sessions from './pages/admin/Sessions'
-import Students from './pages/admin/Students'
-import Facultys from './pages/admin/Facultys'
 
 function App(){
     return (
