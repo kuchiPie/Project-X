@@ -3,6 +3,8 @@ import Student from '../models/Student.js';
 const router = new Router();
 import generator from 'generate-password';
 import adminAuth from '../middleware/adminAuth.js'
+import bcrypt from 'bcryptjs';
+var salt = bcrypt.genSaltSync(10);
 
 router.post('/createStudentProfiles', adminAuth, async (req, res) => {
     const userdata = req.body
@@ -23,7 +25,9 @@ router.post('/createStudentProfiles', adminAuth, async (req, res) => {
             numbers: true
         });
 
-        const newstudent = new Student({email, password});
+        var hash = bcrypt.hashSync(password, salt);
+
+        const newstudent = new Student({email, hash});
 
         await newstudent.save()
         console.log(email, password)
