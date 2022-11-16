@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {store} from '../store';
 
 const FACULTY_API = "http://localhost:5000/api/faculty/";
 
@@ -16,14 +17,17 @@ export const loginService = async (email, password) => {
             email,
             password,
         });
-    if (response.data.accessToken) {
-        localStorage.setItem("user", JSON.stringify(response.data));
+        console.log(response)
+    if (response.data.token) {
+        store.subscribe(()=>
+        localStorage.setItem("TOKEN", JSON.stringify(response.data))
+        )
     }
     return response.data;
 };
 
 export const logoutService = () => {
-  localStorage.removeItem("user");
+  localStorage.removeItem("TOKEN");
 };
 
 // export const facultyLoginService = (body) => async (dispatch) => {
