@@ -7,6 +7,7 @@ import adminRouter from './src/routes/adminRouter.js'
 import testRoute from './src/utility/wait.js'
 import dotenv from 'dotenv'
 import cors from 'cors'
+import emailRoutes from './src/routes/emailRoutes.js'
 const corsOptions ={
    origin:'*', 
    credentials:true,            //access-control-allow-credentials:true
@@ -27,6 +28,7 @@ app.use('/api',facultyRouter)
 app.use('/api',facultyLogin)
 app.use('/api',adminLogin)
 app.use('/api',adminRouter)
+app.use('/api', emailRoutes)
 app.use(testRoute)
 
 
