@@ -2,6 +2,7 @@ import React from "react";
 import { Menubar } from "primereact/menubar";
 import "./Navbar.css";
 import { Link } from "react-router-dom";
+import 'primeicons/primeicons.css';
 
 const Navbar = () => {
   const items = [
@@ -26,15 +27,15 @@ const Navbar = () => {
     <div>
       <Link
         style={{ textDecoration: "none" }}
-        className="text-2xl text-bluegray-50 p-3 m-3 font-bold"
+        className="text-bluegray-50 p-3"
       >
-        Notifications
+        <i className="pi pi-envelope"></i>
       </Link>
       <Link
         style={{ textDecoration: "none" }}
-        className="text-2xl text-bluegray-50 p-3 m-3 font-bold"
+        className="text-bluegray-50 p-3"
       >
-        Profile
+        <i className="pi pi-user"></i>
       </Link>
     </div>
   );

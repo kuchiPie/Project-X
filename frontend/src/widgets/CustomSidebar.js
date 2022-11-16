@@ -43,38 +43,7 @@ const CustomSidebar = ({ visibleLeft }) => {
         },
       ],
     },
-    {
-      label: "Module Designers",
-      style: {
-        marginTop: "20px",
-      },
-      items: [
-        {
-          label: "Aman Gupta",
-          style: {
-            fontSize: "0.85em",
-          },
-        },
-        {
-          label: "Omkar Gowda",
-          style: {
-            fontSize: "0.85em",
-          },
-        },
-        {
-          label: "Chirag Mittal",
-          style: {
-            fontSize: "0.85em",
-          },
-        },
-        {
-          label: "Shreyas Bulbule",
-          style: {
-            fontSize: "0.85em",
-          },
-        },
-      ],
-    },
+    
     {
       label: "Support",
       style: {
@@ -115,11 +84,11 @@ const CustomSidebar = ({ visibleLeft }) => {
             </Sidebar> */}
       </div>
       {visibleLeft ? (
-         <div className="shadow-2 py-5 mt-2" style={{height:"80vh",width:"13vw"}} >
-         <Menu model={items} className="ml-3 p-2 shadow-2" />
+         <div className="shadow-2 py-5 mt-2 pr-3" style={{height:"80vh"}} >
+         <Menu model={items} className="ml-3 border-none w-12rem" />
        </div>
       ) : (
-        <div></div>
+        <></>
       )}
     </>
   );
