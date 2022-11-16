@@ -1,27 +1,57 @@
-import React from 'react';
-import { Menubar } from 'primereact/menubar';
-import { InputText } from 'primereact/inputtext';
+import React from "react";
+import { Menubar } from "primereact/menubar";
+import "./Navbar.css";
+import { Link } from "react-router-dom";
+import 'primeicons/primeicons.css';
 
 const Navbar = () => {
-    const items=[
-        {
-            label:'About Project X'
-        },
-        {
-            label:'Terms And Service',
-            url:''
-        },
-    ]
+  const items = [
+    {
+      label: "Project X",
+    },
+    {
+      label: "Terms And Service",
+      url: "",
+    },
+  ];
 
-    const end = <img alt="iiitdwd-logo" src="https://iiitdwd.ac.in/img/logon.png" height="60" className="mr-2"></img>;
+  const start = (
+    <img
+      alt="iiitdwd-logo"
+      src="images/iiitdwd logo.png"
+      height="60"
+      className="mr-2"
+    ></img>
+  );
+  const end = (
+    <div>
+      <Link
+        style={{ textDecoration: "none" }}
+        className="text-bluegray-50 p-3"
+      >
+        <i className="pi pi-envelope"></i>
+      </Link>
+      <Link
+        style={{ textDecoration: "none" }}
+        className="text-bluegray-50 p-3"
+      >
+        <i className="pi pi-user"></i>
+      </Link>
+    </div>
+  );
 
-    return (
-        <div>
-            <div className="card">
-                <Menubar model={items} end={end} />
-            </div>
-        </div>
-    );
-}
-                 
-export default Navbar
+  return (
+    <div>
+      <div className="card">
+        <Menubar
+          model={items}
+          start={start}
+          end={end}
+          style={{ backgroundColor: "#262626", border: "0", borderRadius: "0" }}
+        />
+      </div>
+    </div>
+  );
+};
+
+export default Navbar;

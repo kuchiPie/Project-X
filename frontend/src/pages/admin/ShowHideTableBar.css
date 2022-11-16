@@ -1,0 +1,6 @@
+.showHideBar{
+    margin-top: 1%;
+    display: flex;
+    flex-direction: row;
+    position: relative;
+}
