@@ -11,7 +11,7 @@ const Admin = () => {
   const [visibleLeft, setVisibleLeft] = useState(true);
   return (
     <>
-      <div >
+      <div className="overflow-x-hidden">
         <Navbar />
         <Navbar2 />
         <div className="flex flex-column">
@@ -46,7 +46,7 @@ const Admin = () => {
           )}
           <div className="flex">
             <CustomSidebar visibleLeft={visibleLeft} />
-            <Outlet />
+            <Outlet context={visibleLeft} />
           </div>
 
             
