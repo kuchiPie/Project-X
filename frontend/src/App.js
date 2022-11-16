@@ -4,6 +4,7 @@ import Admin from './pages/admin/Admin'
 import Student from './pages/student/Student'
 import Faculty from './pages/faculty/Faculty'
 import Login from './pages/login/Login'
+import './App.css'
 
 function App(){
     return (
