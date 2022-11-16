@@ -49,7 +49,7 @@ router.post('/admin/login', (req, res) => {
                     //Sign Token
                     jwt.sign(payload, process.env.SECRET, {
 
-                        expiresIn: 172800 //2 days in seconds    ‬
+                        expiresIn: 172800 //2 days in seconds    
                     }, async(err, token) => {
 
                         user.token = token
