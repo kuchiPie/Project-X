@@ -5,6 +5,7 @@ import facultyLogin from './src/routes/facultyLogin.js'
 import adminLogin from './src/routes/adminLogin.js'
 import adminRouter from './src/routes/adminRouter.js'
 import testRoute from './src/utility/wait.js'
+import studentRouter from './src/routes/studentRouter.js'
 import dotenv from 'dotenv'
 import cors from 'cors'
 const corsOptions ={
@@ -27,6 +28,7 @@ app.use('/api',facultyRouter)
 app.use('/api',facultyLogin)
 app.use('/api',adminLogin)
 app.use('/api',adminRouter)
+app.use('/api',studentRouter)
 app.use(testRoute)
 
 
