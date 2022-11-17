@@ -10,6 +10,8 @@ import Sessions from './pages/admin/Sessions'
 import { useDispatch } from 'react-redux'
 import { setLoginStatus } from './reduxSlices/LoginSlice'
 import FacultyHome from './Test/fakefacultyhomepage';
+import Students from './pages/admin/Students'
+import Facultys from './pages/admin/Facultys';
 
 function App(){
     const logindetails = JSON.parse(localStorage.getItem('isLoggedIn'));
@@ -26,14 +28,15 @@ function App(){
                 <Route path='/' element={<Login/>}/>
                 <Route path='/admin' element={<Admin/>}>
                     <Route path="manage_sessions" element={<Sessions/>}></Route>
-                    <Route path='manage_faculty' element={<Faculty/>}/>
-                    <Route path='manage_student' element={<Student/>}/>
+                    <Route path='manage_faculty' element={<Facultys/>}/>
+                    <Route path='manage_students' element={<Students/>}/>
                 </Route>
                 <Route path='/faculty' element={<FacultyHome />}></Route>
                 <Route path='/student' element={<Student/>}>
                     <Route path="profile" element={<Profile/>}></Route>
                     <Route path='outpass' element={<Outpass/>}/>
                 </Route>
+                <Route path='/faculty' element={<Faculty/>}></Route>
             </Routes>
         </BrowserRouter>
     );
