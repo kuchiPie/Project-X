@@ -5,12 +5,13 @@ import { InputText } from 'primereact/inputtext';
 import { Card } from 'primereact/card';
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate } from 'react-router-dom';
+import { SelectButton } from 'primereact/selectbutton';
+
+
 
 import Form from "react-validation/build/form";
 // import Input from "react-validation/build/input";
-import CheckButton from "react-validation/build/button";
-
-import { login } from '../utils/auth';
+import { loginUser, setUserType } from '../reduxSlices/LoginSlice';
 
 const required = (value) => {
   if (!value) {
@@ -26,14 +27,30 @@ const Login = () => {
     // let navigate = useNavigate();
 
     const form = useRef();
-    const checkBtn = useRef();
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [loading, setLoading] = useState(false);
+    const [selectedUser, setSelectedUser] = useState({
+        label:'Student'
+    });
 
-    const { isLoggedIn } = useSelector(state => state.auth);
-    const { message } = useSelector(state => state.message);
+    const { isLoggedIn, status, loggedUser, userType} = useSelector(state => state.login);
+    const users = [
+        {
+            label:'Admin'
+        },
+        {
+            label:'Faculty'
+        },
+        {
+            label:'Student'
+        }
+    ]
+
+    const justifyTemplate = (option) =>{
+        return <p>{option.label}</p>
+    }
+
 
     const dispatch = useDispatch();
 
@@ -47,29 +64,24 @@ const Login = () => {
         setPassword(password);
     };
 
-    const handleLogin = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
-
-        setLoading(true);
-
-        form.current.validateAll();
-
-        if (checkBtn.current.context._errors.length === 0) {
-        dispatch(login(username, password))
-            // .then(() => {
-            // navigate("/student");
-            // window.location.reload();
-            // })
-            // .catch(() => {
-            // setLoading(false);
-            // });
-        } else {
-        setLoading(false);
-        }
+        await dispatch(loginUser({email: username, password, selectedUser}))
+        dispatch(setUserType({userType: selectedUser.label}))
     };
 
     if (isLoggedIn) {
-        return <Navigate to="/admin" />;
+        localStorage.setItem('isLoggedIn', JSON.stringify(isLoggedIn));
+        localStorage.setItem('token', JSON.stringify(loggedUser.token));
+        localStorage.setItem('user', JSON.stringify(loggedUser));
+        localStorage.setItem('userType', JSON.stringify(userType));
+        
+        if(userType === 'Admin')
+            return <Navigate to="/admin" />;
+        if(userType === 'Faculty')
+            return <Navigate to="/faculty" />;
+        if(userType === 'Student')
+            return <Navigate to="/student" />;
     }
 
     return (
@@ -101,20 +113,16 @@ const Login = () => {
 
                             </span>
                         </div>
-                        {/* <div className="flex align-items-center">
-                            <Checkbox inputId="rememberme1" binary className="mr-2" onChange={e => setChecked(e.checked)} checked={checked} />
-                            <label htmlFor="rememberme1">Remember me</label>
-                        </div> */}
-                        {loading && (
-                            <span className="spinner-border spinner-border-sm"></span>
+                        <SelectButton value={selectedUser} options={users} onChange={(e) => setSelectedUser(e.value)} itemTemplate={justifyTemplate}></SelectButton>               
+                        {status === 'loading' && (
+                            <span className="spinner-border spinner-border-sm"><div>Hello</div></span>
                         )}
-                        <CheckButton style={{ display: "none" }} ref={checkBtn} />  
                         <Button className="my-4 w-full" label="Login"></Button>
                         </Form>
-                        {message && (
+                        {status === 'failed' && (
                         <div className="form-group">
                             <div className="alert alert-danger" role="alert">
-                                {message}
+                                Something went wrong !!!!!
                             </div>
                         </div>
                         )}

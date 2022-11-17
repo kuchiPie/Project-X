@@ -1,14 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit'
-import getFacultyReducer from './reducers/facultyReducer';
-import authReducer from './reducers/authReducer';
-import messageReducer from './reducers/messageReducer';
-
+import loginReducer from './reduxSlices/LoginSlice'
 
 export const store = configureStore({
   reducer: {
-    getfaculty: getFacultyReducer,
-    auth: authReducer,
-    message: messageReducer,
+    login: loginReducer
   }
 })
 

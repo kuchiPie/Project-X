@@ -32,7 +32,7 @@ export const createFaculty = async(body) => {
         bcrypt.hash(body.password, salt, (err, hash) => {
             if (err) throw err;
 
-            let faculty = new Faculty({ name : `${body.name}`, email : `${body.email}`, password : hash, dob : `${body.dob}`, department : `${body.department}` });
+            let faculty = new Faculty({ name : `${body.name}`, email : `${body.email}`, password : hash });
             
             faculty.save(function (err) {
             if (err) return console.error(err);

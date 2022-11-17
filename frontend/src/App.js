@@ -7,8 +7,19 @@ import Profile from './pages/student/Profile'
 import Faculty from './pages/faculty/Faculty'
 import Login from './pages/Login'
 import Sessions from './pages/admin/Sessions'
+import { useDispatch } from 'react-redux'
+import { setLoginStatus } from './reduxSlices/LoginSlice'
+import FacultyHome from './Test/fakefacultyhomepage';
 
 function App(){
+    const logindetails = JSON.parse(localStorage.getItem('isLoggedIn'));
+    const dispatch = useDispatch()
+    if(logindetails){
+        const token = JSON.parse(localStorage.getItem('token'));
+        const user = JSON.parse(localStorage.getItem('user'));
+        const userType = JSON.parse(localStorage.getItem('userType'));
+        dispatch(setLoginStatus({isLogged: logindetails, isUser: user, isToken: token, isUserType: userType}))
+    }
     return (
         <BrowserRouter>
             <Routes>
@@ -18,6 +29,7 @@ function App(){
                     <Route path='manage_faculty' element={<Faculty/>}/>
                     <Route path='manage_student' element={<Student/>}/>
                 </Route>
+                <Route path='/faculty' element={<FacultyHome />}></Route>
                 <Route path='/student' element={<Student/>}>
                     <Route path="profile" element={<Profile/>}></Route>
                     <Route path='outpass' element={<Outpass/>}/>
