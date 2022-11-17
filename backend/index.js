@@ -6,6 +6,7 @@ import adminLogin from './src/routes/adminLogin.js'
 import adminRouter from './src/routes/adminRouter.js'
 import testRoute from './src/utility/wait.js'
 import studentRouter from './src/routes/studentRouter.js'
+import outpassOuter from './src/routes/outpassRouter.js'
 import dotenv from 'dotenv'
 import cors from 'cors'
 import emailRoutes from './src/routes/emailRoutes.js'
@@ -31,6 +32,7 @@ app.use('/api',adminLogin)
 app.use('/api',adminRouter)
 app.use('/api', emailRoutes)
 app.use('/api',studentRouter)
+app.use('/api/outpass',outpassOuter)
 app.use(testRoute)
 
 

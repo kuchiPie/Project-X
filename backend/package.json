@@ -25,6 +25,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
+    "express-async-handler": "^1.2.0",
     "generate-password": "^1.7.0",
     "googleapis": "^109.0.1",
     "is-empty": "^1.2.0",
