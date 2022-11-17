@@ -15,9 +15,11 @@ function App(){
                 <Route path='/' element={<Login/>}/>
                 <Route path='/admin' element={<Admin/>}>
                     <Route path="manage_sessions" element={<Sessions/>}></Route>
-                    <Route path='manage_faculty' element={<Faculty/>}/>
-                    <Route path='manage_student' element={<Student/>}/>
+                    <Route path='manage_faculty' element={<Facultys/>}/>
+                    <Route path='manage_students' element={<Students/>}/>
                 </Route>
+                <Route path='/faculty' element={<Faculty/>}></Route>
+                <Route path='/student' element={<Student/>}></Route>
             </Routes>
         </BrowserRouter>
     );
