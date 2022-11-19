@@ -10,6 +10,7 @@ import { Dropdown } from 'primereact/dropdown';
 import { Calendar } from 'primereact/calendar';
 import { InputTextarea } from 'primereact/inputtextarea';
 import TimePicker from 'react-time-picker';
+import { FileUpload } from 'primereact/fileupload';
 
 function Output() {
     const [value, setValue] = useState(0);
@@ -18,9 +19,13 @@ function Output() {
     const [displayCurrent, setDisplayCurrent] = useState(false);
     const [displayHistory, setDisplayHistory] = useState(false);
     const interval = useRef(null);
-    const [dropdownValue, setDropdownValue] = useState(null);
-    const [calendarValue, setCalendarValue] = useState(null);
-    const [tvalue, onChange] = useState('10:00');
+    const [dropBranch, setBranch] = useState(null);
+    const [dropSemester, setSemester] = useState(null);
+    const [dropGender, setGender] = useState(null);
+    const [leaveDate, setLeaveDate] = useState(null);
+    const [returnDate, setReturnDate] = useState(null);
+    const [leaveTime, setLeaveTime] = useState('10:00');
+    const [returnTime, setReturnTime] = useState('10:00');
 
     const dropdownBranch = [
         { branch: 'DSAI' },
@@ -62,13 +67,17 @@ function Output() {
             }
         }
     }, [value]);
+    
+
     const basicDialogFooter = <Button type="button" label="Create Outpass" onClick={() => setDisplayBasic(false)} icon="pi pi-check" className="p-button-secondary" />;
+
+    const currentDialogFooter = <Button type="button" label="Withdraw" onClick={() => setDisplayBasic(false)} icon="pi pi-arrow-circle-right" className="p-button-secondary" />;
 
     return (
         <>
-            <Card className="w-full h-full mx-5">
+            <Card className="w-full h-full mx-5 surface-100">
                 <h1 className="m-0 font-semibold">Your Outpass</h1>
-                <Card className="m-3 p-0 surface-200 border-2 border-gray-800">
+                <Card className="m-3 p-0 border-2 border-gray-800">
                     <div className="col">
                         <ProgressBar value={value} showValue={false} />
                     </div>
@@ -88,7 +97,7 @@ function Output() {
                     <div className="col-12 mb-2 lg:col-4 lg:mb-0 flex justify-content-center">
                         <Button type="button" label="New Outpass" icon="pi pi-plus" onClick={() => setDisplayBasic(true)} />
                         <Dialog header="New Outpass" visible={displayBasic} style={{ width: '80vw' }} modal footer={basicDialogFooter} onHide={() => setDisplayBasic(false)}>
-                            <Card className="h-full mx-5 border-2 border-gray-800 surface-200">
+                            <Card className="h-full mx-5 border-2 border-gray-800 surface-100">
                                 <div className="flex justify-content-between ">
                                     <h2 className="m-0 font-semibold">Shichan Nohara</h2>
                                     <h2 className="m-0">20BDS022</h2>
@@ -96,64 +105,70 @@ function Output() {
                                 <Divider className="mb-7" layout="horizontal"></Divider>
                                 <div className="grid formgrid  ">
                                     <div className="col-12 mb-2 lg:col-4 lg:mb-0 flex justify-content-between">
-                                        <Dropdown className="w-full" value={dropdownValue} onChange={(e) => setDropdownValue(e.value)} options={dropdownBranch} optionLabel="branch" placeholder="Branch" />
+                                        <Dropdown className="w-full" value={dropBranch} onChange={(e) => setBranch(e.value)} options={dropdownBranch} optionLabel="branch" placeholder="Branch" />
                                     </div>
                                     <div className="col-12 mb-2 lg:col-4 lg:mb-0">
-                                        <Dropdown className="w-full" value={dropdownValue} onChange={(e) => setDropdownValue(e.value)} options={dropdownSemester} optionLabel="semester" placeholder="Semester" />
+                                        <Dropdown className="w-full" value={dropSemester} onChange={(e) => setSemester(e.value)} options={dropdownSemester} optionLabel="semester" placeholder="Semester" />
                                     </div>
                                     <div className="col-12 mb-2 lg:col-4 lg:mb-0">
-                                        <Dropdown className="w-full" value={dropdownValue} onChange={(e) => setDropdownValue(e.value)} options={dropdownGender} optionLabel="gender" placeholder="Gender" />
+                                        <Dropdown className="w-full" value={dropGender} onChange={(e) => setGender(e.value)} options={dropdownGender} optionLabel="gender" placeholder="Gender" />
                                     </div>
                                 </div>
                                 <Divider layout="horizontal"></Divider>
                                 <div className="grid">
                                     <div className="col-12 md:col-6">
                                         <div className="flex justify-content-between ">
-                                            <h4 className="m-0 font-semibold">Hostel room no.</h4>
+                                            <h3 className="m-0 font-semibold">Hostel room no.</h3>
                                             <InputText type="number"></InputText>
                                         </div>
                                         <Divider layout="horizontal"></Divider>
                                         <div className="flex justify-content-between my-5">
-                                            <h4 className="m-0 font-semibold">Date of Leaving</h4>
-                                            <Calendar showIcon showButtonBar value={calendarValue} onChange={(e) => setCalendarValue(e.value)}></Calendar>
+                                            <h3 className="m-0 font-semibold">Date of Leaving</h3>
+                                            <Calendar showIcon showButtonBar value={leaveDate} onChange={(e) => setLeaveDate(e.value)}></Calendar>
                                         </div>
                                         <Divider layout="horizontal"></Divider>
                                         <div className="flex justify-content-between my-5">
-                                            <h4 className="m-0 font-semibold">Date Of Returnin</h4>
-                                            <Calendar showIcon showButtonBar value={calendarValue} onChange={(e) => setCalendarValue(e.value)}></Calendar>
+                                            <h3 className="m-0 font-semibold">Date Of Returning</h3>
+                                            <Calendar showIcon showButtonBar value={returnDate} onChange={(e) => setReturnDate(e.value)}></Calendar>
                                         </div>
                                         <Divider layout="horizontal"></Divider>
                                     </div>
 
                                     <div className="col-12 md:col-6">
                                         <div className="flex justify-content-between">
-                                            <h4 className="m-0 font-semibold">Contact no.</h4>
+                                            <h3 className="m-0 font-semibold">Contact no.</h3>
                                             <InputText type="number"></InputText>
                                         </div>
                                         <Divider layout="horizontal"></Divider>
                                         <div className="flex justify-content-between my-5">
-                                            <h4 className="m-0 font-semibold">Time of Leaving</h4>
-                                            <TimePicker onChange={onChange} value={tvalue} />
+                                            <h3 className="m-0 font-semibold">Time of Leaving</h3>
+                                            <TimePicker onChange={setLeaveTime} value={leaveTime} />
                                         </div>
                                         <Divider layout="horizontal"></Divider>
                                         <div className="flex justify-content-between my-5">
-                                            <h4 className="m-0 font-semibold">Time of Returning</h4>
-                                            <TimePicker onChange={onChange} value={tvalue} />
+                                            <h3 className="m-0 font-semibold">Time of Returning</h3>
+                                            <TimePicker onChange={setReturnTime} value={returnTime} />
                                         </div>
                                         <Divider layout="horizontal"></Divider>
                                     </div>
                                     <div className="field col-12 flex justify-content-between ">
-                                        <h4 className="mr-5 mt-0">Reason</h4>
+                                        <h3 className="mr-5 mt-0">Reason</h3>
                                         <InputTextarea className="w-full" id="address" rows="4" />
                                     </div>
+                                    <Divider layout="horizontal"></Divider>
+                                    <div className="field col-12 flex justify-content-between ">
+                                        <h3 className="mr-5 mt-0">Upload Ticket</h3>
+                                        <FileUpload className="w-full" url="./upload"></FileUpload>
+                                    </div>
+
                                 </div>
                             </Card>
                         </Dialog>
                     </div>
                     <div className="col-12 mb-2 lg:col-4 lg:mb-0 flex justify-content-center">
                         <Button type="button" label="Current Outpass" icon="pi pi-external-link" onClick={() => setDisplayCurrent(true)} />
-                        <Dialog header="Current Outpass" visible={displayCurrent} style={{ width: '80vw' }} modal footer={basicDialogFooter} onHide={() => setDisplayCurrent(false)}>
-                            <Card className="h-full mx-5 border-2 border-gray-800 surface-200">
+                        <Dialog header="Current Outpass" visible={displayCurrent} style={{ width: '80vw' }} modal footer={currentDialogFooter} onHide={() => setDisplayCurrent(false)}>
+                            <Card className="h-full mx-5 border-2 border-gray-800 surface-100">
                                 <div className="flex justify-content-between ">
                                     <h2 className="m-0 font-semibold">Shichan Nohara</h2>
                                     <h2 className="m-0">20BDS022</h2>
@@ -161,59 +176,62 @@ function Output() {
                                 <Divider className="mb-7" layout="horizontal"></Divider>
                                 <div className="grid formgrid  ">
                                     <div className="col-12 mb-2 lg:col-4 lg:mb-0 flex justify-content-between">
-                                        <Dropdown className="w-full" value={dropdownValue} onChange={(e) => setDropdownValue(e.value)} options={dropdownBranch} optionLabel="branch" placeholder="Branch" />
+                                        <h3 className="m-0 font-semibold">Branch</h3>
+                                        <h3 className="m-0 font-semibold">DSAI</h3>
                                     </div>
-                                    <div className="col-12 mb-2 lg:col-4 lg:mb-0">
-                                        <Dropdown className="w-full" value={dropdownValue} onChange={(e) => setDropdownValue(e.value)} options={dropdownSemester} optionLabel="semester" placeholder="Semester" />
+                                    <div className="col-12 mb-2 lg:col-4 lg:mb-0 flex justify-content-between">
+                                        <h3 className="m-0 font-semibold">Semester</h3>
+                                        <h3 className="m-0 font-semibold">VII</h3>
                                     </div>
-                                    <div className="col-12 mb-2 lg:col-4 lg:mb-0">
-                                        <Dropdown className="w-full" value={dropdownValue} onChange={(e) => setDropdownValue(e.value)} options={dropdownGender} optionLabel="gender" placeholder="Gender" />
+                                    <div className="col-12 mb-2 lg:col-4 lg:mb-0 flex justify-content-between">
+                                        <h3 className="m-0 font-semibold">Gender</h3>
+                                        <h3 className="m-0 font-semibold">Male</h3>
                                     </div>
                                 </div>
                                 <Divider layout="horizontal"></Divider>
                                 <div className="grid">
                                     <div className="col-12 md:col-6">
                                         <div className="flex justify-content-between ">
-                                            <h4 className="m-0 font-semibold">Hostel room no.</h4>
-                                            <InputText type="number"></InputText>
+                                            <h3 className="m-0 font-semibold">Hostel room no.</h3>
+                                            <h3 className="m-0 font-semibold">216</h3>
                                         </div>
                                         <Divider layout="horizontal"></Divider>
                                         <div className="flex justify-content-between my-5">
-                                            <h4 className="m-0 font-semibold">Date of Leaving</h4>
-                                            <Calendar showIcon showButtonBar value={calendarValue} onChange={(e) => setCalendarValue(e.value)}></Calendar>
+                                            <h3 className="m-0 font-semibold">Date of Leaving</h3>
+                                            <h3 className="m-0 font-semibold">10-24-2432</h3>
                                         </div>
                                         <Divider layout="horizontal"></Divider>
                                         <div className="flex justify-content-between my-5">
-                                            <h4 className="m-0 font-semibold">Date Of Returnin</h4>
-                                            <Calendar showIcon showButtonBar value={calendarValue} onChange={(e) => setCalendarValue(e.value)}></Calendar>
+                                            <h3 className="m-0 font-semibold">Date Of Returnin</h3>
+                                            <h3 className="m-0 font-semibold">10-24-2432</h3>
                                         </div>
                                         <Divider layout="horizontal"></Divider>
                                     </div>
 
                                     <div className="col-12 md:col-6">
                                         <div className="flex justify-content-between">
-                                            <h4 className="m-0 font-semibold">Contact no.</h4>
-                                            <InputText type="number"></InputText>
+                                            <h3 className="m-0 font-semibold">Contact no.</h3>
+                                            <h3 className="m-0 font-semibold">8506092359</h3>
                                         </div>
                                         <Divider layout="horizontal"></Divider>
                                         <div className="flex justify-content-between my-5">
-                                            <h4 className="m-0 font-semibold">Time of Leaving</h4>
-                                            <TimePicker onChange={onChange} value={tvalue} />
+                                            <h3 className="m-0 font-semibold">Time of Leaving</h3>
+                                            <h3 className="m-0 font-semibold">10:43AM</h3>
                                         </div>
                                         <Divider layout="horizontal"></Divider>
                                         <div className="flex justify-content-between my-5">
-                                            <h4 className="m-0 font-semibold">Time of Returning</h4>
-                                            <TimePicker onChange={onChange} value={tvalue} />
+                                            <h3 className="m-0 font-semibold">Time of Returning</h3>
+                                            <h3 className="m-0 font-semibold">10:43AM</h3>
                                         </div>
                                         <Divider layout="horizontal"></Divider>
                                     </div>
                                     <div className="field col-12 flex justify-content-between ">
-                                        <h4 className="mr-5 mt-0">Reason</h4>
-                                        <InputTextarea className="w-full" id="address" rows="4" />
+                                        <h3 className="mr-5 mt-0">Reason</h3>
+                                        <InputTextarea className="w-full" id="address" rows="4" value="afbsknsklbnfknvksnfkvspkfpqeriqerpivnadfvnsokfvfnvokfsvskflkvmslkfblkavlkavkfnbsknbfkvnaokfnkvsfkvnoskn"/>
                                     </div>
                                     <div className="field col-12 flex justify-content-between ">
-                                        <h4 className="mr-5 mt-0">Remarks</h4>
-                                        <InputTextarea className="w-full" id="address" rows="4" />
+                                        <h3 className="mr-5 mt-0">Remarks</h3>
+                                        <InputTextarea className="w-full" id="address" rows="4" value="fkbskpnfsofokvmf,v fkdvs"/>
                                     </div>
                                 </div>
                             </Card>
@@ -221,8 +239,8 @@ function Output() {
                     </div>
                     <div className="col-12 mb-2 lg:col-4 lg:mb-0 flex justify-content-center">
                         <Button type="button" label="Outpass History" icon="pi pi-folder-open" onClick={() => setDisplayHistory(true)} />
-                        <Dialog header="History" visible={displayHistory} style={{ width: '80vw' }} modal footer={basicDialogFooter} onHide={() => setDisplayHistory(false)}>
-                            <Card header="No History" className="h-full mx-5 border-2 border-gray-800 surface-200">
+                        <Dialog header="History" visible={displayHistory} style={{ width: '80vw' }} modal onHide={() => setDisplayHistory(false)}>
+                            <Card header="No History" className="h-full mx-5 border-2 border-gray-800 surface-100">
                             </Card>
                         </Dialog>
                     </div>
