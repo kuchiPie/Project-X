@@ -5,27 +5,54 @@ import { Dialog } from 'primereact/dialog';
 import { Button } from 'primereact/button';
 import { Divider } from 'primereact/divider';
 import { InputText } from 'primereact/inputtext';
-import { InputNumber } from 'primereact/inputnumber';
+// import { InputNumber } from 'primereact/inputnumber';
 import { Dropdown } from 'primereact/dropdown';
 import { Calendar } from 'primereact/calendar';
 import { InputTextarea } from 'primereact/inputtextarea';
 import TimePicker from 'react-time-picker';
+import storage from '../../firebase/firebase.js'
+import {ref,uploadBytes,getDownloadURL} from 'firebase/storage' 
 import { FileUpload } from 'primereact/fileupload';
+import {Toast} from 'primereact/toast';
+import {v4} from 'uuid'
+import { Image } from 'primereact/image';
 
 function Output() {
+    const toast = useRef(null);
     const [value, setValue] = useState(0);
-    const [inputNumberValue, setInputNumberValue] = useState(null);
+    // const [inputNumberValue, setInputNumberValue] = useState(null);
     const [displayBasic, setDisplayBasic] = useState(false);
     const [displayCurrent, setDisplayCurrent] = useState(false);
     const [displayHistory, setDisplayHistory] = useState(false);
     const interval = useRef(null);
-    const [dropBranch, setBranch] = useState(null);
-    const [dropSemester, setSemester] = useState(null);
-    const [dropGender, setGender] = useState(null);
+
+    // All data fields
     const [leaveDate, setLeaveDate] = useState(null);
     const [returnDate, setReturnDate] = useState(null);
     const [leaveTime, setLeaveTime] = useState('10:00');
     const [returnTime, setReturnTime] = useState('10:00');
+    const [isticketLoading,setticketLoading] = useState(false);
+    const [ticketUrl,setTicketUrl] = useState(null);
+
+    const newOutpassSubmitHandler=()=>{
+
+    }
+    
+    const muUploader =async ({files})=>{
+        console.log(files[0]);
+        const imageRef=ref(storage,`tickets/${files[0].name+v4()}`)
+        try {
+            setticketLoading(true);
+            const response = await uploadBytes(imageRef,files[0]);
+            const url = await getDownloadURL(response.ref);
+            setTicketUrl(url);
+            setticketLoading(false);
+            console.log(response);
+            toast.current.show({severity:'info', summary: 'Ticket Upload Successful', life: 3000});
+        } catch (error) {
+            toast.current.show({severity:'info', summary: 'Info Message', detail:'Message Content', life: 3000});
+        }
+    }
 
     const dropdownBranch = [
         { branch: 'DSAI' },
@@ -69,12 +96,13 @@ function Output() {
     }, [value]);
     
 
-    const basicDialogFooter = <Button type="button" label="Create Outpass" onClick={() => setDisplayBasic(false)} icon="pi pi-check" className="p-button-secondary" />;
+    const basicDialogFooter = <Button type="button" label="Create Outpass" onClick={newOutpassSubmitHandler} icon="pi pi-check" className="p-button-secondary" />;
 
     const currentDialogFooter = <Button type="button" label="Withdraw" onClick={() => setDisplayBasic(false)} icon="pi pi-arrow-circle-right" className="p-button-secondary" />;
 
     return (
         <>
+            <Toast ref={toast} />
             <Card className="w-full h-full mx-5 surface-100">
                 <h1 className="m-0 font-semibold">Your Outpass</h1>
                 <Card className="m-3 p-0 border-2 border-gray-800">
@@ -101,18 +129,6 @@ function Output() {
                                 <div className="flex justify-content-between ">
                                     <h2 className="m-0 font-semibold">Shichan Nohara</h2>
                                     <h2 className="m-0">20BDS022</h2>
-                                </div>
-                                <Divider className="mb-7" layout="horizontal"></Divider>
-                                <div className="grid formgrid  ">
-                                    <div className="col-12 mb-2 lg:col-4 lg:mb-0 flex justify-content-between">
-                                        <Dropdown className="w-full" value={dropBranch} onChange={(e) => setBranch(e.value)} options={dropdownBranch} optionLabel="branch" placeholder="Branch" />
-                                    </div>
-                                    <div className="col-12 mb-2 lg:col-4 lg:mb-0">
-                                        <Dropdown className="w-full" value={dropSemester} onChange={(e) => setSemester(e.value)} options={dropdownSemester} optionLabel="semester" placeholder="Semester" />
-                                    </div>
-                                    <div className="col-12 mb-2 lg:col-4 lg:mb-0">
-                                        <Dropdown className="w-full" value={dropGender} onChange={(e) => setGender(e.value)} options={dropdownGender} optionLabel="gender" placeholder="Gender" />
-                                    </div>
                                 </div>
                                 <Divider layout="horizontal"></Divider>
                                 <div className="grid">
@@ -158,9 +174,9 @@ function Output() {
                                     <Divider layout="horizontal"></Divider>
                                     <div className="field col-12 flex justify-content-between ">
                                         <h3 className="mr-5 mt-0">Upload Ticket</h3>
-                                        <FileUpload className="w-full" url="./upload"></FileUpload>
+                                        {isticketLoading?<h2>Uploading....</h2>:<></>}
+                                        {ticketUrl?<Image src={ticketUrl}/>:<FileUpload className="w-full" accept='image/*' auto customUpload uploadHandler={muUploader}></FileUpload>}
                                     </div>
-
                                 </div>
                             </Card>
                         </Dialog>
