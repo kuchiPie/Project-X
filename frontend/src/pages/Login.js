@@ -89,7 +89,7 @@ const Login = () => {
             <div className="flex justify-content-end ">
                 <img className="h-screen w-8" src="/images/iiit-dharwad.jpg" alt="college" />
                 <div className="w-9 flex align-content-center flex-wrap">
-                    <Card className='m-5 w-full'>
+                    <Card className='m-5 w-full shadow-6'>
                         <div className="flex justify-content-between my-3 ">
                             <img src="/images/logon.png" alt="college-logo" width={250} />
                             <h1 className='font-bold'> Project X</h1>
@@ -107,12 +107,12 @@ const Login = () => {
                             </span>
                         </div>
                         <div className="field">
-                            <span className="p-float-label w-full">
+                            <span className="p-float-label">
                                 <h4>Password</h4>
-                                <Password required={required} value={password} onChange={onChangePassword} feedback={false} id='password'/>
-
+                                <InputText required={required} value={password} onChange={onChangePassword} className="w-full" id="username" type="text" />
                             </span>
                         </div>
+                        
                         <SelectButton value={selectedUser} options={users} onChange={(e) => setSelectedUser(e.value)} itemTemplate={justifyTemplate}></SelectButton>               
                         {status === 'loading' && (
                             <span className="spinner-border spinner-border-sm"><div>Hello</div></span>

@@ -7,6 +7,7 @@ import Student from "../student/Student";
 import { Outlet } from "react-router-dom";
 import { Button } from "primereact/button";
 
+
 const Admin = () => {
   const [visibleLeft, setVisibleLeft] = useState(true);
   return (

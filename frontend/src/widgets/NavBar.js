@@ -3,6 +3,7 @@ import { Menubar } from "primereact/menubar";
 import "./Navbar.css";
 import { Link } from "react-router-dom";
 import 'primeicons/primeicons.css';
+import { Image } from "primereact/image"
 
 const Navbar = () => {
   const items = [
@@ -18,7 +19,7 @@ const Navbar = () => {
   const start = (
     <img
       alt="iiitdwd-logo"
-      src="images/iiit-logo.png"
+      src="/images/iiitdwd logo.png"
       height="60"
       className="mr-2"
     ></img>
