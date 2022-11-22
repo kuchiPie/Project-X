@@ -1,6 +1,9 @@
 import { Router } from 'express';
 const router = new Router();
 import { deleteFacultyController, getFacultyController, insertFacultyController, updateFacultyController } from '../controllers/facultyController.js';
+import facultyLoginController from '../controllers/facultyLoginController.js';
+
+router.post('/faculty/login', facultyLoginController)
 
 router.post('/faculty', insertFacultyController)
 

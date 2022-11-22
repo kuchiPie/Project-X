@@ -2,38 +2,53 @@ import { Router } from 'express';
 import Student from '../models/Student.js';
 const router = new Router();
 import generator from 'generate-password';
+import Session from '../models/Session.js'
 import adminAuth from '../middleware/adminAuth.js'
 import bcrypt from 'bcryptjs';
+import adminLoginController from '../controllers/adminLoginController.js';
+
+router.post('/admin/login', adminLoginController)
+
 var salt = bcrypt.genSaltSync(10);
 
 router.post('/createStudentProfiles', adminAuth, async (req, res) => {
     const userdata = req.body
-
-    for(let i=1; i<=userdata.num; i++){
-        let rollno = ""
-        if(i<10){
-            rollno = `00${i}`
-        } else if(i>=10 && i<100){
-            rollno = `0${i}`
-        } else {
-            rollno = "i"
+    
+    Object.keys(userdata.branches).forEach(async (branch) => {
+        for(let i=1; i<=userdata.branches[branch]; i++){
+            let rollno = ""
+            if(i<10){
+                rollno = `00${i}`
+            } else if(i>=10 && i<100){
+                rollno = `0${i}`
+            } else {
+                rollno = "i"
+            }
+    
+            let email = `${userdata.year}${branch}${rollno}@iiitdwd.ac.in`
+            var password = generator.generate({
+                length: 10,
+                numbers: true
+            });
+    
+            var hash = bcrypt.hashSync(password, salt);
+    
+            const newstudent = new Student({email, password: hash, rollno: `${userdata.year}${branch}${rollno}`, branch, batch: `20${userdata.year}`});
+    
+            await newstudent.save()
+            console.log(email, password)
         }
+    })
 
-        let email = `${userdata.year}${userdata.branch}${rollno}@iiitdwd.ac.in`
-        var password = generator.generate({
-            length: 10,
-            numbers: true
-        });
+    const session = new Session({year: `20${userdata.year}`, cse: userdata.branches.bcs, dsai: userdata.branches.bds, ece: userdata.branches.bec})
+    await session.save()
 
-        var hash = bcrypt.hashSync(password, salt);
+    res.send(session)
+})
 
-        const newstudent = new Student({email, hash});
-
-        await newstudent.save()
-        console.log(email, password)
-    }
-
-    res.send()
+router.get('/getSessions', async(req, res) => {
+    const sessions = await Session.find({})
+    res.send(sessions)
 })
 
 router.patch('/editStudentAdmin/:id', adminAuth, async (req, res) => {

@@ -1,8 +1,10 @@
-
-
 import { Menu } from "primereact/menu";
+import { useSelector } from "react-redux";
 
 const CustomSidebar = ({ visibleLeft }) => {
+
+  const id = useSelector(state => state.login.loggedUser._id);
+
   const items = [
     {
       label: "Quick Links",
@@ -17,7 +19,7 @@ const CustomSidebar = ({ visibleLeft }) => {
         {
           label: "Manage Sessions",
           command: () => {
-            window.location.pathname = "admin/manage_sessions";
+            window.location.pathname = `/admin/${id}/manage_sessions`;
           },
           style: {
             fontSize: "0.85em",
@@ -26,7 +28,7 @@ const CustomSidebar = ({ visibleLeft }) => {
         {
           label: "Manage Faculty",
           command: () => {
-            window.location.pathname = "admin/manage_faculty";
+            window.location.pathname = `admin/${id}/manage_faculty`;
           },
           style: {
             fontSize: "0.85em",
@@ -35,7 +37,7 @@ const CustomSidebar = ({ visibleLeft }) => {
         {
           label: "Manage Students",
           command: () => {
-            window.location.pathname = "admin/manage_students";
+            window.location.pathname = `admin/${id}/manage_students`;
           },
           style: {
             fontSize: "0.85em",

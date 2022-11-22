@@ -19,7 +19,7 @@ const Navbar = () => {
   const start = (
     <img
       alt="iiitdwd-logo"
-      src="/images/iiitdwd logo.png"
+      src="/images/iiit-logo.png"
       height="60"
       className="mr-2"
     ></img>
