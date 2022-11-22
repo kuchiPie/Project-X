@@ -18,7 +18,7 @@
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.4.3",
-    "react-scripts": "5.0.1",
+    "react-scripts": "^5.0.1",
     "react-time-picker": "^5.1.0",
     "react-validation": "^3.0.7",
     "redux-thunk": "^2.4.2",

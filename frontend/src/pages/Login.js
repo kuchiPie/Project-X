@@ -7,8 +7,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Navigate } from 'react-router-dom';
 import { SelectButton } from 'primereact/selectbutton';
 
-
-
 import Form from "react-validation/build/form";
 // import Input from "react-validation/build/input";
 import { loginUser, setUserType } from '../reduxSlices/LoginSlice';
@@ -34,7 +32,7 @@ const Login = () => {
         label:'Student'
     });
 
-    const { isLoggedIn, status, loggedUser, userType} = useSelector(state => state.login);
+    const { isLoggedIn, status, loggedUser, userType, token} = useSelector(state => state.login);
     const users = [
         {
             label:'Admin'
@@ -72,12 +70,12 @@ const Login = () => {
 
     if (isLoggedIn) {
         localStorage.setItem('isLoggedIn', JSON.stringify(isLoggedIn));
-        localStorage.setItem('token', JSON.stringify(loggedUser.token));
+        localStorage.setItem('token', JSON.stringify(token));
         localStorage.setItem('user', JSON.stringify(loggedUser));
         localStorage.setItem('userType', JSON.stringify(userType));
         
         if(userType === 'Admin')
-            return <Navigate to="/admin" />;
+            return <Navigate to={`/admin/${loggedUser._id}`} />;
         if(userType === 'Faculty')
             return <Navigate to="/faculty" />;
         if(userType === 'Student')

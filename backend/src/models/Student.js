@@ -36,7 +36,7 @@ const studentSchema = new Schema({
     },
     altEmail: {
         type: String,
-        unique: true,
+        // unique: true,
     },
     mobileNo: {
         type: Number,
