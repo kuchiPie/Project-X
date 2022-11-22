@@ -4,8 +4,10 @@ import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import { Toast } from "primereact/toast";
-
+import { Dropdown } from "primereact/dropdown"
 import { InputText } from "primereact/inputtext";
+import { classNames } from "primereact/utils";
+
 
 const Facultys = () => {
   let emptyFaculty = {
@@ -26,6 +28,26 @@ const Facultys = () => {
   const [facultyDept, setFacultyDept] = useState("");
   const [deleteFacultyDialog, setDeleteFacultyDialog] = useState(false);
   const [faculty, setFaculty] = useState(emptyFaculty);
+  const [facultyInfoDialog,setFacultyInfoDialog] = useState(false)
+  const [submitted, setSubmitted] = useState(false)
+  const [selectedDepartment, setSelectedDepartment] = useState({
+    label:'DSAI'
+  })
+
+
+  const departments = [
+    {
+      label:"CSE",
+    },
+    {
+      label:"DSAI"
+    },
+    {
+      label:"ECE"
+    }
+
+  ]
+
   const facultys = [
     {
       name: "Manjunath",
@@ -93,6 +115,11 @@ const Facultys = () => {
           onClick={() => viewMentees()}
         />
         <Button
+          icon="pi pi-pencil"
+          className="p-button-rounded p-button-warning mr-2"
+          onClick={() => editFaculty(rowData)}
+        />
+        <Button
           icon="pi pi-trash"
           className="p-button-rounded p-button-danger"
           onClick={() => confirmFacultyDelete(rowData)}
@@ -107,6 +134,11 @@ const Facultys = () => {
   const addFaculty = () => {
     setAddFacultyDialog(true);
   };
+
+  const editFaculty = (faculty)=>{
+    setFaculty(faculty);
+    setFacultyInfoDialog(true);
+  }
 
   const confirmFacultyDelete = (faculty) => {
     setFaculty(faculty);
@@ -124,6 +156,10 @@ const Facultys = () => {
     });
   };
 
+  const onDepartmentChange = (e)=>{
+    setSelectedDepartment(e.target.value)
+  }
+
   const hideDeleteProductDialog = () => {
     setDeleteFacultyDialog(false);
   };
@@ -132,20 +168,34 @@ const Facultys = () => {
     setViewMenteesDialog(false);
   };
 
+  const hideFacultyInfoDialog = ()=>{
+    setFacultyInfoDialog(false)
+  };
+
   const hideAddFacultyDialog = () => {
     setAddFacultyDialog(false);
   };
+
+
 
   const viewMenteesDialogFooter = (
     <>
       <Button label="Add Mentee" className="p-button-text" />
     </>
   );
+
+  const facultyInfoDialogFooter = (
+    <>
+      <Button label="Update" className="p-button-text"/>
+    </>
+  )
+
   const addFacultyDialogFooter = (
     <>
       <Button label="Add Faculty" className="p-button-text" />
     </>
   );
+
 
   const deleteFacultyDialogFooter = (
     <React.Fragment>
@@ -304,6 +354,51 @@ const Facultys = () => {
           </div>
         </div>
       </Dialog>
+
+      <Dialog
+        visible={facultyInfoDialog}
+        onHide={hideFacultyInfoDialog}
+        header = "Edit Profile"
+        style={{width:"450px"}}
+        modal
+        className="p-fluid"
+        footer={facultyInfoDialogFooter}
+      >
+        <div className="field">
+          <label htmlFor="name">Name</label>
+          <InputText 
+            id="name"
+            value={faculty.name}
+            required
+            autoFocus
+            className={classNames({"p-invalid":submitted && !faculty.name})}
+          />
+        </div>
+        <div className="field">
+          <label htmlFor="institute_id">Institute Mail Id</label>
+          <InputText 
+            id="institute_id"
+            value={faculty.institute_id}
+            required
+            autoFocus
+            className={classNames({"p-invalid":submitted && !faculty.institute_id})}
+          />
+        </div>
+        <div className="field">
+          <label htmlFor="department">Department</label>
+          <Dropdown 
+            value={selectedDepartment}
+            options = {departments}
+            placeholder="Select a department"
+            required
+            onChange={onDepartmentChange}
+
+          />
+        </div>
+        
+
+      </Dialog>
+
     </>
   );
 };

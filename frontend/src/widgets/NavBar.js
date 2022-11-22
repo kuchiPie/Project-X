@@ -3,6 +3,7 @@ import { Menubar } from "primereact/menubar";
 import "./Navbar.css";
 import { Link } from "react-router-dom";
 import 'primeicons/primeicons.css';
+import { Image } from "primereact/image"
 
 const Navbar = () => {
   const items = [

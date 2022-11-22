@@ -5,6 +5,7 @@ import { Column } from "primereact/column";
 import { Dialog } from "primereact/dialog";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
+import { Toolbar } from 'primereact/toolbar'
 
 const Students = () => {
   const emptyStudent = {
@@ -21,6 +22,7 @@ const Students = () => {
   const [studentInfoDialog, setStudentInfoDialog] = useState(false);
   const [student, setStudent] = useState(emptyStudent);
   const [submitted, setSubmitted] = useState(false);
+  const [globalFilter, setGlobalFilter] = useState(null);
 
   const students = [
     {
@@ -56,6 +58,16 @@ const Students = () => {
     <Button type="button" icon="pi pi-cloud" className="p-button-text" />
   );
 
+  const header = (
+    <>
+      <div className="table-header">
+        <span className="p-input-icon-left">
+          <i className="pi pi-search"/>
+          <InputText type="search" onInput={(e)=>{setGlobalFilter(e.target.value)}} placeholder="Search"/>
+        </span>
+      </div>
+    </>
+  )
   const actionBodyTemplate = (rowData) => {
     return (
       <>
@@ -108,7 +120,7 @@ const Students = () => {
   return (
     <>
       <div className="w-full min-h-screen p-5">
-        <h1>View Students</h1>
+        <h1>Manage Students</h1>
         <DataTable
           value={students}
           paginator
@@ -121,6 +133,8 @@ const Students = () => {
           paginatorRight={paginatorRight}
           selection={selectedStudents}
           onSelectionChange={(e) => setSelectedStudents(e.value)}
+          globalFilter={globalFilter}
+          header={header}
         >
           <Column
             selectionMode="multiple"
