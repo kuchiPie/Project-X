@@ -4,7 +4,6 @@ import Admin from './pages/admin/Admin'
 import Student from './pages/student/Student'
 import Outpass from './pages/student/Outpass'
 import Profile from './pages/student/Profile'
-import Faculty from './pages/faculty/Faculty'
 import Login from './pages/Login'
 import Sessions from './pages/admin/Sessions'
 import { useDispatch } from 'react-redux'
@@ -36,7 +35,6 @@ function App(){
                     <Route path="profile" element={<Profile/>}></Route>
                     <Route path='outpass' element={<Outpass/>}/>
                 </Route>
-                <Route path='/faculty' element={<Faculty/>}></Route>
             </Routes>
         </BrowserRouter>
     );
