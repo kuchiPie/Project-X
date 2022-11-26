@@ -63,28 +63,6 @@ const CustomSidebar = ({ visibleLeft }) => {
   ];
   return (
     <>
-      <div>
-        {/* <Sidebar
-              visible={true}
-              maskStyle={{display:'none'}}
-              style={{
-                borderRadius:'10px',
-                color: "white",
-                width: "15em",
-                height: "75vh",
-              }}
-              className="shadow-2"
-              showCloseIcon={false}
-              
-            >
-              <div>
-                <Menu 
-                    model={items}
-                    className="p-3 shadow-2"
-                />
-              </div>
-            </Sidebar> */}
-      </div>
       {visibleLeft ? (
          <div className="shadow-2 py-5 mt-2 pr-3" style={{height:"80vh"}} >
          <Menu model={items} className="ml-3 border-none w-12rem" />

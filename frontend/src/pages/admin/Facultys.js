@@ -1,13 +1,14 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
-import { Toast } from "primereact/toast";
 import { Dropdown } from "primereact/dropdown"
 import { InputText } from "primereact/inputtext";
 import { classNames } from "primereact/utils";
-
+import { useDispatch, useSelector } from "react-redux";
+import { addFacultyServer, deleteFacultyServer, editFacultyServer, getFacultyServer, } from "../../reduxSlices/FacultySlice";
+import { useNavigate } from "react-router-dom";
 
 const Facultys = () => {
   let emptyFaculty = {
@@ -17,6 +18,10 @@ const Facultys = () => {
     mentees: [],
   };
 
+  const navigate = useNavigate()
+
+  const dispatch = useDispatch()
+  const reduxFaculty = useSelector(state => state.faculty) 
   const toast = useRef(null);
   const [selectedFaculty, setSelectedFaculty] = useState(null);
   const [selectedMentees, setSelectedMentees] = useState(null);
@@ -34,7 +39,11 @@ const Facultys = () => {
     label:'DSAI'
   })
 
-
+  if(reduxFaculty.length === 0){
+    dispatch(getFacultyServer())
+  }
+  
+  console.log(reduxFaculty)
   const departments = [
     {
       label:"CSE",
@@ -46,65 +55,9 @@ const Facultys = () => {
       label:"ECE"
     }
 
-  ]
+  ] 
 
-  const facultys = [
-    {
-      name: "Manjunath",
-      department: "DSAI",
-      institute_id: "manjunath@iiitdwd.ac.in",
-      mentees: [
-        {
-          name: "Aman Gupta",
-          institute_id: "20bds024",
-          department: "DSAI",
-        },
-        {
-          name: "Aniket Raj",
-          institute_id: "20bds007",
-          department: "DSAI",
-        },
-        {
-          name: "Vipul Bawankar",
-          institute_id: "20bds063",
-          department: "DSAI",
-        },
-      ],
-    },
-    {
-      name: "Pawan Kumar",
-      institute_id: "pawan@iiitdwd.ac.in",
-      department: "CSE",
-      mentees: [
-        {
-          name: "Sparsh",
-          institute_id: "20bcs125",
-          department: "CSE",
-        },
-        {
-          name: "Lucky",
-          institute_id: "20bcs071",
-          department: "CSE",
-        },
-        {
-          name: "Prithvi",
-          institute_id: "20bcs063",
-          department: "CSE",
-        },
-      ],
-    },
-  ];
-
-  // const facultyss = facultys.map((item,i)=>{
-  //   return (
-  //     {
-  //       id:i,
-  //       name:item.name,
-  //       department:item.department,
-  //       mentees:item.mentees
-  //     }
-  //   )
-  // })
+  // const facultys = [...reduxfaculty];
 
   const actionBodyTemplate = (rowData) => {
     return (
@@ -135,25 +88,14 @@ const Facultys = () => {
     setAddFacultyDialog(true);
   };
 
-  const editFaculty = (faculty)=>{
-    setFaculty(faculty);
+  const editFaculty = (data)=>{
+    setFaculty(data);
     setFacultyInfoDialog(true);
   }
 
-  const confirmFacultyDelete = (faculty) => {
-    setFaculty(faculty);
+  const confirmFacultyDelete = (data) => {
+    setFaculty(data);
     setDeleteFacultyDialog(true);
-  };
-
-  const deleteFaculty = () => {
-    setDeleteFacultyDialog(false);
-    setFaculty(emptyFaculty);
-    toast.current.show({
-      severity: "success",
-      summary: "Successful",
-      detail: "Faculty Deleted",
-      life: 3000,
-    });
   };
 
   const onDepartmentChange = (e)=>{
@@ -177,6 +119,21 @@ const Facultys = () => {
   };
 
 
+  const onAddFaculty = async() => {
+    await dispatch(addFacultyServer({name: facultyName, email: facultyId, department: facultyDept}))
+    setAddFacultyDialog(false);
+  }
+
+  const onUpdateFaculty = async() => {
+    const updatedFaculty = {...faculty, department: selectedDepartment.label}
+    await dispatch(editFacultyServer(updatedFaculty))
+    setFacultyInfoDialog(false)
+  }
+
+  const ondeleteFaculty = async() => {
+    setDeleteFacultyDialog(false);
+    await dispatch(deleteFacultyServer(faculty))
+  };
 
   const viewMenteesDialogFooter = (
     <>
@@ -186,13 +143,13 @@ const Facultys = () => {
 
   const facultyInfoDialogFooter = (
     <>
-      <Button label="Update" className="p-button-text"/>
+      <Button label="Update" className="p-button-text" onClick={onUpdateFaculty}/>
     </>
   )
 
   const addFacultyDialogFooter = (
     <>
-      <Button label="Add Faculty" className="p-button-text" />
+      <Button label="Add Faculty" className="p-button-text" onClick={onAddFaculty}/>
     </>
   );
 
@@ -209,7 +166,7 @@ const Facultys = () => {
         label="Yes"
         icon="pi pi-check"
         className="p-button-text"
-        onClick={deleteFaculty}
+        onClick={ondeleteFaculty}
       />
     </React.Fragment>
   );
@@ -220,6 +177,7 @@ const Facultys = () => {
   const paginatorRight = (
     <Button type="button" icon="pi pi-cloud" className="p-button-text" />
   );
+
   return (
     <>
       <div className="border-round-lg ml-2 w-full">
@@ -227,7 +185,7 @@ const Facultys = () => {
           <div>
             <h1>View Faculty</h1>
             <DataTable
-              value={facultys}
+              value={reduxFaculty}
               paginator
               responsiveLayout="scroll"
               paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
@@ -250,7 +208,7 @@ const Facultys = () => {
                 style={{ minWidth: "8rem" }}
               ></Column>
               <Column
-                field="institute_id"
+                field="email"
                 header="Institute ID"
                 style={{ minWidth: "8rem" }}
               ></Column>
@@ -260,11 +218,10 @@ const Facultys = () => {
                 style={{ minidth: "8rem" }}
               ></Column>
               <Column
-                field="mentees.length"
+                field="mentees"
                 header="No. of Mentees"
                 style={{ width: "20%" }}
               ></Column>
-
               <Column
                 header="Actions"
                 body={actionBodyTemplate}
@@ -301,6 +258,8 @@ const Facultys = () => {
           )}
         </div>
       </Dialog>
+
+
       <Dialog
         visible={viewMenteesDialog}
         style={{ width: "450px" }}
@@ -319,6 +278,8 @@ const Facultys = () => {
           <Column field="" header="Department"></Column>
         </DataTable>
       </Dialog>
+
+
       <Dialog
         visible={addFacultyDialog}
         style={{ width: "450px" }}
@@ -355,6 +316,7 @@ const Facultys = () => {
         </div>
       </Dialog>
 
+
       <Dialog
         visible={facultyInfoDialog}
         onHide={hideFacultyInfoDialog}
@@ -378,7 +340,7 @@ const Facultys = () => {
           <label htmlFor="institute_id">Institute Mail Id</label>
           <InputText 
             id="institute_id"
-            value={faculty.institute_id}
+            value={faculty.email}
             required
             autoFocus
             className={classNames({"p-invalid":submitted && !faculty.institute_id})}
@@ -392,11 +354,8 @@ const Facultys = () => {
             placeholder="Select a department"
             required
             onChange={onDepartmentChange}
-
           />
         </div>
-        
-
       </Dialog>
 
     </>
