@@ -7,7 +7,7 @@ import { Button } from "primereact/button";
 import React, { useState } from "react";
 import { InputText } from "primereact/inputtext";
 
-const SearchStudent = () => {
+const SearchStudent = (props) => {
   const branches = [
     { label: "DSAI", value: "DSAI" },
     { label: "CSE", value: "CSE" },
@@ -40,9 +40,7 @@ const SearchStudent = () => {
   };
 
   const submitHandler = () => {
-    console.log(keyword);
-    console.log(branch);
-    console.log(batch);
+    props.dataHandler(keyword,branch,batch);
   };
 
   return (
@@ -75,11 +73,11 @@ const SearchStudent = () => {
               />
             </div>
 
-            <Button
+            {props.loading?<Button loading/>:<Button
               onClick={submitHandler}
               label="Search"
               aria-label="Submit"
-            />
+            />}
           </div>
         </div>
       </div>
