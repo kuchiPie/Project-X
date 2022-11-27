@@ -6,6 +6,7 @@ import { Dialog } from "primereact/dialog";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { Toolbar } from 'primereact/toolbar'
+import SearchStudent from '../../widgets/SearchStudent';
 
 const Students = () => {
   const emptyStudent = {
@@ -121,6 +122,7 @@ const Students = () => {
     <>
       <div className="w-full min-h-screen p-5">
         <h1>Manage Students</h1>
+        <SearchStudent/>
         <DataTable
           value={students}
           paginator

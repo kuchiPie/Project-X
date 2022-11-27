@@ -3,66 +3,11 @@ import bcrypt from 'bcryptjs';
 
 //get and search,pagination, may add sort 
 export const getStudentList = async(keyword, batch, branch, limit, skip) => {
-    if (batch || branch) {
-        const data = await Student.find(
-            {
-                $or:[
-                    {
-                        batch: `${batch}`
-                    },
-                    {
-                        branch: `${branch}`
-                    }
-                ]
-            }
-        )
-        .limit(limit)
-        .skip(skip)
-        return { success: true, data: data };
-    } 
-
-    if(batch && branch){
-        const data = await Student.find(
-            {
-                $and:[
-                    {
-                        batch: `${batch}`
-                    },
-                    {
-                        branch: `${branch}`
-                    }
-                ]
-            }
-        )
-        .limit(limit)
-        .skip(skip)
-        return { success: true, data: data };
+    if(!keyword && !batch && !branch){
+        const data = await Student.find();
+        return {success:true,data:data};
     }
-    if(keyword){
-        const data = await Student.find(
-            {
-                $or:[
-                    {
-                        name: 
-                        { 
-                            $regex: `${keyword}`, $options: "i" 
-                        }
-                    },
-                    {
-                        rollno:
-                        {
-                            $regex: `${keyword}`, $options: "i"
-                        }
-                    }
-                ]
-            }
-        )
-        .limit(limit)
-        .skip(skip)
-        return { success: true, data: data };
-    }
-
-    if(keyword && batch && branch){
+    else if(keyword && batch && branch){
         const data = await Student.find(
             {
                 $and:[
@@ -94,6 +39,64 @@ export const getStudentList = async(keyword, batch, branch, limit, skip) => {
         return { success: true, data: data };
     }
     
+    else if(batch && branch){
+        const data = await Student.find(
+            {
+                $and:[
+                    {
+                        batch: `${batch}`
+                    },
+                    {
+                        branch: `${branch}`
+                    }
+                ]
+            }
+        )
+        .limit(limit)
+        .skip(skip)
+        return { success: true, data: data };
+    }
+    else if (batch || branch) {
+        const data = await Student.find(
+            {
+                $or:[
+                    {
+                        batch: `${batch}`
+                    },
+                    {
+                        branch: `${branch}`
+                    }
+                ]
+            }
+        )
+        .limit(limit)
+        .skip(skip)
+        return { success: true, data: data };
+    } 
+
+    else if(keyword){
+        const data = await Student.find(
+            {
+                $or:[
+                    {
+                        name: 
+                        { 
+                            $regex: `${keyword}`, $options: "i" 
+                        }
+                    },
+                    {
+                        rollno:
+                        {
+                            $regex: `${keyword}`, $options: "i"
+                        }
+                    }
+                ]
+            }
+        )
+        .limit(limit)
+        .skip(skip)
+        return { success: true, data: data };
+    }
 }
 
 //create
