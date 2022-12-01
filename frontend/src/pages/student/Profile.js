@@ -8,9 +8,14 @@ import { Card } from 'primereact/card';
 function Profile() {
     return (
         <>
-            {/* <div className="grid w-full m-5"> */}
+
+            {/* Student Page */}
+            <div className="grid w-full m-1">
                 <div className="col-12 lg:col-3 xl:col-3">
+
                     <h1 className="my-1">Welcome, Shinchan</h1>
+                    
+                    {/* Profile Card */}
                     <Card className=" flex justify-content-center surface-100">
                         <div className="flex flex-column">
                             <Image src="/images/shin.jpg" alt="profile-photo" width={250} preview />
@@ -22,8 +27,12 @@ function Profile() {
                     </Card>
                 </div>
                 <div className="col-12 lg:col-9 xl:col-9">
+
+                    {/* TabView Card */}
                     <Card className="mb-0 surface-100">
                         <TabView className='font-bold text-xl'>
+
+                            {/* Personal Info Tab */}
                             <TabPanel header="Personal" width="100%">
                                 <div className="grid p-fluid">
                                     <div className="col">
@@ -134,6 +143,8 @@ function Profile() {
                                         </div>
                                     </div>
                                 </div></TabPanel>
+
+                            {/* Academic Info Tab */}
                             <TabPanel header="Academic">
                                 <div className="col">
                                     <h3 className="my-2 font-bold mt-6">Degree Details</h3>
@@ -214,13 +225,16 @@ function Profile() {
                                     </div>
                                 </div>
                             </TabPanel>
+
+                            {/* Other Info Tab */}
                             <TabPanel header="Other">
                                 <p>dkvalkfnvkonokafkvmapkvmpkmv</p>
                             </TabPanel>
+                            
                         </TabView>
                     </Card>
                 </div>
-            {/* </div> */}
+            </div>
 
         </>
     );
