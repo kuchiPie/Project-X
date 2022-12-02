@@ -1,13 +1,13 @@
 import React from "react";
-import { useState } from "react";
-
+import { useState, useEffect } from "react";
+import axios from "axios";
 import { Dropdown } from "primereact/dropdown";
-
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { useOutletContext } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Sessions = () => {
   const visible = useOutletContext()
@@ -15,6 +15,21 @@ const Sessions = () => {
   const [countCSE, setCountCSE] = useState(null);
   const [countDSAI, setCountDSAI] = useState(null);
   const [countECE, setCountECE] = useState(null);
+  const [fetchedsessions, setfetchedsessions] = useState([])
+
+  useEffect(() => {
+    async function fetchdata() {
+      try{
+        const response = await axios.get("http://localhost:5000/api/getSessions")
+        setfetchedsessions(response.data)
+      } catch(e) {
+        console.log(e)
+      }
+      console.log(fetchedsessions)
+    }
+    fetchdata()
+  }, []);
+
   const sessions = [
     {
       label: "2019-2023",
@@ -30,6 +45,30 @@ const Sessions = () => {
     },
   ];
 
+  const token = useSelector(state => state.login.token)
+  
+  const createSession = async () => {
+    const mp = {
+      bds: countDSAI,
+      bcs: countCSE,
+      bec: countECE
+    }
+    const body = {
+      year: parseInt(selectedSession.label.substring(2,4)),
+      branches: mp
+    }
+    try{
+      const response = await axios.post("http://localhost:5000/api/createStudentProfiles", body, {
+        headers: {Authorization: "Bearer " + token}
+      });
+      const sessionsCopy = [...fetchedsessions]
+      sessionsCopy.push(response.data)
+      setfetchedsessions(sessionsCopy)
+    } catch(e) {
+      console.log(e)
+    }
+  } 
+
   return (
     <>
       <div
@@ -38,13 +77,14 @@ const Sessions = () => {
       >
         <div className="p-3 min-h-screen border-round-lg">
           <h1>View Sessions</h1>
-          <DataTable>
-            <Column field="Id" header="Id"></Column>
-            <Column field="" header="Session Year"></Column>
-            <Column field="" header="CSE(students)"></Column>
-            <Column field="" header="DSAI(students)"></Column>
-            <Column field="" header="ECE(students)"></Column>
-          </DataTable>
+          {fetchedsessions != [] ? 
+          <DataTable value = {fetchedsessions}>
+            <Column field="id" header="Id"></Column>
+            <Column field="year" header="Session Year"></Column>
+            <Column field="cse" header="CSE(students)"></Column>
+            <Column field="dsai" header="DSAI(students)"></Column>
+            <Column field="ece" header="ECE(students)"></Column>
+          </DataTable> : <div>Fetching Data</div>}
         </div>
 
 
@@ -78,7 +118,7 @@ const Sessions = () => {
               />
             </div>
             <div className="field ml-3 text-center">
-              <label htmlFor="countECE" className="block">No. of students in DSAI</label>
+              <label htmlFor="countECE" className="block">No. of students in ECE</label>
               <InputText
                 style={{width: '10em'}}
                 id="countECE"
@@ -91,6 +131,7 @@ const Sessions = () => {
             label="Add Session"
             className="bg-black-alpha-60 mt-3"
             style={{width:'10em'}}
+            onClick={createSession}
           />
         </div>
       </div>

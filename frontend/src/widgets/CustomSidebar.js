@@ -1,8 +1,10 @@
-
-
 import { Menu } from "primereact/menu";
+import { useSelector } from "react-redux";
 
 const CustomSidebar = ({ visibleLeft }) => {
+
+  const id = useSelector(state => state.login.loggedUser._id);
+
   const items = [
     {
       label: "Quick Links",
@@ -17,7 +19,7 @@ const CustomSidebar = ({ visibleLeft }) => {
         {
           label: "Manage Sessions",
           command: () => {
-            window.location.pathname = "admin/manage_sessions";
+            window.location.pathname = `/admin/${id}/manage_sessions`;
           },
           style: {
             fontSize: "0.85em",
@@ -26,7 +28,7 @@ const CustomSidebar = ({ visibleLeft }) => {
         {
           label: "Manage Faculty",
           command: () => {
-            window.location.pathname = "admin/manage_faculty";
+            window.location.pathname = `admin/${id}/manage_faculty`;
           },
           style: {
             fontSize: "0.85em",
@@ -35,7 +37,7 @@ const CustomSidebar = ({ visibleLeft }) => {
         {
           label: "Manage Students",
           command: () => {
-            window.location.pathname = "admin/manage_students";
+            window.location.pathname = `admin/${id}/manage_students`;
           },
           style: {
             fontSize: "0.85em",
@@ -61,28 +63,6 @@ const CustomSidebar = ({ visibleLeft }) => {
   ];
   return (
     <>
-      <div>
-        {/* <Sidebar
-              visible={true}
-              maskStyle={{display:'none'}}
-              style={{
-                borderRadius:'10px',
-                color: "white",
-                width: "15em",
-                height: "75vh",
-              }}
-              className="shadow-2"
-              showCloseIcon={false}
-              
-            >
-              <div>
-                <Menu 
-                    model={items}
-                    className="p-3 shadow-2"
-                />
-              </div>
-            </Sidebar> */}
-      </div>
       {visibleLeft ? (
          <div className="shadow-2 py-5 mt-2 pr-3" style={{height:"80vh"}} >
          <Menu model={items} className="ml-3 border-none w-12rem" />

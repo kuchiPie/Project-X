@@ -30,8 +30,9 @@ export const getFacultyController = async (req, res) => {
 
 export const insertFacultyController = async (req, res) => {
     try {
-        await facultyServices.createFacultyService(req)
-        res.status(200).send({success: true, message: "inserted successfully"})
+        const newfaculty = await facultyServices.createFacultyService(req)
+        console.log(newfaculty)
+        res.status(200).send(newfaculty.data)
     } catch (e) {
         res.status(500).send(e)
     }

@@ -60,7 +60,7 @@ function facultyLoginController(req, res) {
         res.json({
             success: true,
             token: "Bearer" + token,
-            user: user.name
+            user
         });
     });
 }

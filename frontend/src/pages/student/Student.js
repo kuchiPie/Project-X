@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import Navbar from "../../widgets/NavBar";
 import Navbar2 from "../../widgets/Navbar2";
-import CustomSidebar from "../../widgets/CustomSidebar";
+import StudentSidebar from "../../widgets/StudentSidebar";
 import { Outlet } from "react-router-dom";
 import { Button } from "primereact/button";
 
@@ -12,39 +12,43 @@ const Student = () => {
     <>
       <div >
         <Navbar />
-        <Navbar2 />
         <div className="flex flex-column">
-          {visibleLeft ? (
+        <div className="flex flex-row">
+        {visibleLeft ? (
             <Button
-              label="Hide Menu"
-              icon="pi pi-arrow-left"
+              icon="pi pi-angle-double-left"
               style={{
-                width:"10rem",
+                width:"4rem",
                 backgroundColor: "white",
                 border: "0px",
                 color: "black",
-                marginTop: "15px",
-                height: "1rem",
+                margin: "12px",
+                height: "2rem",
+                
               }}
               onClick={() => setVisibleLeft(false)}
             />
           ) : (
             <Button
-              label="Show Menu"
-              icon="pi pi-arrow-right"
+              icon="pi pi-angle-double-right"
               style={{
-                width:"10rem",
+                width:"4rem",
                 backgroundColor: "white",
                 border: "0px",
                 color: "black",
-                marginTop: "15px",
-                height: "1rem",
+                margin: "12px",
+                height: "2rem",
               }}
               onClick={() => setVisibleLeft(true)}
             />
           )}
+        <h3>STUDENT PORTAL</h3>
+        </div>
+          
+          
+          
           <div className="flex">
-            <CustomSidebar visibleLeft={visibleLeft} />
+            <StudentSidebar visibleLeft={visibleLeft} />
             <Outlet />
           </div>
 
