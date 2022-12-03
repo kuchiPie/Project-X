@@ -7,13 +7,14 @@ import { Divider } from 'primereact/divider';
 import { InputText } from 'primereact/inputtext';
 import { Calendar } from 'primereact/calendar';
 import { InputTextarea } from 'primereact/inputtextarea';
-import TimePicker from 'react-time-picker';
 import storage from '../../../firebase/firebase.js';
 import {ref,uploadBytes,getDownloadURL} from 'firebase/storage';
 import { FileUpload } from 'primereact/fileupload';
 import {Toast} from 'primereact/toast';
 import {v4} from 'uuid'
 import { Image } from 'primereact/image';
+import TextField from '@mui/material/TextField';
+import TimePicker from '@mui/lab/TimePicker';
 import { useSelector } from 'react-redux';
 
 function Output() {
@@ -42,6 +43,10 @@ function Output() {
         }
         console.log(newOutpass)
     }
+
+    const handleleavetime = (newValue) => {
+        setLeaveTime(newValue);
+    };
     
     const muUploader =async ({files})=>{
         console.log(files[0]);
@@ -163,12 +168,17 @@ function Output() {
                                         <Divider layout="horizontal"></Divider>
                                         <div className="flex justify-content-between my-5">
                                             <h3 className="m-0">Time of Leaving</h3>
-                                            <TimePicker className="w-15rem p-2 bg-white border-round-md h-3rem" onChange={setLeaveTime} value={leaveTime} />
+                                            <TimePicker
+                                                label="Time"
+                                                value={leaveTime}
+                                                onChange={handleleavetime}
+                                                renderInput={(params) => <TextField {...params} />}
+                                            />
                                         </div>
                                         <Divider layout="horizontal"></Divider>
                                         <div className="flex justify-content-between my-5">
                                             <h3 className="m-0">Time of Returning</h3>
-                                            <TimePicker className="w-15rem p-2 bg-white border-round-md h-3rem" onChange={setReturnTime} value={returnTime} />
+                                            {/* <TimePicker className="w-15rem p-2 bg-white border-round-md h-3rem" disableClock={true} minutePlaceholder="mm" hourPlaceholder='hh' onChange={(value) => setReturnTime(value)} value={returnTime} /> */}
                                         </div>
                                         <Divider layout="horizontal"></Divider>
                                     </div>
