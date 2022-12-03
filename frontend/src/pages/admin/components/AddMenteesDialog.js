@@ -6,8 +6,8 @@ import { Dialog } from "primereact/dialog";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { Toolbar } from 'primereact/toolbar'
-import SearchStudent from './SearchStudent';
-import { getAllStudents, mapSelectedStudents } from '../reduxSlices/studentSlice';
+import SearchStudent from '../../../widgets/SearchStudent';
+import { getAllStudents, mapSelectedStudents } from '../../../reduxSlices/studentSlice';
 import { useDispatch, useSelector } from "react-redux";
 
 const AddMenteesDialog = (props) => {

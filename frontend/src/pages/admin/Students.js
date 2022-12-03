@@ -23,7 +23,7 @@ const Students = () => {
 	const reduxStudent = useSelector(state => state.student);
 	const dispatch = useDispatch();
 	useEffect(() => {
-		dispatch(getAllStudents({ keyword: "", batch: "", branch: "", limit: "", skip: "" }));
+		dispatch(getAllStudents({ keyword: "", batch: "", branch: "", limit: "10", skip: "" }));
 	}, [])
 
 	const [selectedStudents, setSelectedStudents] = useState();

@@ -1,4 +1,4 @@
-import { Schema as _Schema, model } from 'mongoose';
+import { Schema as _Schema, model, mongoose } from 'mongoose';
 
 const Schema = _Schema;
 
@@ -10,12 +10,10 @@ const studentSchema = new Schema({
     },
     batch: {
         type: Number,
-        required: true,
         trim: true,
     },
     branch: {
         type: String,
-        required: true,
         trim: true,
     },
     email: {
@@ -25,7 +23,6 @@ const studentSchema = new Schema({
     },
     rollno: {
         type: String,
-        required: true,
         unique: true,
     },
     password: {
@@ -40,7 +37,6 @@ const studentSchema = new Schema({
     },
     mobileNo: {
         type: Number,
-        unique: true,
     },
     facultyAdvisor: {
         type: _Schema.Types.ObjectId, ref: 'Faculty'

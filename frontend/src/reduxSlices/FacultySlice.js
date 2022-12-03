@@ -24,6 +24,9 @@ const facultySlice = createSlice({
                     state.push(element)
                 });
             })
+            .addCase(getFacultyServer.rejected,(state,action)=>{
+                console.log("Some error occured");
+            })
             .addCase(editFacultyServer.fulfilled, (state, action) => {
                 const index = state.findIndex((element) => action.meta.arg._id === element._id)
                 state[index] = action.meta.arg
@@ -43,8 +46,10 @@ export const addFacultyServer = createAsyncThunk('faculty/addfaculty', async (fa
     return response.data
 })
 
-export const getFacultyServer = createAsyncThunk('faculty/getfaculty', async () => {
-    const response = await axios.get('http://localhost:5000/api/faculty')
+export const getFacultyServer = createAsyncThunk('faculty/getfaculty', async (data) => {
+    const {token} = data;
+    console.log("running");
+    const response = await axios.get('http://localhost:5000/api/faculty',{ headers: {"Authorization" : `Bearer ${token}`} })
     return response.data
 })
 

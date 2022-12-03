@@ -54,7 +54,7 @@ router.get('/getSessions', async(req, res) => {
 
 router.patch('/editStudentAdmin/:id', adminAuth, async (req, res) => {
     const updates = Object.keys(req.body)
-    const allowedUpdates = ['altEmail', 'mobileNo']
+    const allowedUpdates = ['altEmail', 'mobileNo', 'facultyAdvisor']
     const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
 
     if (!isValidOperation) {
