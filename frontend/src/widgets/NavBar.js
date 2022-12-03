@@ -10,7 +10,7 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   
-  const logoutHandler=()=>{
+  const logout=()=>{
     dispatch(logoutHandler());
   }
 
@@ -48,7 +48,7 @@ const Navbar = () => {
       </Link>
       <Link
         to={'/'}
-        onClick={logoutHandler}
+        onClick={logout}
         style={{ textDecoration: "none" }}
         className="text-bluegray-50 p-3"
       >
