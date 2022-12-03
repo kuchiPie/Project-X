@@ -47,8 +47,7 @@ export const getAllStudents = createAsyncThunk('student/getStudentList', async (
 })
 
 export const mapSelectedStudents = createAsyncThunk('StudentFacultyMapping/map', async (data) => {
-    // const response = await axios.get(`http://localhost:5000/api/student?keyword=${keyword}&batch=${batch}&branch=${branch}&limit=${limit}&skip=${skip}`);
-    console.log(data.selStudents, 'From Slice')
+    console.log(data)
     const response = await axios.post('http://localhost:5000/api/mapStudentFaculty',{
         studentArray : data.selStudents,
         facultyId : data.facultyId

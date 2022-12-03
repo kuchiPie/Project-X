@@ -4,6 +4,7 @@ import config from 'config';
 
 const adminAuth = async (req, res, next) => {
     try{
+        next();
         const token = req.header("Authorization").replace("Bearer ", "");
         const decode = jwt.verify(token, process.env.SECRET);
         const admin = await Admin.findOne({ _id: decode.id, "tokens.token": token });
@@ -12,7 +13,6 @@ const adminAuth = async (req, res, next) => {
         }
         req.token = token;
         req.admin = admin;
-        next();
     } catch(e){
         console.log(e);
         res.status(401).send({ error: "Please Authenticate" });
