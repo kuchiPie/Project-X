@@ -1,4 +1,4 @@
-import { Schema as _Schema, model } from 'mongoose';
+import { Schema as _Schema, model, mongoose } from 'mongoose';
 
 const Schema = _Schema;
 
@@ -23,8 +23,11 @@ let Faculty = new Schema({
   },
   token: {
     type: String
+  },
+  outpasses: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Outpass"
   }
-  
 });
 
 export default model("Faculty", Faculty);

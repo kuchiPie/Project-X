@@ -14,6 +14,7 @@ import { FileUpload } from 'primereact/fileupload';
 import {Toast} from 'primereact/toast';
 import {v4} from 'uuid'
 import { Image } from 'primereact/image';
+import { useSelector } from 'react-redux';
 
 function Output() {
     const toast = useRef(null);
@@ -22,6 +23,7 @@ function Output() {
     const [displayCurrent, setDisplayCurrent] = useState(false);
     const [displayHistory, setDisplayHistory] = useState(false);
     const interval = useRef(null);
+    const studentId = useSelector(state => state.login.loggedUser._id)
 
     // All data fields
     const [leaveDate, setLeaveDate] = useState(null);
@@ -32,7 +34,6 @@ function Output() {
     const [ticketUrl,setTicketUrl] = useState(null);
 
     const newOutpassSubmitHandler=()=>{
-        
     }
     
     const muUploader =async ({files})=>{

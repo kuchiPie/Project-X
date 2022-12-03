@@ -41,6 +41,10 @@ const studentSchema = new Schema({
     facultyAdvisor: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Faculty"
+    },
+    outpasses: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Outpass"
     }
 },{
     timestamps: true
