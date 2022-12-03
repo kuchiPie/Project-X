@@ -7,13 +7,15 @@ import { Divider } from 'primereact/divider';
 import { InputText } from 'primereact/inputtext';
 import { Calendar } from 'primereact/calendar';
 import { InputTextarea } from 'primereact/inputtextarea';
-import TimePicker from 'react-time-picker';
 import storage from '../../../firebase/firebase.js';
 import {ref,uploadBytes,getDownloadURL} from 'firebase/storage';
 import { FileUpload } from 'primereact/fileupload';
 import {Toast} from 'primereact/toast';
 import {v4} from 'uuid'
 import { Image } from 'primereact/image';
+import TextField from '@mui/material/TextField';
+import TimePicker from '@mui/lab/TimePicker';
+import { useSelector } from 'react-redux';
 
 function Output() {
     const toast = useRef(null);
@@ -22,6 +24,7 @@ function Output() {
     const [displayCurrent, setDisplayCurrent] = useState(false);
     const [displayHistory, setDisplayHistory] = useState(false);
     const interval = useRef(null);
+    const studentId = useSelector(state => state.login.loggedUser._id)
 
     // All data fields
     const [leaveDate, setLeaveDate] = useState(null);
@@ -30,10 +33,20 @@ function Output() {
     const [returnTime, setReturnTime] = useState('10:00');
     const [isticketLoading,setticketLoading] = useState(false);
     const [ticketUrl,setTicketUrl] = useState(null);
+    const [contactNo, setContactNo] = useState(null);
+    const [reason, setreason] = useState(null);
+    const [hostelRoom, sethostelRoom] = useState(null);
 
     const newOutpassSubmitHandler=()=>{
-        
+        const newOutpass = {
+            leaveDate, returnDate, leaveTime, returnTime, ticket: ticketUrl, studentId, contactNo, reason, hostelRoom
+        }
+        console.log(newOutpass)
     }
+
+    const handleleavetime = (newValue) => {
+        setLeaveTime(newValue);
+    };
     
     const muUploader =async ({files})=>{
         console.log(files[0]);
@@ -132,7 +145,7 @@ function Output() {
                                         
                                         <div className="flex justify-content-between ">
                                             <h3 className="m-0">Hostel room no.</h3>
-                                            <InputText className="w-15rem"  type="number"></InputText>
+                                            <InputText className="w-15rem"  type="number" value={hostelRoom} onChange={(e) => sethostelRoom(e.target.value)}></InputText>
                                         </div>
                                         <Divider layout="horizontal"></Divider>
                                         <div className="flex justify-content-between my-5">
@@ -150,23 +163,28 @@ function Output() {
                                     <div className="col-12 md:col-6">
                                         <div className="flex justify-content-between">
                                             <h3 className="m-0">Contact no.</h3>
-                                            <InputText className="w-15rem" type="number"></InputText>
+                                            <InputText className="w-15rem" type="number" value={contactNo} onChange={(e) => setContactNo(e.target.value)}></InputText>
                                         </div>
                                         <Divider layout="horizontal"></Divider>
                                         <div className="flex justify-content-between my-5">
                                             <h3 className="m-0">Time of Leaving</h3>
-                                            <TimePicker className="w-15rem p-2 bg-white border-round-md h-3rem" onChange={setLeaveTime} value={leaveTime} />
+                                            <TimePicker
+                                                label="Time"
+                                                value={leaveTime}
+                                                onChange={handleleavetime}
+                                                renderInput={(params) => <TextField {...params} />}
+                                            />
                                         </div>
                                         <Divider layout="horizontal"></Divider>
                                         <div className="flex justify-content-between my-5">
                                             <h3 className="m-0">Time of Returning</h3>
-                                            <TimePicker className="w-15rem p-2 bg-white border-round-md h-3rem" onChange={setReturnTime} value={returnTime} />
+                                            {/* <TimePicker className="w-15rem p-2 bg-white border-round-md h-3rem" disableClock={true} minutePlaceholder="mm" hourPlaceholder='hh' onChange={(value) => setReturnTime(value)} value={returnTime} /> */}
                                         </div>
                                         <Divider layout="horizontal"></Divider>
                                     </div>
                                     <div className="field col-12 flex justify-content-between ">
                                         <h3 className="mr-5 w-1">Reason</h3>
-                                        <InputTextarea className="w-full" id="address" rows="4" />
+                                        <InputTextarea className="w-full" id="address" rows="4" value={reason} onChange={(e) => setreason(e.target.value)}/>
                                     </div>
                                     <Divider layout="horizontal"></Divider>
                                     <div className="field col-12 flex justify-content-between ">
