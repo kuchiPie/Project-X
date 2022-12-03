@@ -41,8 +41,11 @@ const facultySlice = createSlice({
     }
 })
 
-export const addFacultyServer = createAsyncThunk('faculty/addfaculty', async (faculty) => {
-    const response = await axios.post('http://localhost:5000/api/faculty', faculty)
+export const addFacultyServer = createAsyncThunk('faculty/addfaculty', async (data) => {
+    const {faculty,token}=data;
+    // console.log(faculty);
+    // console.log(token);
+    const response = await axios.post('http://localhost:5000/api/faculty', faculty,{headers: {Authorization: "Bearer " + token}})
     return response.data
 })
 
@@ -53,14 +56,15 @@ export const getFacultyServer = createAsyncThunk('faculty/getfaculty', async (da
     return response.data
 })
 
-export const editFacultyServer = createAsyncThunk('faculty/editfaculty', async (faculty) => {
-    console.log(faculty)
-    const response = await axios.patch(`http://localhost:5000/api/faculty/${faculty._id}`, faculty)
+export const editFacultyServer = createAsyncThunk('faculty/editfaculty', async (facultyData) => {
+    const {token,faculty} = facultyData;
+    const response = await axios.patch(`http://localhost:5000/api/faculty/${faculty._id}`, faculty,{headers: {Authorization: "Bearer " + token}})
     return response.data
 })
 
-export const deleteFacultyServer = createAsyncThunk('faculty/deletefaculty', async (faculty) => {
-    const response = await axios.delete(`http://localhost:5000/api/faculty/${faculty._id}`)
+export const deleteFacultyServer = createAsyncThunk('faculty/deletefaculty', async (facultyData) => {
+    const {token,faculty} = facultyData;
+    const response = await axios.delete(`http://localhost:5000/api/faculty/${faculty._id}`,{headers: {Authorization: "Bearer " + token}})
     return faculty
 })
 

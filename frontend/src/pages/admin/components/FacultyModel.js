@@ -9,16 +9,14 @@ import EditFaculty from "./EditFaculty";
 import Mentees from "./Mentees";
 
 const FacultyModel = () => {
-    var token = localStorage.getItem('token');
+    // var token = localStorage.getItem('token');
     const [selectedFaculty, setSelectedFaculty] = useState(null);
     const dispatch = useDispatch()
     const reduxFaculty = useSelector(state => state.faculty) 
+    const {token} = useSelector(state=>state.login);
 
     useEffect(()=>{
-      // console.log(token);
-      token=token.split('"')[1];
-      // console.log(token);
-      dispatch(getFacultyServer({'token':token}))
+      dispatch(getFacultyServer({token:token}))
     },[])
     
     const actionBodyTemplate = (rowData) => {
