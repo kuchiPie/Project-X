@@ -77,9 +77,9 @@ const Login = () => {
         if(userType === 'Admin')
             return <Navigate to={`/admin/${loggedUser._id}`} />;
         if(userType === 'Faculty')
-            return <Navigate to="/faculty" />;
+            return <Navigate to={`/faculty/${loggedUser._id}`} />;
         if(userType === 'Student')
-            return <Navigate to="/student" />;
+            return <Navigate to={`/student/${loggedUser._id}`} />;
     }
 
     return (
