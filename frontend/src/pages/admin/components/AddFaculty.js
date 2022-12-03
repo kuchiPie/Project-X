@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useEffect, useState } from "react";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import { Dropdown } from "primereact/dropdown";
@@ -7,7 +7,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { addFacultyServer } from "../../../reduxSlices/FacultySlice";
 
 const AddFaculty = () => {
-
+  var token;
+  useEffect(()=>{
+    token=localStorage.getItem('token');
+  },[])
 
   const [addFacultyDialog, setAddFacultyDialog] = useState(false);
   const [facultyName, setFacultyName] = useState("");

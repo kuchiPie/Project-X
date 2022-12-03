@@ -2,16 +2,17 @@ import { Router } from 'express';
 const router = new Router();
 import { deleteFacultyController, getFacultyController, insertFacultyController, updateFacultyController } from '../controllers/facultyController.js';
 import facultyLoginController from '../controllers/facultyLoginController.js';
+import adminAuth from '../middleware/adminAuth.js'
 
-router.post('/faculty/login', facultyLoginController)
+router.post('/faculty/login', adminAuth , facultyLoginController)
 
-router.post('/faculty', insertFacultyController)
+router.post('/faculty', adminAuth,  insertFacultyController)
 
-router.get('/faculty', getFacultyController)
+router.get('/faculty', adminAuth , getFacultyController)
 
-router.patch('/faculty/:id', updateFacultyController)
+router.patch('/faculty/:id', adminAuth,  updateFacultyController)
 
-router.delete('/faculty/:id', deleteFacultyController)
+router.delete('/faculty/:id',adminAuth, deleteFacultyController)
 
 
 export default router
