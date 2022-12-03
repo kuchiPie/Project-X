@@ -22,7 +22,7 @@ function Profile() {
                     <h1 className="my-1">Welcome, Shinchan</h1>
 
                     {/* Profile Card */}
-                    <Card className=" flex justify-content-center surface-100">
+                    <Card className=" flex justify-content-center border-2 border-gray-800">
                         <div className="flex flex-column">
                             <Image src="/images/shin.jpg" alt="profile-photo" width="250rem" preview />
                             <h4 className="flex justify-content-center my-1">Shinchan Nohara</h4>
@@ -35,8 +35,8 @@ function Profile() {
                 <div className="col-12 lg:col-9 xl:col-9">
 
                     {/* TabView Card */}
-                    <Card className="surface-100">
-                        <TabView className='font-bold text-xl'>
+                    {/* <Card className=""> */}
+                        <TabView className='font-bold py-3 text-xl border-2 border-gray-800 border-round-lg'>
 
                             {/* Personal Info Tab */}
                             <TabPanel header="Personal" width="100%">
@@ -54,7 +54,7 @@ function Profile() {
                             </TabPanel>
 
                         </TabView>
-                    </Card>
+                    {/* </Card> */}
                 </div>
             </div>
 
