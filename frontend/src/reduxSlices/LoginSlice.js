@@ -13,6 +13,13 @@ const loginSlice = createSlice({
     name: 'login',
     initialState,
     reducers: {
+        logoutHandler(state,action){
+            state.isLoggedIn=false
+            state.loggedUser={}
+            state.token=''
+            state.status= ''
+            state.userType= ''
+        },
         setLoginStatus(state, action) {
             state.isLoggedIn = action.payload.isLogged
             state.token = action.payload.isToken

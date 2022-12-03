@@ -1,5 +1,5 @@
 import React, { useState, useRef} from 'react';
-import { Password } from 'primereact/password';
+
 import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
 import { Card } from 'primereact/card';
@@ -25,7 +25,7 @@ const Login = () => {
     // let navigate = useNavigate();
 
     const form = useRef();
-
+    const [showPassword,setShowPassword] = useState(false)
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [selectedUser, setSelectedUser] = useState({
@@ -77,9 +77,9 @@ const Login = () => {
         if(userType === 'Admin')
             return <Navigate to={`/admin/${loggedUser._id}`} />;
         if(userType === 'Faculty')
-            return <Navigate to="/faculty" />;
+            return <Navigate to={`/faculty/${loggedUser._id}`} />;
         if(userType === 'Student')
-            return <Navigate to="/student" />;
+            return <Navigate to={`/student/${loggedUser._id}`} />;
     }
 
     return (
@@ -105,9 +105,10 @@ const Login = () => {
                             </span>
                         </div>
                         <div className="field">
-                            <span className="p-float-label">
-                                <h4>Password</h4>
-                                <InputText required={required} value={password} onChange={onChangePassword} className="w-full" id="username" type="text" />
+                        <h4>Password</h4>
+                            <span className="p-float-label p-input-icon-right">
+                            { showPassword ? (<i onClick = {()=>setShowPassword(!showPassword)} className='pi pi-eye'></i>):(<i onClick = {()=>setShowPassword(!showPassword)}  className='pi pi-eye-slash'></i>)}
+                                <InputText required={required} value={password} onChange={onChangePassword} className="w-30rem" id="password" type= {showPassword ? "text":"password"} />      
                             </span>
                         </div>
                         
