@@ -5,7 +5,6 @@ const Schema = _Schema;
 const studentSchema = new Schema({
     name: {
         type: String,
-        // required: true,
         trim: true,
     },
     batch: {
@@ -37,10 +36,16 @@ const studentSchema = new Schema({
     },
     mobileNo: {
         type: Number,
+        default: 0
     },
     facultyAdvisor: {
-        type: _Schema.Types.ObjectId, ref: 'Faculty'
-    }
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Faculty"
+    },
+    outpasses: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Outpass"
+    }]
 },{
     timestamps: true
 }

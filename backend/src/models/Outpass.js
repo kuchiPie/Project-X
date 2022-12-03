@@ -9,6 +9,18 @@ const OutpassModel = new Schema(
             ref:"Student",
             required:true,
         },
+        hostelRoom:{
+            type: Number,
+            required: true
+        },
+        contactNo:{
+            type: Number,
+            required: true
+        },
+        reason: {
+            type: String,
+            required: true
+        },
         dateofjourney:{
             type: Date,
             required:true,
@@ -17,12 +29,24 @@ const OutpassModel = new Schema(
             type:Date,
             required:true,
         },
+        leavetime:{
+            type: String,
+            required: true
+        },
+        returntime:{
+            type: String,
+            required: true,
+        },
         ticket:{
             type:String,
         },
         approvalStatus:{
             type:String,
             default:'Faculty Advisor'
+        },
+        isApproved:{
+            type: Boolean,
+            default: false,
         }
     },
     {
