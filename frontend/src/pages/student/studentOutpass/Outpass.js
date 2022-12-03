@@ -8,8 +8,8 @@ import { InputText } from 'primereact/inputtext';
 import { Calendar } from 'primereact/calendar';
 import { InputTextarea } from 'primereact/inputtextarea';
 import TimePicker from 'react-time-picker';
-import storage from '../../firebase/firebase.js'
-import {ref,uploadBytes,getDownloadURL} from 'firebase/storage' 
+import storage from '../../../firebase/firebase.js';
+import {ref,uploadBytes,getDownloadURL} from 'firebase/storage';
 import { FileUpload } from 'primereact/fileupload';
 import {Toast} from 'primereact/toast';
 import {v4} from 'uuid'
