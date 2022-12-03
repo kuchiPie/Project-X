@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import Student from '../models/Student.js';
+import Faculty from '../models/Faculty.js'
 const router = new Router();
 import generator from 'generate-password';
 import Session from '../models/Session.js'
@@ -73,6 +74,33 @@ router.delete('/deleteStudent/:id', adminAuth, async (req, res) => {
     try{
         await Student.deleteOne({_id: studentid})
         res.status(200).send(student)
+    } catch(error){
+        res.status(400).send(error)
+    }
+})
+
+// AdminAuth middleware needs to be added for security
+router.post('/mapStudentFaculty', async (req, res) => {
+    const studentArrayIDs = req.body.studentArray
+    const facultyId = req.body.facultyId
+
+    let faculty = await Faculty.findById(facultyId)
+
+    try{
+        // first we need to check if the faculty already has been assigned to those mentees
+        studentArrayIDs.forEach(async (studentId) => {
+            if (!faculty.mentees.includes(studentId)){
+                faculty.mentees.push(studentId)
+                let student = await Student.findById(studentId)
+                student.facultyAdvisor = facultyId
+                await student.save()
+            }
+        });
+
+        await faculty.save()
+        // console.log(faculty)
+
+        res.status(200).send(faculty)
     } catch(error){
         res.status(400).send(error)
     }

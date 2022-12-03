@@ -9,13 +9,14 @@ import EditFaculty from "./EditFaculty";
 import Mentees from "./Mentees";
 
 const FacultyModel = () => {
+    const token = localStorage.getItem('token');
     const [selectedFaculty, setSelectedFaculty] = useState(null);
     const dispatch = useDispatch()
     const reduxFaculty = useSelector(state => state.faculty) 
 
-    if(reduxFaculty.length === 0){
-      dispatch(getFacultyServer())
-    }
+    useEffect(()=>{
+      dispatch(getFacultyServer({'token':token}))
+    },[])
     
     const actionBodyTemplate = (rowData) => {
         return (

@@ -42,10 +42,10 @@ const studentSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Faculty"
     },
-    outpasses: {
+    outpasses: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Outpass"
-    }
+    }]
 },{
     timestamps: true
 }

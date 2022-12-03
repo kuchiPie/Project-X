@@ -27,7 +27,12 @@ let Faculty = new Schema({
   outpasses: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Outpass"
+  },
+  mentees: {
+    type: [{ type : _Schema.Types.ObjectId, ref: 'Student' }]
   }
+
+  
 });
 
 export default model("Faculty", Faculty);

@@ -19,7 +19,9 @@ function App(){
         const token = JSON.parse(localStorage.getItem('token'));
         const user = JSON.parse(localStorage.getItem('user'));
         const userType = JSON.parse(localStorage.getItem('userType'));
-        dispatch(setLoginStatus({isLogged: logindetails, isUser: user, isToken: token, isUserType: userType}))
+        if(token && user && userType){
+            dispatch(setLoginStatus({isLogged: logindetails, isUser: user, isToken: token, isUserType: userType}))
+        }
     }
     
     return (
