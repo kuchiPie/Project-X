@@ -9,14 +9,9 @@ import { useDispatch, useSelector } from "react-redux";
 const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  
   const logoutHandler=()=>{
-    localStorage.removeItem('isLoggedIn')
-    localStorage.removeItem('token')
-    localStorage.removeItem('user')
-    localStorage.removeItem('userType')
     dispatch(logoutHandler());
-    // navigate('/');
-    // console.log('j')
   }
 
   const items = [

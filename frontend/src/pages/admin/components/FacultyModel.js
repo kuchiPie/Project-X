@@ -12,7 +12,7 @@ const FacultyModel = () => {
     // var token = localStorage.getItem('token');
     const [selectedFaculty, setSelectedFaculty] = useState(null);
     const dispatch = useDispatch()
-    const reduxFaculty = useSelector(state => state.faculty) 
+    const {facultyList} = useSelector(state => state.faculty) 
     const {token} = useSelector(state=>state.login);
 
     useEffect(()=>{
@@ -41,7 +41,7 @@ const FacultyModel = () => {
   return (
     <>
     <DataTable
-              value={reduxFaculty}
+              value={facultyList}
               paginator
               responsiveLayout="scroll"
               paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"

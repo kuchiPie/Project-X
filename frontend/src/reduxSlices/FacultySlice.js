@@ -1,7 +1,11 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 
-const initialState = []
+const initialState = {
+    facultyList:[],
+    isLoading:false,
+    hasFailed:false
+}
 
 const facultySlice = createSlice({
     name: 'Faculty',
@@ -14,29 +18,30 @@ const facultySlice = createSlice({
                 
             })
             .addCase(addFacultyServer.fulfilled, (state, action) => {
-                state.push({...action.payload})
+                state.facultyList.push({...action.payload})
             })
             .addCase(addFacultyServer.rejected, (state, action) => {
-
+                console.log(action);
             })
             .addCase(getFacultyServer.fulfilled, (state,action) => {
                 action.payload.forEach(element => {
-                    state.push(element)
+                    state.facultyList.push(element)
                 });
             })
             .addCase(getFacultyServer.rejected,(state,action)=>{
+                console.log(action);
                 console.log("Some error occured");
             })
             .addCase(editFacultyServer.fulfilled, (state, action) => {
-                const index = state.findIndex((element) => action.meta.arg._id === element._id)
-                state[index] = action.meta.arg
+                const index = state.facultyList.findIndex((element) => action.meta.arg._id === element._id)
+                state.facultyList[index] = action.meta.arg
             })
             .addCase(editFacultyServer.rejected, (state, action) => {
                 console.log(action.error)
             })
             .addCase(deleteFacultyServer.fulfilled, (state, action) => {
-                const index = state.findIndex((element) => action.payload._id === element._id)
-                state.splice(index, 1)
+                const index = state.facultyList.findIndex((element) => action.payload._id === element._id)
+                state.facultyList.splice(index, 1)
             })
     }
 })
@@ -50,10 +55,10 @@ export const addFacultyServer = createAsyncThunk('faculty/addfaculty', async (da
 })
 
 export const getFacultyServer = createAsyncThunk('faculty/getfaculty', async (data) => {
-    const {token} = data;
+    var {token} = data;
     console.log("running");
     const response = await axios.get('http://localhost:5000/api/faculty',{headers: {Authorization: "Bearer " + token}})
-    return response.data
+    return response.data;
 })
 
 export const editFacultyServer = createAsyncThunk('faculty/editfaculty', async (facultyData) => {

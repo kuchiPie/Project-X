@@ -14,11 +14,11 @@ const loginSlice = createSlice({
     initialState,
     reducers: {
         logoutHandler(state,action){
-            state.isLoggedIn=false
-            state.loggedUser={}
-            state.token=''
-            state.status= ''
-            state.userType= ''
+            localStorage.removeItem('isLoggedIn')
+            localStorage.removeItem('token')
+            localStorage.removeItem('user')
+            localStorage.removeItem('userType')
+            state=initialState
         },
         setLoginStatus(state, action) {
             state.isLoggedIn = action.payload.isLogged
