@@ -25,7 +25,6 @@ const Sessions = () => {
       } catch(e) {
         console.log(e)
       }
-      console.log(fetchedsessions)
     }
     fetchdata()
   }, []);

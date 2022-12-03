@@ -49,7 +49,7 @@ export const addFacultyServer = createAsyncThunk('faculty/addfaculty', async (fa
 export const getFacultyServer = createAsyncThunk('faculty/getfaculty', async (data) => {
     const {token} = data;
     console.log("running");
-    const response = await axios.get('http://localhost:5000/api/faculty',{ headers: {"Authorization" : `Bearer ${token}`} })
+    const response = await axios.get('http://localhost:5000/api/faculty',{headers: {Authorization: "Bearer " + token}})
     return response.data
 })
 
