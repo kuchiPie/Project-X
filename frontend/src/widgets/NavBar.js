@@ -9,14 +9,9 @@ import { useDispatch, useSelector } from "react-redux";
 const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const logoutHandler=()=>{
-    localStorage.removeItem('isLoggedIn')
-    localStorage.removeItem('token')
-    localStorage.removeItem('user')
-    localStorage.removeItem('userType')
+  
+  const logout=()=>{
     dispatch(logoutHandler());
-    // navigate('/');
-    // console.log('j')
   }
 
   const items = [
@@ -53,7 +48,7 @@ const Navbar = () => {
       </Link>
       <Link
         to={'/'}
-        onClick={logoutHandler}
+        onClick={logout}
         style={{ textDecoration: "none" }}
         className="text-bluegray-50 p-3"
       >
