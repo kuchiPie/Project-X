@@ -5,7 +5,6 @@ const Schema = _Schema;
 const studentSchema = new Schema({
     name: {
         type: String,
-        // required: true,
         trim: true,
     },
     batch: {
@@ -37,6 +36,7 @@ const studentSchema = new Schema({
     },
     mobileNo: {
         type: Number,
+        default: 0
     },
     facultyAdvisor: {
         type: mongoose.Schema.Types.ObjectId,

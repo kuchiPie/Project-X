@@ -32,8 +32,15 @@ function Output() {
     const [returnTime, setReturnTime] = useState('10:00');
     const [isticketLoading,setticketLoading] = useState(false);
     const [ticketUrl,setTicketUrl] = useState(null);
+    const [contactNo, setContactNo] = useState(null);
+    const [reason, setreason] = useState(null);
+    const [hostelRoom, sethostelRoom] = useState(null);
 
     const newOutpassSubmitHandler=()=>{
+        const newOutpass = {
+            leaveDate, returnDate, leaveTime, returnTime, ticket: ticketUrl, studentId, contactNo, reason, hostelRoom
+        }
+        console.log(newOutpass)
     }
     
     const muUploader =async ({files})=>{
@@ -133,7 +140,7 @@ function Output() {
                                         
                                         <div className="flex justify-content-between ">
                                             <h3 className="m-0">Hostel room no.</h3>
-                                            <InputText className="w-15rem"  type="number"></InputText>
+                                            <InputText className="w-15rem"  type="number" value={hostelRoom} onChange={(e) => sethostelRoom(e.target.value)}></InputText>
                                         </div>
                                         <Divider layout="horizontal"></Divider>
                                         <div className="flex justify-content-between my-5">
@@ -151,7 +158,7 @@ function Output() {
                                     <div className="col-12 md:col-6">
                                         <div className="flex justify-content-between">
                                             <h3 className="m-0">Contact no.</h3>
-                                            <InputText className="w-15rem" type="number"></InputText>
+                                            <InputText className="w-15rem" type="number" value={contactNo} onChange={(e) => setContactNo(e.target.value)}></InputText>
                                         </div>
                                         <Divider layout="horizontal"></Divider>
                                         <div className="flex justify-content-between my-5">
@@ -167,7 +174,7 @@ function Output() {
                                     </div>
                                     <div className="field col-12 flex justify-content-between ">
                                         <h3 className="mr-5 w-1">Reason</h3>
-                                        <InputTextarea className="w-full" id="address" rows="4" />
+                                        <InputTextarea className="w-full" id="address" rows="4" value={reason} onChange={(e) => setreason(e.target.value)}/>
                                     </div>
                                     <Divider layout="horizontal"></Divider>
                                     <div className="field col-12 flex justify-content-between ">
