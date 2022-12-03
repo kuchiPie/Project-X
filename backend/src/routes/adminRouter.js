@@ -7,6 +7,7 @@ import Session from '../models/Session.js'
 import adminAuth from '../middleware/adminAuth.js'
 import bcrypt from 'bcryptjs';
 import adminLoginController from '../controllers/adminLoginController.js';
+import isEmpty from 'is-empty';
 
 router.post('/admin/login', adminLoginController)
 
@@ -86,21 +87,46 @@ router.post('/mapStudentFaculty', async (req, res) => {
 
     let faculty = await Faculty.findById(facultyId)
 
+    console.log(faculty, req.body)
+
+    if (studentArrayIDs.len == 0){
+        res.status(400).send("Empty Student Array")
+        return
+    }
+    else{
+        console.log(studentArrayIDs)
+    }
+
+    var menteesArr;
+    try{
+        menteesArr = faculty.mentees
+    } catch(err){
+        console.log("Faculty Mentees is empty")
+        menteesArr = []
+    }
+
     try{
         // first we need to check if the faculty already has been assigned to those mentees
         studentArrayIDs.forEach(async (studentId) => {
-            if (!faculty.mentees.includes(studentId)){
-                faculty.mentees.push(studentId)
-                let student = await Student.findById(studentId)
-                student.facultyAdvisor = facultyId
-                await student.save()
-            }
+            try {
+                if (!menteesArr.includes(studentId) ){
+                    menteesArr.push(studentId)
+                    let student = await Student.findById(studentId)
+                    student.facultyAdvisor = facultyId
+                    await student.save()
+                }
+              }
+              catch(err) {
+                console.log(err)
+              }
+          
         });
-
+        faculty.mentees = menteesArr
+        console.log(faculty)
         await faculty.save()
         // console.log(faculty)
 
-        res.status(200).send(faculty)
+        res.status(200)
     } catch(error){
         res.status(400).send(error)
     }

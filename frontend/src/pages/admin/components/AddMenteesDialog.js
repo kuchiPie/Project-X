@@ -11,7 +11,8 @@ import { getAllStudents, mapSelectedStudents } from '../../../reduxSlices/studen
 import { useDispatch, useSelector } from "react-redux";
 
 const AddMenteesDialog = (props) => {
-	// console.log(props.faculty)
+
+	// console.log(props.faculty, 'props')
 	const emptyStudent = {
 		name: "",
 		institute_id: "",
@@ -55,11 +56,10 @@ const AddMenteesDialog = (props) => {
 
 	const mapMenteesToFaculty = ()=> {
 		var studentIds = []
-		console.log(selectedStudents,12)
 		selectedStudents.forEach(element => {
 			studentIds.push(element.id)
 		});
-		dispatch(mapSelectedStudents({selStudents: studentIds, facultyId: props.faculty._id}));
+		dispatch(mapSelectedStudents({selStudents: studentIds, facultyId: props.faculty}));
 	}
 
 	const searchedStudents = [
@@ -114,11 +114,11 @@ const AddMenteesDialog = (props) => {
 				
 				
 				<div class="card">
-					<div class="flex flex-wrap align-items-center justify-content-center card-container">
+					{/* <div class="flex flex-wrap align-items-center justify-content-center card-container"> */}
 						<div class="max-w-full p-4 flex align-items-center justify-content-center">
 							<Button label="Add Selected Mentees" onClick={mapMenteesToFaculty}/>
 						</div>
-					</div>
+					{/* </div> */}
 				</div>
 
 
