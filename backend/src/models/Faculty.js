@@ -23,7 +23,11 @@ let FacultyTest = new Schema({
   },
   token: {
     type: String
+  },
+  mentees: {
+    type: [{ type : _Schema.Types.ObjectId, ref: 'Student' }]
   }
+
   
 });
 

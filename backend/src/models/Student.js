@@ -42,6 +42,9 @@ const studentSchema = new Schema({
         type: Number,
         unique: true,
     },
+    facultyAdvisor: {
+        type: _Schema.Types.ObjectId, ref: 'Faculty'
+    }
 },{
     timestamps: true
 }

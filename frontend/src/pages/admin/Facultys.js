@@ -9,6 +9,7 @@ import { classNames } from "primereact/utils";
 import { useDispatch, useSelector } from "react-redux";
 import { addFacultyServer, deleteFacultyServer, editFacultyServer, getFacultyServer, } from "../../reduxSlices/FacultySlice";
 import { useNavigate } from "react-router-dom";
+import AddMenteesDialog from "../../widgets/AddMenteesDialog";
 
 const Facultys = () => {
   let emptyFaculty = {
@@ -27,6 +28,7 @@ const Facultys = () => {
   const [selectedMentees, setSelectedMentees] = useState(null);
   const [facultyDialog, setFacultyDialog] = useState(false);
   const [viewMenteesDialog, setViewMenteesDialog] = useState(false);
+  const [viewAddMenteesDialog, setViewAddMenteesDialog] = useState(false);
   const [addFacultyDialog, setAddFacultyDialog] = useState(false);
   const [facultyName, setFacultyName] = useState("");
   const [facultyId, setFacultyId] = useState("");
@@ -65,7 +67,7 @@ const Facultys = () => {
         <Button
           icon="pi pi-users"
           className="p-button-rounded p-button-success mr-2"
-          onClick={() => viewMentees()}
+          onClick={() => viewMentees(rowData)}
         />
         <Button
           icon="pi pi-pencil"
@@ -81,9 +83,22 @@ const Facultys = () => {
     );
   };
 
-  const viewMentees = () => {
+  const viewMentees = (data) => {
+    setFaculty(data)
     setViewMenteesDialog(true);
   };
+  
+  const viewAddMentees = () => {
+    
+    // setFaculty(data)
+    setViewAddMenteesDialog(true);
+  };
+
+  const hideViewAddMenteesDialog = () => {
+    setViewAddMenteesDialog(false);
+  };
+
+
   const addFaculty = () => {
     setAddFacultyDialog(true);
   };
@@ -135,9 +150,13 @@ const Facultys = () => {
     await dispatch(deleteFacultyServer(faculty))
   };
 
+  // const showAddMenteesMenu = () =>{
+  //   setViewAddMenteesDialog(true)
+  // }
+
   const viewMenteesDialogFooter = (
     <>
-      <Button label="Add Mentee" className="p-button-text" />
+      <Button label="Add Mentee" className="p-button-text" onClick={()=>viewAddMentees()}/>
     </>
   );
 
@@ -268,6 +287,7 @@ const Facultys = () => {
         model
         onHide={hideViewMenteesDialog}
       >
+        Viewing mentees for {faculty.name}
         <DataTable
           selection={selectedMentees}
           onSelectionChange={(e) => setSelectedMentees(e.value)}
@@ -277,6 +297,19 @@ const Facultys = () => {
           <Column field="" header="Institute ID"></Column>
           <Column field="" header="Department"></Column>
         </DataTable>
+      </Dialog>
+
+      <Dialog
+        visible={viewAddMenteesDialog}
+        style={{ width: "1050px" }}
+        header="Add Mentees"
+        // footer={viewMenteesDialogFooter}
+        model
+        onHide={hideViewAddMenteesDialog}
+      >
+        <AddMenteesDialog
+          faculty= {faculty}
+        />
       </Dialog>
 
 
