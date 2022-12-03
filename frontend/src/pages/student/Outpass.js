@@ -32,7 +32,7 @@ function Output() {
     const [ticketUrl,setTicketUrl] = useState(null);
 
     const newOutpassSubmitHandler=()=>{
-
+        
     }
     
     const muUploader =async ({files})=>{
