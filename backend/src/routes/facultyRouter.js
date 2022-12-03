@@ -4,15 +4,15 @@ import { deleteFacultyController, getFacultyController, insertFacultyController,
 import facultyLoginController from '../controllers/facultyLoginController.js';
 import adminAuth from '../middleware/adminAuth.js'
 
-router.post('/faculty/login', adminAuth , facultyLoginController)
+router.post('/faculty/login' , facultyLoginController)
 
-router.post('/faculty', adminAuth,  insertFacultyController)
+router.post('/faculty',  insertFacultyController)
 
-router.get('/faculty', adminAuth , getFacultyController)
+router.get('/faculty' , getFacultyController)
 
-router.patch('/faculty/:id', adminAuth,  updateFacultyController)
+router.patch('/faculty/:id',  updateFacultyController)
 
-router.delete('/faculty/:id',adminAuth, deleteFacultyController)
+router.delete('/faculty/:id', deleteFacultyController)
 
 
 export default router

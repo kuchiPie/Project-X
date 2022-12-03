@@ -39,8 +39,7 @@ const studentSchema = new Schema({
         type: Number,
     },
     facultyAdvisor: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Faculty"
+        type: _Schema.Types.ObjectId, ref: 'Faculty'
     }
 },{
     timestamps: true

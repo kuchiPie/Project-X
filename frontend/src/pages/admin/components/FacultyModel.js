@@ -24,7 +24,7 @@ const FacultyModel = () => {
     const actionBodyTemplate = (rowData) => {
         return (
           <>
-            <Mentees/>
+            <Mentees rowData={rowData}/>
             <EditFaculty rowData={rowData}/>
             <DeleteFaculty rowData={rowData}/>
           </>
