@@ -9,13 +9,14 @@ import EditFaculty from "./EditFaculty";
 import Mentees from "./Mentees";
 
 const FacultyModel = () => {
-    const token = localStorage.getItem('token');
+    // var token = localStorage.getItem('token');
     const [selectedFaculty, setSelectedFaculty] = useState(null);
     const dispatch = useDispatch()
-    const reduxFaculty = useSelector(state => state.faculty) 
+    const {facultyList} = useSelector(state => state.faculty) 
+    const {token} = useSelector(state=>state.login);
 
     useEffect(()=>{
-      dispatch(getFacultyServer({'token':token}))
+      dispatch(getFacultyServer({token:token}))
     },[])
     
     const actionBodyTemplate = (rowData) => {
@@ -40,7 +41,7 @@ const FacultyModel = () => {
   return (
     <>
     <DataTable
-              value={reduxFaculty}
+              value={facultyList}
               paginator
               responsiveLayout="scroll"
               paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"

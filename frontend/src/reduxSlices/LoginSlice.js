@@ -14,11 +14,15 @@ const loginSlice = createSlice({
     initialState,
     reducers: {
         logoutHandler(state,action){
+            localStorage.removeItem('isLoggedIn')
+            localStorage.removeItem('token')
+            localStorage.removeItem('user')
+            localStorage.removeItem('userType')
             state.isLoggedIn=false
             state.loggedUser={}
-            state.token=''
-            state.status= ''
-            state.userType= ''
+            state.token='';
+            state.status=''
+            state.userType=''
         },
         setLoginStatus(state, action) {
             state.isLoggedIn = action.payload.isLogged
@@ -67,6 +71,6 @@ export const loginUser = createAsyncThunk('login/loginUser', async (logindetails
     }
 })
 
-export const { setLoginStatus, setUserType} = loginSlice.actions
+export const { setLoginStatus, setUserType,logoutHandler} = loginSlice.actions
 
 export default loginSlice.reducer

@@ -18,7 +18,7 @@ const corsOptions ={
 const app = express()
 const port = process.env.PORT || 5000
 
-dotenv.config();
+dotenv.config(); 
 connectDB();
 app.use(json())
 

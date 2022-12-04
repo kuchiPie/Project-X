@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { deleteFacultyServer } from "../../../reduxSlices/FacultySlice";
 
 const DeleteFaculty = ({ rowData }) => {
+  const token = useSelector(state=>state.login);
   let emptyFaculty = {
     name: "",
     institute_id: "",
@@ -27,7 +28,7 @@ const DeleteFaculty = ({ rowData }) => {
 
   const ondeleteFaculty = async () => {
     setDeleteFacultyDialog(false);
-    await dispatch(deleteFacultyServer(faculty));
+    await dispatch(deleteFacultyServer({faculty:faculty,token:token}));
   };
 
   const deleteFacultyDialogFooter = (
