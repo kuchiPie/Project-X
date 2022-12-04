@@ -12,6 +12,8 @@ import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { FileUpload } from 'primereact/fileupload';
 import { v4 } from 'uuid'
 import { Image } from 'primereact/image';
+import { InputNumber } from 'primereact/inputnumber';
+import { InputMask } from 'primereact/inputmask';
 
 
 function NewOutpass() {
@@ -23,10 +25,12 @@ function NewOutpass() {
     // All data fields
     const [leaveDate, setLeaveDate] = useState(null);
     const [returnDate, setReturnDate] = useState(null);
-    const [leaveTime, setLeaveTime] = useState('10:00');
-    const [returnTime, setReturnTime] = useState('10:00');
+    const [leaveTime, setLeaveTime] = useState(null);
+    const [returnTime, setReturnTime] = useState(null);
     const [isticketLoading, setticketLoading] = useState(false);
     const [ticketUrl, setTicketUrl] = useState(null);
+    // const [leaveHour, setLeaveHour] = useState(null);
+    // const [leaveMin, setLeaveMin] = useState(null);
 
     const newOutpassSubmitHandler = () => {
 
@@ -112,8 +116,15 @@ function NewOutpass() {
                             </div>
                             <Divider layout="horizontal"></Divider>
                             <div className="flex justify-content-between my-5">
-                                <h3 className="m-0 ">Date Of Returning</h3>
-                                <Calendar className="w-15rem" showIcon showButtonBar value={returnDate} onChange={(e) => setReturnDate(e.value)}></Calendar>
+                                <h3 className="m-0">Time of Leaving</h3>
+                                <div className="flex">
+                                    {/* <InputMask mask="10:00" value={leaveHour} onValueChange={(e) => setLeaveHour(e.value)} max={"23:59"}></InputMask>*/}
+                                    {/* <InputNumber className="w-5rem" value={leaveMin} onValueChange={(e) => setLeaveMin(e.value)} max={59} />  */}
+                                    {/* <InputNumber className="w-5rem" style={{ width: '3rem' }} value={leaveHour} onValueChange={(e) => setLeaveHour(e.value)} />
+                                    <InputText className="w-5rem" type="number" max={23}></InputText> */}
+                                    {/* <input className="w-full" value={leaveTime} onValueChange={(e) => setLeaveTime(e.value)} type="time" id="ltime" /> */}
+                                    <input value={leaveTime} onValueChange={(e) => setLeaveTime(e.value)} type="time" id="ltime" />
+                                </div>
                             </div>
                             <Divider layout="horizontal"></Divider>
                         </div>
@@ -125,17 +136,13 @@ function NewOutpass() {
                             </div>
                             <Divider layout="horizontal"></Divider>
                             <div className="flex justify-content-between my-5">
-                                <h3 className="m-0">Time of Leaving</h3>
-                                {/* <div class="field col-12 md:col-4">
-                                                <p:outputLabel for="timeonly" value="Time Only" />
-                                                <p:datePicker id="timeonly" value="#{calendarView.date14}" timeOnly="true" pattern="HH:mm" />
-                                            </div> */}
-                                <TimePicker className="w-15rem p-2 bg-white border-round-md h-3rem" id="timeonly" timeOnly="true" pattern="HH:mm" onChange={setLeaveTime} disableClock={false} value={leaveTime} />
+                                <h3 className="m-0 ">Date Of Returning</h3>
+                                <Calendar className="w-15rem" showIcon showButtonBar value={returnDate} onChange={(e) => setReturnDate(e.value)}></Calendar>
                             </div>
                             <Divider layout="horizontal"></Divider>
                             <div className="flex justify-content-between my-5">
                                 <h3 className="m-0">Time of Returning</h3>
-                                <TimePicker className="w-15rem p-2 bg-white border-round-md h-3rem" onChange={setReturnTime} value={returnTime} />
+                                <input value={returnTime} onValueChange={(e) => setReturnTime(e.value)} type="time" id="rtime" />
                             </div>
                             <Divider layout="horizontal"></Divider>
                         </div>
