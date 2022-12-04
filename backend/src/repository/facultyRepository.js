@@ -1,46 +1,28 @@
 import Faculty from "../models/Faculty.js";
 import bcrypt from 'bcryptjs';
+import generator from 'generate-password';
 
 //get and search,pagination, may add sort 
-export const getFaculty = async(keyword, limit, skip) => {
-    const data = await Faculty.find(
-        { $or:[
-            {
-                name: 
-            { 
-                $regex: `${keyword}`, $options: "i" 
-            }
-        },
-            {
-                department:
-            {
-                $regex: `${keyword}`, $options: "i"
-            }
-        }
-        ]
-        }
-    )
-    .limit(limit)
-    .skip(skip)
+export const getFaculty = async() => {
+    const data = await Faculty.find({})
     return { success: true, data: data };
 }
 
 //create
 export const createFaculty = async(body) => {
-    
-    bcrypt.genSalt(10, (err, salt) => {
-        bcrypt.hash(body.password, salt, (err, hash) => {
-            if (err) throw err;
-
-            let faculty = new Faculty({ name : `${body.name}`, email : `${body.email}`, password : hash, dob : `${body.dob}`, department : `${body.department}` });
-            
-            faculty.save(function (err) {
-            if (err) return console.error(err);
-            console.log("saved to faculty collection.");
-            });
-        });
+    var password = generator.generate({
+        length: 10,
+        numbers: true
     });
- 
+    const hash = bcrypt.hashSync(password, 10);
+    console.log('Hello')
+    try{
+        let faculty = new Faculty({ name : `${body.name}`, email : `${body.email}`, password : hash, department: body.department});
+        await faculty.save()
+        return faculty
+    } catch(e) {
+        console.log(e)
+    }
 }
 
 //update 

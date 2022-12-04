@@ -58,8 +58,8 @@ function adminLoginController(req, res) {
         // returning final json as response
         res.json({
             success: true,
-            token: "Bearer" + token,
-            user: user.name
+            token: token,
+            user
         });
     });
 }
