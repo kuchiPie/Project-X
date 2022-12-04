@@ -124,9 +124,21 @@ router.post('/mapStudentFaculty', async (req, res) => {
         studentArrayIDs.forEach(async (studentId) => {
             try {
                 if (!menteesArr.includes(studentId) ){
-                    console.log(studentId, 'pushed to mentees')
+                    // console.log(studentId, 'pushed to mentees')
                     menteesArr.push(studentId)
                     let student = await Student.findById(studentId)
+                    // Check if the student is already been assigned to some other faculty...
+                    // If the student is assigned then we need to deassign him/her from other..
+                    // faculty.
+                    if (student.facultyAdvisor != null){
+                        let prevFaculty = await Faculty.findById(student.facultyAdvisor)
+                        console.log('Found previos faculty', prevFaculty)
+                        var index = prevFaculty.mentees.indexOf(studentId);
+                        if (index !== -1) {
+                            prevFaculty.mentees.splice(index, 1);
+                        }
+                        await prevFaculty.save()
+                    }
                     student.facultyAdvisor = facultyId
                     await student.save()
                 }
