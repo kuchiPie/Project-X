@@ -6,9 +6,9 @@ import adminAuth from '../middleware/adminAuth.js'
 
 router.post('/faculty/login' , facultyLoginController)
 
-router.post('/faculty',  insertFacultyController)
+router.post('/faculty',adminAuth,insertFacultyController)
 
-router.get('/faculty' , getFacultyController)
+router.get('/faculty',adminAuth , getFacultyController)
 
 router.patch('/faculty/:id',  updateFacultyController)
 

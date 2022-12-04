@@ -11,6 +11,8 @@ import { InputText } from "primereact/inputtext";
 
 const EditFaculty = ({rowData}) => {
 
+  const token = useSelector(state=>state.login);
+
     let emptyFaculty = {
         name: "",
         institute_id: "",
@@ -46,7 +48,7 @@ const EditFaculty = ({rowData}) => {
     }
     const onUpdateFaculty = async() => {
         const updatedFaculty = {...faculty, department: selectedDepartment.label}
-        await dispatch(editFacultyServer(updatedFaculty))
+        await dispatch(editFacultyServer({faculty:updatedFaculty,token:token}))
         setFacultyInfoDialog(false)
       }
 
