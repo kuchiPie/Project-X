@@ -13,11 +13,12 @@ import { FileUpload } from 'primereact/fileupload';
 import {Toast} from 'primereact/toast';
 import {v4} from 'uuid'
 import { Image } from 'primereact/image';
-import TextField from '@mui/material/TextField';
-import TimePicker from '@mui/lab/TimePicker';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { createOutpass } from '../../../reduxSlices/outpassSlice.js';
 
 function Output() {
+    const dispatch = useDispatch()
+
     const toast = useRef(null);
     const [value, setValue] = useState(0);
     const [displayBasic, setDisplayBasic] = useState(false);
@@ -39,9 +40,10 @@ function Output() {
 
     const newOutpassSubmitHandler=()=>{
         const newOutpass = {
-            leaveDate, returnDate, leaveTime, returnTime, ticket: ticketUrl, studentId, contactNo, reason, hostelRoom
+            dateofjourney: leaveDate, dateofreturn: returnDate, ticket: ticketUrl, studentId, contactNo, reason, hostelRoom
         }
         console.log(newOutpass)
+        dispatch(createOutpass(newOutpass))
     }
 
     const handleleavetime = (newValue) => {
@@ -168,12 +170,12 @@ function Output() {
                                         <Divider layout="horizontal"></Divider>
                                         <div className="flex justify-content-between my-5">
                                             <h3 className="m-0">Time of Leaving</h3>
-                                            <TimePicker
+                                            {/* <TimePicker
                                                 label="Time"
                                                 value={leaveTime}
                                                 onChange={handleleavetime}
                                                 renderInput={(params) => <TextField {...params} />}
-                                            />
+                                            /> */}
                                         </div>
                                         <Divider layout="horizontal"></Divider>
                                         <div className="flex justify-content-between my-5">

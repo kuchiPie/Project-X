@@ -9,7 +9,19 @@ const outpassSlice = createSlice({
     reducers: {},
     extraReducers(builder) {
         builder
-            .addCase()
+            .addCase(createOutpass.fulfilled, (state, action) => {
+                state.push(action.payload)
+            })
+            .addCase(createOutpass.rejected, (state, action) => {
+                console.log('Hello')
+                console.log(action.error.message)
+            })
     }
 })
 
+export const createOutpass = createAsyncThunk('outpass/createoutpass', async (outpass) => {
+    const response = await axios.post("http://localhost:5000/api/outpass/", outpass)
+    return response.data
+})
+
+export default outpassSlice.reducer

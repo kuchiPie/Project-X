@@ -56,15 +56,10 @@ export const loginUser = createAsyncThunk('login/loginUser', async (logindetails
     if(logindetails.selectedUser.label === 'Faculty')
         API = "http://localhost:5000/api/faculty/";   
     if(logindetails.selectedUser.label === 'Student')
-        API = "http://localhost:5000/api/student/";  
-    
-    try{
-        const response = await axios.post(API + "login", {email: logindetails.email, password: logindetails.password});
-        return response.data
-    }
-    catch(e){
-        console.log(e);
-    }
+        API = "http://localhost:5000/api/student/";
+          
+    const response = await axios.post(API + "login", {email: logindetails.email, password: logindetails.password});
+    return response.data
 })
 
 export const { setLoginStatus, setUserType} = loginSlice.actions

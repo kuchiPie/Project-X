@@ -29,14 +29,14 @@ const OutpassModel = new Schema(
             type:Date,
             required:true,
         },
-        leavetime:{
-            type: String,
-            required: true
-        },
-        returntime:{
-            type: String,
-            required: true,
-        },
+        // leavetime:{
+        //     type: String,
+        //     required: true
+        // },
+        // returntime:{
+        //     type: String,
+        //     required: true,
+        // },
         ticket:{
             type:String,
         },

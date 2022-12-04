@@ -24,13 +24,11 @@ export const getAllOutpass = async(req,res)=>{
 //@route           POST /api/outpass/
 //@access          Now Open but make it protected
 export const createNewOutpass=async(req,res)=>{
-    const {studentId,dateofjourney,dateofreturn,ticket}=req.body;
+    const { studentId, dateofjourney, dateofreturn, ticket, contactNo, reason, hostelRoom }=req.body;
 
-    // Bad Request
-    if(dateofjourney>dateofreturn){
-        res.status(400).json({message:"Date of Journey should be smaller than date of return"});
-        return;
-    }
+    const dateofJ = new Date(dateofjourney) 
+    const dateofR = new Date(dateofreturn)
+    console.log(dateofJ, dateofR)
 
     // Bad Request
     if(!studentId||!dateofjourney||!dateofreturn){
@@ -38,18 +36,25 @@ export const createNewOutpass=async(req,res)=>{
         return;
     }
 
-    var outpass={
+    // Bad Request
+    if(dateofJ>dateofR){
+        res.status(400).json({message:"Date of Journey should be smaller than date of return"});
+        return;
+    }
+
+    const outpass={
         studentId:studentId,
         dateofjourney:dateofjourney,
         dateofreturn:dateofreturn,
-        ticket:ticket
+        ticket:ticket,
+        contactNo, reason, hostelRoom
     };
 
     try{
-        var newOutpass = await Outpass.create(outpass);
+        const newOutpass = await Outpass.create(outpass);
         res.status(201).json(newOutpass);
     }
     catch(error){
-        res.status(400).json({message:"Some error occured"});
+        res.status(400).send({message:"Some error occured"});
     }
 };

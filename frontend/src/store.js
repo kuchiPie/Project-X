@@ -5,9 +5,9 @@ import studentReducer from './reduxSlices/studentSlice'
 
 export const store = configureStore({
   reducer: {
-    login: loginReducer,
-    faculty: facultyReducer,
-    student:studentReducer,
-  }
+        login: loginReducer,
+        faculty: facultyReducer,
+        student:studentReducer,
+    }
 })
 
