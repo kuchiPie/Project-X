@@ -6,7 +6,8 @@ const initialState = {
     loggedUser: {},
     token: '',
     status: '',
-    userType: ''
+    userType: '',
+    error: ''
 }
 
 const loginSlice = createSlice({
@@ -30,9 +31,9 @@ const loginSlice = createSlice({
             state.loggedUser = action.payload.isUser
             state.userType = action.payload.isUserType
         },
-        setUserType(state, action) {
-            state.userType = action.payload.userType
-        }
+        // setUserType(state, action) {
+        //     state.userType = action.payload.userType
+        // }
     },
     extraReducers(builder) {
         builder
@@ -47,14 +48,15 @@ const loginSlice = createSlice({
             })
             .addCase(loginUser.rejected, (state, action) => {
                 state.status = 'failed'
+                state.error = action.payload.error
             }) 
     }
 })
 
-export const loginUser = createAsyncThunk('login/loginUser', async (logindetails) => {
+export const loginUser = createAsyncThunk('login/loginUser', async (logindetails, { rejectWithValue }) => {
     let API
     // console.log(userType)
-    console.log(logindetails)
+    // console.log(logindetails)
     if(logindetails.selectedUser.label === 'Admin')
         API = "http://localhost:5000/api/admin/";
     if(logindetails.selectedUser.label === 'Faculty')
@@ -62,15 +64,25 @@ export const loginUser = createAsyncThunk('login/loginUser', async (logindetails
     if(logindetails.selectedUser.label === 'Student')
         API = "http://localhost:5000/api/student/";  
     
-    try{
+    
+    
+
+    try {
         const response = await axios.post(API + "login", {email: logindetails.email, password: logindetails.password});
+        if (!response.ok) {
+            return rejectWithValue(response.status)
+        }
         return response.data
-    }
-    catch(e){
-        console.log(e);
-    }
+        } catch (err) {
+        if (!err.response) {
+          throw err
+        }
+  
+        return rejectWithValue(err.response.data)
+      }
+    
 })
 
-export const { setLoginStatus, setUserType,logoutHandler} = loginSlice.actions
+export const { setLoginStatus, setUserType, logoutHandler} = loginSlice.actions
 
 export default loginSlice.reducer

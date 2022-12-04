@@ -26,7 +26,7 @@ const AddMenteesDialog = (props) => {
 	const token = useSelector(state => state.login.token)
 	const dispatch = useDispatch();
 	useEffect(() => {
-		dispatch(getAllStudents({ keyword: "", batch: "", branch: "", limit: "1", skip: "" }));
+		dispatch(getAllStudents({ keyword: "", batch: "", branch: "", limit: "", skip: "" }));
 	}, [])
 
 	const [selectedStudents, setSelectedStudents] = useState();
