@@ -75,11 +75,11 @@ function CurrentOutpass() {
                         </div>
                         <div className="field col-12 flex justify-content-between ">
                             <h3 className="mr-5 mt-0 w-1">Reason</h3>
-                            <InputTextarea className="w-full" id="address" rows="4" value="afbsknsklbnfknvksnfkvspkfpqeriqerpivnadfvnsokfvfnvokfsvskflkvmslkfblkavlkavkfnbsknbfkvnaokfnkvsfkvnoskn" />
+                            <InputTextarea className="w-full" id="address" rows="4" disabled={true} value="afbsknsklbnfknvksnfkvspkfpqeriqerpivnadfvnsokfvfnvokfsvskflkvmslkfblkavlkavkfnbsknbfkvnaokfnkvsfkvnoskn" />
                         </div>
                         <div className="field col-12 flex justify-content-between ">
                             <h3 className="mr-5 mt-0 w-1">Remarks</h3>
-                            <InputTextarea className="w-full" id="address" rows="4" value="fkbskpnfsofokvmf,v fkdvs" />
+                            <InputTextarea className="w-full" id="address" rows="4" disabled={true} value="fkbskpnfsofokvmf,v fkdvs" />
                         </div>
                     </div>
                 </Card>
