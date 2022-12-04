@@ -66,7 +66,7 @@ const Login = () => {
 
     const showError = () => {
         if(error === 'Email is not registered'){
-            toast.current.show({severity:'error', summary: 'Select correct role', detail:'Email not registored', life: 3000});
+            toast.current.show({severity:'error', summary: 'Select Correct Role', detail:'Email is not registored', life: 3000});
         }
         if(error === 'Password incorrect'){
             toast.current.show({severity:'error', summary: 'Incorrect Password', detail:'Re-enter Password', life: 3000});
