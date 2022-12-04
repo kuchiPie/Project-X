@@ -29,7 +29,7 @@ let Faculty = new Schema({
     ref: "Outpass"
   },
   mentees: {
-    type: [{ type : _Schema.Types.ObjectId, ref: 'Student' }]
+    type: [{ type : _Schema.Types.ObjectId, ref: 'student' }]
   }
 
   

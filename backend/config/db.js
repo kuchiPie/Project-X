@@ -10,7 +10,9 @@ function connectDB (){
     } catch (error) {
         console.log(error);
     }
-    const db = mongoose.connection;
+    // var student = new Student;
+
+    var db = mongoose.connection;
     db.on('error', console.error.bind(console, 'connection error:'));
     db.once('open', () => {
       console.log('[INFO] Connect to DB successful!');

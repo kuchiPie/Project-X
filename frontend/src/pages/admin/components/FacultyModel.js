@@ -73,11 +73,11 @@ const FacultyModel = () => {
                 header="Department"
                 style={{ minidth: "8rem" }}
               ></Column>
-              <Column
+              {/* <Column
                 field="mentees"
                 header="No. of Mentees"
                 style={{ width: "20%" }}
-              ></Column>
+              ></Column> */}
               <Column
                 header="Actions"
                 body={actionBodyTemplate}
