@@ -1,8 +1,8 @@
-import { Schema as _Schema, model } from 'mongoose';
+import { Schema as _Schema, model, mongoose } from 'mongoose';
 
 const Schema = _Schema;
 
-let FacultyTest = new Schema({
+let Faculty = new Schema({
   name: {
     type: String,
     required: true
@@ -20,8 +20,19 @@ let FacultyTest = new Schema({
   },
   department: {
     type: String
+  },
+  token: {
+    type: String
+  },
+  outpasses: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Outpass"
+  },
+  mentees: {
+    type: [{ type : _Schema.Types.ObjectId, ref: 'student' }]
   }
+
   
 });
 
-export default model("FacultyTest", FacultyTest);
+export default model("Faculty", Faculty);

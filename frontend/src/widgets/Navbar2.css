@@ -1,0 +1,25 @@
+.card2 .p-menubar-end{
+    margin-left: 60%;
+}
+
+.card2 .p-menubar-button{
+    display: none;
+}
+
+.card2 .p-menubar-end a{
+    text-decoration: none;
+    color: black;
+    font-weight: 600;
+}
+
+@media screen and (max-width:820px) {
+    .card2 .p-menubar-end{
+        margin-left: 40%;
+    }
+}
+
+@media screen and (max-width:540px) {
+    .card2 .p-menubar-end{
+        margin-left: 20%;
+    }
+}
