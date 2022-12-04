@@ -80,6 +80,20 @@ router.delete('/deleteStudent/:id', adminAuth, async (req, res) => {
     }
 })
 
+router.get('/getAllMentees', async (req, res) => {
+    try{
+        const Facultyid = req.body.id
+        let faculty = await Faculty.findById(Facultyid)
+        console.log(faculty)
+        Faculty.findById(Facultyid).populate('mentees').exec((_err, post) => {
+            console.log(post, "Done??");
+            res.send(post.mentees);
+        })
+    } catch(error){
+        res.status(400).send(error)
+    }
+})
+
 // AdminAuth middleware needs to be added for security
 router.post('/mapStudentFaculty', async (req, res) => {
     const studentArrayIDs = req.body.studentArray
@@ -110,6 +124,7 @@ router.post('/mapStudentFaculty', async (req, res) => {
         studentArrayIDs.forEach(async (studentId) => {
             try {
                 if (!menteesArr.includes(studentId) ){
+                    console.log(studentId, 'pushed to mentees')
                     menteesArr.push(studentId)
                     let student = await Student.findById(studentId)
                     student.facultyAdvisor = facultyId

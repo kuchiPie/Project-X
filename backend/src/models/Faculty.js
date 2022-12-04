@@ -25,7 +25,7 @@ let Faculty = new Schema({
     type: String
   },
   mentees: {
-    type: [{ type : _Schema.Types.ObjectId, ref: 'Student' }]
+    type: [{ type : _Schema.Types.ObjectId, ref: 'student' }]
   }
 
   

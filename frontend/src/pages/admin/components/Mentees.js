@@ -69,6 +69,7 @@ const Mentees = (props) => {
       >
         {/* Mentees */}
         <DataTable
+        // value={getMenteesData}
         >
           <Column selectionMode="multiple"></Column>
           <Column field="name" header="Name"></Column>
