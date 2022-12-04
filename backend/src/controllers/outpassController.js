@@ -24,11 +24,12 @@ export const getAllOutpass = async(req,res)=>{
 //@route           POST /api/outpass/
 //@access          Now Open but make it protected
 export const createNewOutpass=async(req,res)=>{
-    const { studentId, dateofjourney, dateofreturn, ticket, contactNo, reason, hostelRoom }=req.body;
+    const { studentId, dateofjourney, dateofreturn, ticket, contactNo, reason, hostelRoom, leaveTime, returnTime }=req.body;
 
     const dateofJ = new Date(dateofjourney) 
     const dateofR = new Date(dateofreturn)
     console.log(dateofJ, dateofR)
+    console.log(req.body)
 
     // Bad Request
     if(!studentId||!dateofjourney||!dateofreturn){
@@ -47,7 +48,7 @@ export const createNewOutpass=async(req,res)=>{
         dateofjourney:dateofjourney,
         dateofreturn:dateofreturn,
         ticket:ticket,
-        contactNo, reason, hostelRoom
+        contactNo, reason, hostelRoom, leaveTime, returnTime
     };
 
     try{

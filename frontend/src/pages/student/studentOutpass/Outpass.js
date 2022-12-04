@@ -5,10 +5,8 @@ import { Toast } from 'primereact/toast';
 import NewOutpass from './NewOutpass.js';
 import CurrentOutpass from './CurrentOutpass.js';
 import OutpassHistory from './OutpassHistory.js';
-import storage from '../../../firebase/firebase.js';
-import {ref,uploadBytes,getDownloadURL} from 'firebase/storage';
-import {v4} from 'uuid'
-import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import {createOutpass} from '../../../reduxSlices/outpassSlice'
 
 function Output() {
     const dispatch = useDispatch()
@@ -16,46 +14,11 @@ function Output() {
     const toast = useRef(null);
     const [value, setValue] = useState(0);
     const interval = useRef(null);
-    const studentId = useSelector(state => state.login.loggedUser._id)
 
-    // All data fields
-    const [leaveDate, setLeaveDate] = useState(null);
-    const [returnDate, setReturnDate] = useState(null);
-    const [leaveTime, setLeaveTime] = useState('10:00');
-    const [returnTime, setReturnTime] = useState('10:00');
-    const [isticketLoading,setticketLoading] = useState(false);
-    const [ticketUrl,setTicketUrl] = useState(null);
-    const [contactNo, setContactNo] = useState(null);
-    const [reason, setreason] = useState(null);
-    const [hostelRoom, sethostelRoom] = useState(null);
-
-    const newOutpassSubmitHandler=()=>{
-        const newOutpass = {
-            dateofjourney: leaveDate, dateofreturn: returnDate, ticket: ticketUrl, studentId, contactNo, reason, hostelRoom
-        }
-        console.log(newOutpass)
-        dispatch(createOutpass(newOutpass))
+    const newOutpassSubmitHandler=(outpass)=>{
+        dispatch(createOutpass(outpass))
     }
 
-    const handleleavetime = (newValue) => {
-        setLeaveTime(newValue);
-    };
-    
-    const muUploader =async ({files})=>{
-        console.log(files[0]);
-        const imageRef=ref(storage,`tickets/${files[0].name+v4()}`)
-        try {
-            setticketLoading(true);
-            const response = await uploadBytes(imageRef,files[0]);
-            const url = await getDownloadURL(response.ref);
-            setTicketUrl(url);
-            setticketLoading(false);
-            console.log(response);
-            toast.current.show({severity:'info', summary: 'Ticket Upload Successful', life: 3000});
-        } catch (error) {
-            toast.current.show({severity:'info', summary: 'Info Message', detail:'Message Content', life: 3000});
-        }
-    }
     useEffect(() => {
         let val = value;
         interval.current = setInterval(() => {
@@ -101,7 +64,7 @@ function Output() {
                 </Card>
                 <div className="grid formgrid">
                     <div className="col-12 mb-2 lg:col-4 lg:mb-0 flex justify-content-center">
-                        <NewOutpass />
+                        <NewOutpass newOutpassFunc={newOutpassSubmitHandler}/>
                     </div>
                     <div className="col-12 mb-2 lg:col-4 lg:mb-0 flex justify-content-center">
                         <CurrentOutpass />

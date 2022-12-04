@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { Card } from 'primereact/card';
 import { Dialog } from 'primereact/dialog';
 import { Button } from 'primereact/button';
@@ -6,35 +6,37 @@ import { Divider } from 'primereact/divider';
 import { InputText } from 'primereact/inputtext';
 import { Calendar } from 'primereact/calendar';
 import { InputTextarea } from 'primereact/inputtextarea';
-import TimePicker from 'react-time-picker';
 import storage from '../../../firebase/firebase.js';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { FileUpload } from 'primereact/fileupload';
 import { v4 } from 'uuid'
 import { Image } from 'primereact/image';
-import { InputNumber } from 'primereact/inputnumber';
-import { InputMask } from 'primereact/inputmask';
+import { useSelector } from 'react-redux';
 
 
-function NewOutpass() {
+function NewOutpass({newOutpassFunc}) {
     const toast = useRef(null);
-    const [value, setValue] = useState(0);
     const [displayBasic, setDisplayBasic] = useState(false);
-    const interval = useRef(null);
+    const studentId = useSelector(state => state.login.loggedUser._id)
 
     // All data fields
     const [leaveDate, setLeaveDate] = useState(null);
     const [returnDate, setReturnDate] = useState(null);
-    const [leaveTime, setLeaveTime] = useState(null);
-    const [returnTime, setReturnTime] = useState(null);
+    const [leaveTime, setLeaveTime] = useState("");
+    const [returnTime, setReturnTime] = useState("");
     const [isticketLoading, setticketLoading] = useState(false);
     const [ticketUrl, setTicketUrl] = useState(null);
-    // const [leaveHour, setLeaveHour] = useState(null);
-    // const [leaveMin, setLeaveMin] = useState(null);
+    const [contactNo, setContactNo] = useState(null);
+    const [reason, setreason] = useState(null);
+    const [hostelRoom, sethostelRoom] = useState(null);
 
     const newOutpassSubmitHandler = () => {
-
+        const newOutpass = {
+            dateofjourney: leaveDate, dateofreturn: returnDate, ticket: ticketUrl, studentId, contactNo, reason, hostelRoom, leaveTime, returnTime
+        }
+        newOutpassFunc(newOutpass)
     }
+
 
     const muUploader = async ({ files }) => {
         console.log(files[0]);
@@ -52,35 +54,14 @@ function NewOutpass() {
         }
     }
 
-    useEffect(() => {
-        let val = value;
-        interval.current = setInterval(() => {
-            val += 34;
-
-            if (val >= 100) {
-                val = 100;
-                clearInterval(interval.current);
-            }
-            setValue(val);
-        }, 9000);
-
-        return () => {
-            if (interval.current) {
-                clearInterval(interval.current);
-                interval.current = null;
-            }
-        }
-    }, [value]);
-
-
-    const basicDialogFooter = <Button type="button" label="Create Outpass" onClick={newOutpassSubmitHandler} icon="pi pi-check" className="p-button-secondary" />;
+    const basicDialogFooter = <Button type="button" label="Create Outpass" onClick={newOutpassSubmitHandler} icon="pi pi-check" className=" mt-4 p-button-secondary" />;
 
 
     return (
         <>
             <Button type="button" label="New Outpass" icon="pi pi-plus" onClick={() => setDisplayBasic(true)} />
             <Dialog header="New Outpass" visible={displayBasic} style={{ width: '80vw' }} modal footer={basicDialogFooter} onHide={() => setDisplayBasic(false)}>
-                <Card className="h-full mx-5 border-2 border-gray-800 surface-100">
+                <Card className="h-full mx-5 surface-100">
                     <div className="flex justify-content-between ">
                         <h2 className="m-0 font-semibold">Shichan Nohara</h2>
                         <h2 className="m-0">20BDS022</h2>
@@ -107,7 +88,7 @@ function NewOutpass() {
 
                             <div className="flex justify-content-between ">
                                 <h3 className="m-0">Hostel room no.</h3>
-                                <InputText className="w-15rem" type="number"></InputText>
+                                <InputText className="w-15rem" type="number" value={hostelRoom} onChange={(e) => sethostelRoom(e.target.value)}></InputText>
                             </div>
                             <Divider layout="horizontal"></Divider>
                             <div className="flex justify-content-between my-5">
@@ -123,7 +104,7 @@ function NewOutpass() {
                                     {/* <InputNumber className="w-5rem" style={{ width: '3rem' }} value={leaveHour} onValueChange={(e) => setLeaveHour(e.value)} />
                                     <InputText className="w-5rem" type="number" max={23}></InputText> */}
                                     {/* <input className="w-full" value={leaveTime} onValueChange={(e) => setLeaveTime(e.value)} type="time" id="ltime" /> */}
-                                    <input value={leaveTime} onValueChange={(e) => setLeaveTime(e.value)} type="time" id="ltime" />
+                                    <input value={leaveTime} onChange={(e) => setLeaveTime(e.target.value)} type="time" id="ltime" />
                                 </div>
                             </div>
                             <Divider layout="horizontal"></Divider>
@@ -132,7 +113,7 @@ function NewOutpass() {
                         <div className="col-12 md:col-6">
                             <div className="flex justify-content-between">
                                 <h3 className="m-0">Contact no.</h3>
-                                <InputText className="w-15rem" type="number"></InputText>
+                                <InputText className="w-15rem" type="number" value={contactNo} onChange={(e) => setContactNo(e.target.value)}></InputText>
                             </div>
                             <Divider layout="horizontal"></Divider>
                             <div className="flex justify-content-between my-5">
@@ -142,13 +123,13 @@ function NewOutpass() {
                             <Divider layout="horizontal"></Divider>
                             <div className="flex justify-content-between my-5">
                                 <h3 className="m-0">Time of Returning</h3>
-                                <input value={returnTime} onValueChange={(e) => setReturnTime(e.value)} type="time" id="rtime" />
+                                <input value={returnTime} onChange={(e) => setReturnTime(e.target.value)} type="time" id="rtime" />
                             </div>
                             <Divider layout="horizontal"></Divider>
                         </div>
                         <div className="field col-12 flex justify-content-between ">
                             <h3 className="mr-5 w-1">Reason</h3>
-                            <InputTextarea className="w-full" id="address" rows="4" />
+                            <InputTextarea className="w-full" id="address" rows="4" value={reason} onChange={(e) => setreason(e.target.value)}/>
                         </div>
                         <Divider layout="horizontal"></Divider>
                         <div className="field col-12 flex justify-content-between ">
