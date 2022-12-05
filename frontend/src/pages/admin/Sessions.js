@@ -42,6 +42,9 @@ const Sessions = () => {
     {
       label: "2022-2026",
     },
+    {
+      label: "2023-2027",
+    },
   ];
 
   const token = useSelector(state => state.login.token)
