@@ -11,17 +11,15 @@ import Mentees from "./Mentees";
 const FacultyModel = () => {
     // var token = localStorage.getItem('token');
     const [selectedFaculty, setSelectedFaculty] = useState(null);
-    const dispatch = useDispatch()
     const {facultyList} = useSelector(state => state.faculty) 
-    const {token} = useSelector(state=>state.login);
 
     // useEffect(()=>{
     //   dispatch(getFacultyServer({token:token}))
     // },[])
     // console.log(facultyList)
-    if(facultyList.length === 0){
-        dispatch(getFacultyServer({token:token}))
-    }
+    // if(facultyList.length === 0){
+    //     dispatch(getFacultyServer({token:token}))
+    // }
 
     const actionBodyTemplate = (rowData) => {
         return (
