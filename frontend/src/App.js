@@ -1,6 +1,7 @@
 import React from 'react'
 import {BrowserRouter,Routes,Route} from "react-router-dom";
 import Admin from './pages/admin/Admin'
+import Faculty from './pages/faculty/Faculty';
 import Student from './pages/student/Student'
 import Outpass from './pages/student/Outpass'
 import Profile from './pages/student/Profile'
@@ -8,9 +9,11 @@ import Login from './pages/Login'
 import Sessions from './pages/admin/Sessions'
 import { useDispatch } from 'react-redux'
 import { setLoginStatus } from './reduxSlices/LoginSlice'
-import FacultyHome from './Test/fakefacultyhomepage';
+
 import Students from './pages/admin/Students'
 import Facultys from './pages/admin/Facultys';
+import AllMentees from './pages/faculty/AllMentees';
+import AllOutpassRequests from './pages/faculty/AllOutpassRequests';
 
 function App(){
     const logindetails = JSON.parse(localStorage.getItem('isLoggedIn'));
@@ -30,7 +33,11 @@ function App(){
                     <Route path='manage_faculty' element={<Facultys/>}/>
                     <Route path='manage_students' element={<Students/>}/>
                 </Route>
-                <Route path='/faculty' element={<FacultyHome />}></Route>
+                <Route path='/faculty' element={<Faculty/>}>
+                    <Route path="all_mentees" element={<AllMentees/>}></Route>
+                    <Route path="all_outpass_requests" element={<AllOutpassRequests/>}/>
+                    <Route path="profile" element={<Profile/>}/>
+                </Route>
                 <Route path='/student' element={<Student/>}>
                     <Route path="profile" element={<Profile/>}></Route>
                     <Route path='outpass' element={<Outpass/>}/>

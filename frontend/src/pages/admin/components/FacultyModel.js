@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
@@ -16,6 +16,7 @@ const FacultyModel = () => {
     if(reduxFaculty.length === 0){
       dispatch(getFacultyServer())
     }
+    console.log(reduxFaculty)
     
     const actionBodyTemplate = (rowData) => {
         return (
