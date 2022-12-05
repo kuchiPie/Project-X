@@ -110,7 +110,7 @@ const Students = () => {
 
 	return (
 		<>
-			<div className="w-full min-h-screen p-5">
+			<div className="w-full min-h-screen px-5">
 				<h1>Manage Students</h1>
 				<SearchStudent dataHandler={getSearchData} loading={reduxStudent.isLoading} />
 				<DataTable
