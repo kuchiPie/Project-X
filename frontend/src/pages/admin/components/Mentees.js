@@ -1,9 +1,12 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import AddMenteesDialog from "./AddMenteesDialog"
+import { useDispatch, useSelector } from "react-redux";
+import { getMentees } from '../../../reduxSlices/studentSlice';
+
 
 
 const Mentees = (props) => {
@@ -12,11 +15,15 @@ const Mentees = (props) => {
 
   const [viewMenteesDialog, setViewMenteesDialog] = useState(false);
   const [viewAddMenteesDialog, setViewAddMenteesDialog] = useState(false);
-
+  const {mentees} = useSelector(state => state.student)
+  const dispatch = useDispatch()
+  
  
   const viewMentees=()=>{
-    setViewMenteesDialog(true);    
+    setViewMenteesDialog(true);
+		dispatch(getMentees(props.rowData._id));
     console.log(props.rowData._id)
+    console.log('mentees', mentees)
   }
 
   const hideViewMenteesDialog = () => {
@@ -31,6 +38,10 @@ const Mentees = (props) => {
     setViewAddMenteesDialog(true);
   }
 
+  // const 
+
+  const localMentees=[];
+  mentees.forEach(mentee=>{localMentees.push({'name':mentee.name?mentee.name:"Some Student",'institute_id':mentee.rollno,'department':mentee.branch})})
   
 
   const viewMenteesDialogFooter = (
@@ -61,7 +72,7 @@ const Mentees = (props) => {
 
       <Dialog
         visible={viewMenteesDialog}
-        style={{ width: "450px" }}
+        style={{ width: "650px" }}
         header="View Mentees"
         footer={viewMenteesDialogFooter}
         model
@@ -69,7 +80,7 @@ const Mentees = (props) => {
       >
         {/* Mentees */}
         <DataTable
-        // value={getMenteesData}
+        value={localMentees}
         >
           <Column selectionMode="multiple"></Column>
           <Column field="name" header="Name"></Column>

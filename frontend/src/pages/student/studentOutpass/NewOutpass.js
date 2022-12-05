@@ -63,9 +63,9 @@ function NewOutpass({newOutpassFunc}) {
 
     return (
         <>
-            <Button type="button" disabled={isbtndisable} label="New Outpass" icon="pi pi-plus" onClick={() => setDisplayBasic(true)} />
-            <Dialog header="New Outpass" visible={displayBasic} style={{ width: '80vw' }} modal footer={basicDialogFooter} onHide={() => setDisplayBasic(false)}>
-                <Card className="h-full mx-5 surface-100">
+            <Button type="button" label="New Outpass" disabled={isbtndisable} icon="pi pi-plus" onClick={() => setDisplayBasic(true)} />
+            <Dialog header="New Outpass" visible={displayBasic} style={{ width: '80vw' }} modal footer={basicDialogFooter} onHide={() => setDisplayBasic(false)} blockScroll={true}>
+                <Card className="h-full mx-5 border-2 border-gray-800 surface-100">
                     <div className="flex justify-content-between ">
                         <h2 className="m-0 font-semibold">Shichan Nohara</h2>
                         <h2 className="m-0">20BDS022</h2>
@@ -108,7 +108,7 @@ function NewOutpass({newOutpassFunc}) {
                                     {/* <InputNumber className="w-5rem" style={{ width: '3rem' }} value={leaveHour} onValueChange={(e) => setLeaveHour(e.value)} />
                                     <InputText className="w-5rem" type="number" max={23}></InputText> */}
                                     {/* <input className="w-full" value={leaveTime} onValueChange={(e) => setLeaveTime(e.value)} type="time" id="ltime" /> */}
-                                    <input value={leaveTime} onChange={(e) => setLeaveTime(e.target.value)} type="time" id="ltime" />
+                                    <input value={leaveTime} onChange={(e) => setLeaveTime(e.target.value)} type="time" id="ltime" className='w-15rem h-3rem text-2xl'/>
                                 </div>
                             </div>
                             <Divider layout="horizontal"></Divider>
@@ -127,7 +127,7 @@ function NewOutpass({newOutpassFunc}) {
                             <Divider layout="horizontal"></Divider>
                             <div className="flex justify-content-between my-5">
                                 <h3 className="m-0">Time of Returning</h3>
-                                <input value={returnTime} onChange={(e) => setReturnTime(e.target.value)} type="time" id="rtime" />
+                                <input value={returnTime} onChange={(e) => setReturnTime(e.target.value)} type="time" id="rtime" className='w-15rem h-3rem text-2xl'/>
                             </div>
                             <Divider layout="horizontal"></Divider>
                         </div>

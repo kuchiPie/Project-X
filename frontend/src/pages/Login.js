@@ -2,6 +2,8 @@ import React, { useState, useRef} from 'react';
 
 import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
+import { Toast } from 'primereact/toast';
+import { ProgressSpinner } from 'primereact/progressspinner';
 import { Card } from 'primereact/card';
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate } from 'react-router-dom';
@@ -9,7 +11,7 @@ import { SelectButton } from 'primereact/selectbutton';
 
 import Form from "react-validation/build/form";
 // import Input from "react-validation/build/input";
-import { loginUser, setUserType } from '../reduxSlices/LoginSlice';
+import { loginUser } from '../reduxSlices/LoginSlice';
 
 const required = (value) => {
   if (!value) {
@@ -23,16 +25,18 @@ const required = (value) => {
 
 const Login = () => {
     // let navigate = useNavigate();
+    const toast = useRef(null);
 
     const form = useRef();
     const [showPassword,setShowPassword] = useState(false)
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [selectedUser, setSelectedUser] = useState({
-        label:'Student'
-    });
+    
 
-    const { isLoggedIn, status, loggedUser, userType, token} = useSelector(state => state.login);
+    const { isLoggedIn, status, loggedUser, userType, token, error} = useSelector(state => state.login);
+    const [selectedUser, setSelectedUser] = useState({
+        label:'' || `${userType}`
+    });
     const users = [
         {
             label:'Admin'
@@ -53,37 +57,50 @@ const Login = () => {
     const dispatch = useDispatch();
 
     const onChangeUsername = (e) => {
-        const username = e.target.value;
-        setUsername(username);
+        setUsername(e.target.value);
     };
 
     const onChangePassword = (e) => {
-        const password = e.target.value;
-        setPassword(password);
+        setPassword(e.target.value);
     };
 
-    const handleLogin = async (e) => {
+    const showError = () => {
+        if(error === 'Email is not registered'){
+            toast.current.show({severity:'error', summary: 'Select Correct Role', detail:'Email is not registored', life: 3000});
+        }
+        if(error === 'Password incorrect'){
+            toast.current.show({severity:'error', summary: 'Incorrect Password', detail:'Re-enter Password', life: 3000});
+        }
+        
+    }
+
+    const handleLogin = (e) => {
         e.preventDefault();
-        await dispatch(loginUser({email: username, password, selectedUser}))
-        dispatch(setUserType({userType: selectedUser.label}))
+        dispatch(loginUser({email: username, password, selectedUser}))
+        if(status === 'failed') {
+            showError()
+        }
+        // dispatch(setUserType({userType: selectedUser.label}))
     };
 
     if (isLoggedIn) {
         localStorage.setItem('isLoggedIn', JSON.stringify(isLoggedIn));
         localStorage.setItem('token', JSON.stringify(token));
         localStorage.setItem('user', JSON.stringify(loggedUser));
-        localStorage.setItem('userType', JSON.stringify(userType));
+        localStorage.setItem('userType', JSON.stringify(selectedUser.label));
         
-        if(userType === 'Admin')
+        if(selectedUser.label === 'Admin')
             return <Navigate to={`/admin/${loggedUser._id}`} />;
-        if(userType === 'Faculty')
+        if(selectedUser.label === 'Faculty')
             return <Navigate to={`/faculty/${loggedUser._id}`} />;
-        if(userType === 'Student')
+        if(selectedUser.label === 'Student')
             return <Navigate to={`/student/${loggedUser._id}`} />;
     }
+    
 
     return (
         <>
+        <Toast ref={toast} />
             <div className="flex justify-content-end ">
                 <img className="h-screen w-8" src="/images/iiit-dharwad.jpg" alt="college" />
                 <div className="w-9 flex align-content-center flex-wrap">
@@ -111,20 +128,19 @@ const Login = () => {
                                 <InputText required={required} value={password} onChange={onChangePassword} className="w-30rem" id="password" type= {showPassword ? "text":"password"} />      
                             </span>
                         </div>
-                        
-                        <SelectButton value={selectedUser} options={users} onChange={(e) => setSelectedUser(e.value)} itemTemplate={justifyTemplate}></SelectButton>               
+                        <SelectButton className ="w-full"  value={selectedUser} options={users} onChange={(e) => setSelectedUser(e.value)} itemTemplate={justifyTemplate}></SelectButton>     
                         {status === 'loading' && (
-                            <span className="spinner-border spinner-border-sm"><div>Hello</div></span>
+                            <span className="spinner-border spinner-border-sm"><ProgressSpinner /></span>
                         )}
                         <Button className="my-4 w-full" label="Login"></Button>
                         </Form>
-                        {status === 'failed' && (
+                        {/* {(status === 'failed') && (
                         <div className="form-group">
                             <div className="alert alert-danger" role="alert">
-                                Something went wrong !!!!!
+                                {showError()}
                             </div>
                         </div>
-                        )}
+                        )} */}
                     </Card>
                     </div>
             </div></>

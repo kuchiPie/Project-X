@@ -23,6 +23,7 @@ const AddMenteesDialog = (props) => {
 	};
 
 	const reduxStudent = useSelector(state => state.student);
+	const [viewMenteeAdded, setViewMenteeAdded] = useState(false)
 	const token = useSelector(state => state.login.token)
 	const dispatch = useDispatch();
 	useEffect(() => {
@@ -60,15 +61,31 @@ const AddMenteesDialog = (props) => {
 			studentIds.push(element.id)
 		});
 		dispatch(mapSelectedStudents({selStudents: studentIds, facultyId: props.faculty}));
+		menteeAddedDialog()
 	}
 
 	const searchedStudents = [
 	];
 
+	const menteeAddedDialog = ()=> {
+		setViewMenteeAdded(true)
+	}
+
+	const hideMenteeAddedDialog = ()=> {
+		setViewMenteeAdded(false)
+	}
+
 	reduxStudent.students.map(student => searchedStudents.push({ name: student.name, institute_id: student.rollno, department:student.branch, session:student.batch, phone_no:student.mobileNo, id: student._id}))
 	// console.log(selectedStudents)
 	return (
 		<>
+			<Dialog
+				visible={viewMenteeAdded}
+				style={{ width: "650px" }}
+				header="All Mentees Added"
+				model
+				onHide={hideMenteeAddedDialog}
+			></Dialog>
 			<div className="w-full min-h-screen p-5">
 				<SearchStudent dataHandler={getSearchData} loading={reduxStudent.isLoading} />
 				<DataTable

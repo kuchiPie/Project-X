@@ -81,9 +81,16 @@ router.delete('/deleteStudent/:id', adminAuth, async (req, res) => {
 
 router.get('/getAllMentees', async (req, res) => {
     try{
-        const Facultyid = req.body.id
+        const Facultyid = req.query.id
+        console.log(req.query)
         let faculty = await Faculty.findById(Facultyid)
+        // console.log(req)
+        if (Object.is(faculty, null)){
+            res.status(404).send("Faculty not found for id")
+            return
+        }
         console.log(faculty)
+        // if 
         Faculty.findById(Facultyid).populate('mentees').exec((_err, post) => {
             console.log(post, "Done??");
             res.send(post.mentees);
@@ -99,7 +106,7 @@ router.post('/mapStudentFaculty', async (req, res) => {
     const facultyId = req.body.facultyId
 
     let faculty = await Faculty.findById(facultyId)
-
+    
     console.log(faculty, req.body)
 
     if (studentArrayIDs.len == 0){
