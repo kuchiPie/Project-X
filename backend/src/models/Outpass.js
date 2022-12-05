@@ -52,12 +52,25 @@ const OutpassModel = new Schema(
         isRejected:{
             type: Boolean,
             default: false,
+        },
+        remarks:{
+            type: String,
         }
     },
     {
         timestamps:true,
     }
 );
+
+OutpassModel.pre('save', async function(next) {
+    const outpass = this
+
+    if(outpass.approvalStatus === 'warApproved'){
+        outpass.isApproved = true
+    }
+
+    next()
+})
 
 const Outpass = model('Outpass',OutpassModel);
 

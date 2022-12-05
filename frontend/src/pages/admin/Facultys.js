@@ -1,4 +1,4 @@
-import React from "react";
+import {React, useEffect} from "react";
 
 import { getFacultyServer } from "../../reduxSlices/FacultySlice";
 import FacultyModel from "./components/FacultyModel";
@@ -24,10 +24,11 @@ const Facultys = () => {
     dispatch(logoutHandler());
     navigate('/');
   }
+  
+  useEffect(() => {
+      dispatch(getFacultyServer({token:token}))
+  }, [])
 
-  if(facultyList.length === 0){
-    dispatch(getFacultyServer({token:token}))
-  }
   return (
     <>
       <WentWrongWidget noFunction={continueOnError} yesFunction={logoutFunction} hasFailed={hasFailed}/>

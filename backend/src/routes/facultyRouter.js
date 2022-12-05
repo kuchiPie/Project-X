@@ -1,6 +1,6 @@
 import { Router } from 'express';
 const router = new Router();
-import { deleteFacultyController, getFacultyController, insertFacultyController, updateFacultyController } from '../controllers/facultyController.js';
+import { deleteFacultyController, getFacultyController, insertFacultyController, outpassApproval, updateFacultyController } from '../controllers/facultyController.js';
 import facultyLoginController from '../controllers/facultyLoginController.js';
 import adminAuth from '../middleware/adminAuth.js'
 
@@ -13,6 +13,8 @@ router.get('/faculty',adminAuth , getFacultyController)
 router.patch('/faculty/:id',  updateFacultyController)
 
 router.delete('/faculty/:id', deleteFacultyController)
+
+router.post('/faculty/approval', outpassApproval)
 
 
 export default router
