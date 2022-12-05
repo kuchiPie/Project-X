@@ -54,10 +54,10 @@ const ViewMenteeProfile = ({rowData}) => {
               </div>
               <div className="flex justify-content-evenly mx-3">
                 <h2>
-                  Semester<span className="px-1"></span>:
+                  Email<span className="px-1"></span>:
                 </h2>
-                <p className="w-7rem text-xl border-bottom-2 border-x-none border-top-none text-center pb-2 mx-3 ">
-                  {mentee.semester}
+                <p className="w-13rem text-xl border-bottom-2 border-x-none border-top-none text-center pb-2 mx-3 ">
+                  {mentee.email}
                 </p>
               </div>
               <div className="flex justify-content-evenly">

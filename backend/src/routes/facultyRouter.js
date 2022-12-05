@@ -3,6 +3,7 @@ const router = new Router();
 import { deleteFacultyController, getFacultyController, insertFacultyController, outpassApproval, updateFacultyController } from '../controllers/facultyController.js';
 import facultyLoginController from '../controllers/facultyLoginController.js';
 import adminAuth from '../middleware/adminAuth.js'
+import Student from '../models/Student.js';
 
 router.post('/faculty/login' , facultyLoginController)
 
@@ -15,6 +16,24 @@ router.patch('/faculty/:id',  updateFacultyController)
 router.delete('/faculty/:id', deleteFacultyController)
 
 router.post('/faculty/approval', outpassApproval)
+router.get('/getHistoricOutpasses', async (req, res) => {
+    const studentId = req.query.id
+
+    var student = await Student.findById(studentId)
+    console.log(student)
+
+    Student.findById(studentId).populate('outpasses').exec((_err, post) => {
+        console.log(post, "Done??");
+        var allOutpasses = post.outpasses;
+        var historicOutpasses = []
+        allOutpasses.forEach((element)=>{
+            if (element.isApproved == true || element.isRejected == true){
+                historicOutpasses.push(element)
+            }
+        })
+        res.send(historicOutpasses)
+    })
+})
 
 
 export default router

@@ -10,6 +10,8 @@ const initialState = {
     error: ''
 }
 
+
+
 const loginSlice = createSlice({
     name: 'login',
     initialState,
@@ -25,11 +27,18 @@ const loginSlice = createSlice({
             state.status = ''
             state.userType = ''
         },
-        setLoginStatus(state, action) {
+        setLoginStatus (state, action) {
             state.isLoggedIn = action.payload.isLogged
             state.token = action.payload.isToken
             state.loggedUser = action.payload.isUser
             state.userType = action.payload.isUserType
+            // if ( state.userType === 'Faculty' ){
+            
+            // }
+            // else{
+            //     state.mentees= []
+            // }
+            
         },
         // setUserType(state, action) {
         //     state.userType = action.payload.userType

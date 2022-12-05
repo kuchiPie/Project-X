@@ -4,8 +4,11 @@ import { Dialog } from 'primereact/dialog'
 import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
 import Outpass from './Outpass'
+import { getHistoricOutpasses } from '../../../reduxSlices/FacultySlice'
+import { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 
-const ViewOutpassHistory = () => {
+const ViewOutpassHistory = ({rowData}) => {
 
   const emptyOutpass = {
     name: "",
@@ -27,26 +30,31 @@ const ViewOutpassHistory = () => {
   const [outpass,setOutpass] = useState(emptyOutpass)
   const [showOutpassDialog,setShowOutpassDialog] = useState(false)
 
+  const [OutpassHistory, setOutpassHistory] = useState([]);
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(getHistoricOutpasses(rowData._id))
+  }, [])
+  
 
-
-  const OutpassHistory = [
-    {
-      name: "Aman Gupta",
-      institute_id: "20bds024@iiitdwd.ac.in",
-      gender: "Male",
-      branch: "DSAI",
-      semester: "5th",
-      hostel_room: "223",
-      contact_no: "9036986178",
-      date_of_leaving: "20/12/22",
-      date_of_arriving: "22/12/22",
-      time_of_leaving: "9:00AM",
-      time_of_arrival: "9:00PM",
-      reason: "Vacation",
-      status: "Pending",
-      uploaded_document: "",
-    },
-  ]
+  // const OutpassHistory = [
+  //   {
+  //     name: "Aman Gupta",
+  //     institute_id: "20bds024@iiitdwd.ac.in",
+  //     gender: "Male",
+  //     branch: "DSAI",
+  //     semester: "5th",
+  //     hostel_room: "223",
+  //     contact_no: "9036986178",
+  //     date_of_leaving: "20/12/22",
+  //     date_of_arriving: "22/12/22",
+  //     time_of_leaving: "9:00AM",
+  //     time_of_arrival: "9:00PM",
+  //     reason: "Vacation",
+  //     status: "Pending",
+  //     uploaded_document: "",
+  //   },
+  // ]
 
   const showOutpass = (rowData) => {
     setOutpass(rowData);
