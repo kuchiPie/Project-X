@@ -9,60 +9,75 @@ import { Dropdown } from "primereact/dropdown";
 import { classNames } from "primereact/utils";
 import { InputText } from "primereact/inputtext";
 
-const EditFaculty = ({rowData}) => {
+const EditFaculty = ({ rowData }) => {
 
-  const token = useSelector(state=>state.login);
+  const token = useSelector(state => state.login);
 
-    let emptyFaculty = {
-        name: "",
-        institute_id: "",
-        department: "",
-        mentees: [],
-      };
+  let emptyFaculty = {
+    name: "",
+    institute_id: "",
+    department: "",
+    mentees: [],
+  };
 
-      const departments = [
-        {
-          label:"CSE",
-        },
-        {
-          label:"DSAI"
-        },
-        {
-          label:"ECE"
-        }
-      ] 
-
-    const [facultyInfoDialog,setFacultyInfoDialog] = useState(false)
-    const [faculty,setFaculty] = useState(emptyFaculty)
-    const [selectedDepartment,setSelectedDepartment] = useState("")
-    const [submitted, setSubmitted] = useState(false)
-    const dispatch = useDispatch()
-
-
-    const editFaculty = (data)=>{
-        setFacultyInfoDialog(true)
-        setFaculty(data)
+  const departments = [
+    {
+      label: "CSE",
+    },
+    {
+      label: "DSAI"
+    },
+    {
+      label: "ECE"
     }
-    const hideFacultyInfoDialog=()=>{
-        setFacultyInfoDialog(false)
+  ]
+
+  const roles = [
+    {
+      label: "Faculty",
+    },
+    {
+      label: "Warden"
+    },
+    {
+      label: "SWE"
     }
-    const onUpdateFaculty = async() => {
-        const updatedFaculty = {...faculty, department: selectedDepartment.label}
-        await dispatch(editFacultyServer({faculty:updatedFaculty,token:token}))
-        setFacultyInfoDialog(false)
-      }
+  ]
 
-    const facultyInfoDialogFooter = (
-        <>
-          <Button label="Update" className="p-button-text" onClick={onUpdateFaculty}/>
-        </>
-      )
+  const [facultyInfoDialog, setFacultyInfoDialog] = useState(false)
+  const [faculty, setFaculty] = useState(emptyFaculty)
+  const [selectedDepartment, setSelectedDepartment] = useState("")
+  const [submitted, setSubmitted] = useState(false)
+  const [role,setRole]=useState('Faculty');
+  const dispatch = useDispatch()
 
-    const onDepartmentChange=(e)=>{
-        setSelectedDepartment(e.target.value)
-    }
 
-      
+  const editFaculty = (data) => {
+    setFacultyInfoDialog(true)
+    setFaculty(data)
+  }
+  const hideFacultyInfoDialog = () => {
+    setFacultyInfoDialog(false)
+  }
+  const onUpdateFaculty = async () => {
+    const updatedFaculty = { ...faculty, department: selectedDepartment.label,role:role.label }
+    await dispatch(editFacultyServer({ faculty: updatedFaculty, token: token }))
+    setFacultyInfoDialog(false)
+  }
+
+  const facultyInfoDialogFooter = (
+    <>
+      <Button label="Update" className="p-button-text" onClick={onUpdateFaculty} />
+    </>
+  )
+
+  const onDepartmentChange = (e) => {
+    setSelectedDepartment(e.target.value)
+  }
+
+  const onRoleChange=(e)=>{
+    setRole(e.target.value);
+  }
 
   return (
     <>
@@ -74,40 +89,50 @@ const EditFaculty = ({rowData}) => {
       <Dialog
         visible={facultyInfoDialog}
         onHide={hideFacultyInfoDialog}
-        header = "Edit Profile"
-        style={{width:"450px"}}
+        header="Edit Profile"
+        style={{ width: "450px" }}
         modal
         className="p-fluid"
         footer={facultyInfoDialogFooter}
       >
         <div className="field">
           <label htmlFor="name">Name</label>
-          <InputText 
+          <InputText
             id="name"
             value={faculty.name}
             required
             autoFocus
-            className={classNames({"p-invalid":submitted && !faculty.name})}
+            className={classNames({ "p-invalid": submitted && !faculty.name })}
           />
         </div>
         <div className="field">
           <label htmlFor="institute_id">Institute Mail Id</label>
-          <InputText 
+          <InputText
             id="institute_id"
             value={faculty.email}
             required
             autoFocus
-            className={classNames({"p-invalid":submitted && !faculty.institute_id})}
+            className={classNames({ "p-invalid": submitted && !faculty.institute_id })}
           />
         </div>
         <div className="field">
           <label htmlFor="department">Department</label>
-          <Dropdown 
+          <Dropdown
             value={selectedDepartment}
-            options = {departments}
+            options={departments}
             placeholder="Select a department"
             required
             onChange={onDepartmentChange}
+          />
+        </div>
+        <div className="field">
+          <label htmlFor="role">Role</label>
+          <Dropdown
+            value={role}
+            options={roles}
+            placeholder="Select a Role"
+            required
+            onChange={onRoleChange}
           />
         </div>
       </Dialog>
