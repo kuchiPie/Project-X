@@ -25,7 +25,6 @@ const Sessions = () => {
       } catch(e) {
         console.log(e)
       }
-      console.log(fetchedsessions)
     }
     fetchdata()
   }, []);
@@ -77,7 +76,7 @@ const Sessions = () => {
       >
         <div className="p-3 min-h-screen border-round-lg">
           <h1>View Sessions</h1>
-          {fetchedsessions != [] ? 
+          {fetchedsessions !== [] ? 
           <DataTable value = {fetchedsessions}>
             <Column field="id" header="Id"></Column>
             <Column field="year" header="Session Year"></Column>

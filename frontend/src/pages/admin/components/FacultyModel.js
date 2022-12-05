@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
@@ -9,19 +9,20 @@ import EditFaculty from "./EditFaculty";
 import Mentees from "./Mentees";
 
 const FacultyModel = () => {
+    // var token = localStorage.getItem('token');
     const [selectedFaculty, setSelectedFaculty] = useState(null);
     const dispatch = useDispatch()
-    const reduxFaculty = useSelector(state => state.faculty) 
+    const {facultyList} = useSelector(state => state.faculty) 
+    const {token} = useSelector(state=>state.login);
 
-    if(reduxFaculty.length === 0){
-      dispatch(getFacultyServer())
-    }
-    console.log(reduxFaculty)
+    useEffect(()=>{
+      dispatch(getFacultyServer({token:token}))
+    },[])
     
     const actionBodyTemplate = (rowData) => {
         return (
           <>
-            <Mentees/>
+            <Mentees rowData={rowData}/>
             <EditFaculty rowData={rowData}/>
             <DeleteFaculty rowData={rowData}/>
           </>
@@ -40,7 +41,7 @@ const FacultyModel = () => {
   return (
     <>
     <DataTable
-              value={reduxFaculty}
+              value={facultyList}
               paginator
               responsiveLayout="scroll"
               paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
@@ -72,11 +73,11 @@ const FacultyModel = () => {
                 header="Department"
                 style={{ minidth: "8rem" }}
               ></Column>
-              <Column
+              {/* <Column
                 field="mentees"
                 header="No. of Mentees"
                 style={{ width: "20%" }}
-              ></Column>
+              ></Column> */}
               <Column
                 header="Actions"
                 body={actionBodyTemplate}

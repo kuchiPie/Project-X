@@ -4,7 +4,7 @@ import bcrypt from 'bcryptjs';
 //get and search,pagination, may add sort 
 export const getStudentList = async(keyword, batch, branch, limit, skip) => {
     if(!keyword && !batch && !branch){
-        const data = await Student.find();
+        const data = await Student.find().limit(limit).skip(skip);
         return {success:true,data:data};
     }
     else if(keyword && batch && branch){

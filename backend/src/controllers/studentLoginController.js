@@ -26,7 +26,7 @@ function studentLoginController(req, res) {
         //Check if Your Exists
         if (!user) {
             return res.status(404).json({
-                emailNotFound: "Email is not registered"
+                error: "Email is not registered"
             });
         }
 
@@ -36,7 +36,7 @@ function studentLoginController(req, res) {
         // If password is incorrect send Error 400
         if (isPasswordCorrect == false){
             return res.status(400).json({
-                passwordIncorrect: "Password incorrect"
+                error: "Password incorrect"
             });
         }
         

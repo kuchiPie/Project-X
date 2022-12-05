@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {BrowserRouter,Routes,Route} from "react-router-dom";
 import Admin from './pages/admin/Admin'
 import Faculty from './pages/faculty/Faculty';
 import Student from './pages/student/Student'
-import Outpass from './pages/student/Outpass'
-import Profile from './pages/student/Profile'
+import Outpass from './pages/student/studentOutpass/Outpass'
+import Profile from './pages/student/studentProfile/Profile'
 import Login from './pages/Login'
 import Sessions from './pages/admin/Sessions'
 import { useDispatch } from 'react-redux'
@@ -22,8 +22,11 @@ function App(){
         const token = JSON.parse(localStorage.getItem('token'));
         const user = JSON.parse(localStorage.getItem('user'));
         const userType = JSON.parse(localStorage.getItem('userType'));
-        dispatch(setLoginStatus({isLogged: logindetails, isUser: user, isToken: token, isUserType: userType}))
+        if(token && user && userType){
+            dispatch(setLoginStatus({isLogged: logindetails, isUser: user, isToken: token, isUserType: userType}))
+        }
     }
+    
     return (
         <BrowserRouter>
             <Routes>

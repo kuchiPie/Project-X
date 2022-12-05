@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useEffect, useState } from "react";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import { Dropdown } from "primereact/dropdown";
@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addFacultyServer } from "../../../reduxSlices/FacultySlice";
 
 const AddFaculty = () => {
-
+  var {token}=useSelector(state=>state.login);
 
   const [addFacultyDialog, setAddFacultyDialog] = useState(false);
   const [facultyName, setFacultyName] = useState("");
@@ -41,7 +41,8 @@ const AddFaculty = () => {
 
 
   const onAddFaculty = async() => {
-    await dispatch(addFacultyServer({name: facultyName, email: facultyId, department: selectedDepartment.label}))
+    console.log(token);
+    dispatch(addFacultyServer({faculty:{name: facultyName, email: facultyId, department: selectedDepartment.label},token:token}));
     setAddFacultyDialog(false);
     setFacultyName("")
     setFacultyId("")
