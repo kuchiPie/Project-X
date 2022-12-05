@@ -9,9 +9,9 @@ import { InputText } from "primereact/inputtext";
 
 const SearchStudent = (props) => {
   const branches = [
-    { label: "DSAI", value: "DSAI" },
-    { label: "CSE", value: "CSE" },
-    { label: "ECE", value: "ECE" }
+    { label: "DSAI", value: "bds" },
+    { label: "CSE", value: "bcs" },
+    { label: "ECE", value: "bce" }
   ];
 
   const batches = [

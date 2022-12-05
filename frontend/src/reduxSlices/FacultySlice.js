@@ -88,6 +88,7 @@ export const getFacultyServer = createAsyncThunk('faculty/getfaculty', async (da
 
 export const editFacultyServer = createAsyncThunk('faculty/editfaculty', async (facultyData) => {
     const {token,faculty} = facultyData;
+    console.log(faculty);
     const response = await axios.patch(`http://localhost:5000/api/faculty/${faculty._id}`, faculty,{headers: {Authorization: "Bearer " + token}})
     return response.data
 })
