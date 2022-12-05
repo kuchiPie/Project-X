@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import {BrowserRouter,Routes,Route} from "react-router-dom";
 import Admin from './pages/admin/Admin'
 import Faculty from './pages/faculty/Faculty';
@@ -36,12 +36,12 @@ function App(){
                     <Route path='manage_faculty' element={<Facultys/>}/>
                     <Route path='manage_students' element={<Students/>}/>
                 </Route>
-                <Route path='/faculty' element={<Faculty/>}>
+                <Route path='/faculty/:id' element={<Faculty/>}>
                     <Route path="all_mentees" element={<AllMentees/>}></Route>
                     <Route path="all_outpass_requests" element={<AllOutpassRequests/>}/>
                     <Route path="profile" element={<Profile/>}/>
                 </Route>
-                <Route path='/student' element={<Student/>}>
+                <Route path='/student/:id' element={<Student/>}>
                     <Route path="profile" element={<Profile/>}></Route>
                     <Route path='outpass' element={<Outpass/>}/>
                 </Route>

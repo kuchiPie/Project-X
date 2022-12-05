@@ -48,6 +48,10 @@ const OutpassModel = new Schema(
         isApproved:{
             type: Boolean,
             default: false,
+        },
+        isRejected:{
+            type: Boolean,
+            default: false,
         }
     },
     {

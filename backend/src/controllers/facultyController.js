@@ -15,6 +15,8 @@
 //             res.status(204).send({});
 //         });
 //  };
+import Faculty from '../models/Faculty.js';
+import Outpass from '../models/Outpass.js';
 import FacultyService from '../services/facultyServices.js'
 
 const facultyServices = new FacultyService();
@@ -53,5 +55,30 @@ export const deleteFacultyController = async (req, res) => {
         res.status(200).send({success: true, message: "deleted successfully"})
     } catch (e) {
         res.status(500).send(e)
+    }
+}
+
+export const outpassApproval = async (req, res) => {
+    try{
+        const outpass = await Outpass.findById(req.body.outpassId)
+        const faculty = await Faculty.findById(req.body.facultyID)
+        const intent = req.body.intent
+
+        if(!faculty.outpasses.includes(outpass._id)){
+            res.send("No outpasses found").status(400)
+        }
+
+        if(intent){
+            outpass.status = 'facApproved'
+            await outpass.save()
+            const index = faculty.outpasses.indexOf(outpass._id)
+            faculty.outpasses.splice(index, 1)
+            await faculty.save()
+        } else {
+            
+        }
+
+    } catch(e) {
+
     }
 }

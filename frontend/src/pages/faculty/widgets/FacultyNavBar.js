@@ -11,19 +11,19 @@ const FacultyNavBar = () => {
     const MenuItems = [
       {
         title:"Dashboard",
-        path:`/faculty`
+        path:`/faculty/${id}`
       },
       {
         title:"My Profile",
-        path:`/faculty/profile`
+        path:`/faculty/${id}/profile`
       },
       {
         title:"All Mentees",
-        path:`/faculty/all_mentees`
+        path:`/faculty/${id}/all_mentees`
       },
       {
         title:"All Outpass Requests",
-        path:`/faculty/all_outpass_requests`
+        path:`/faculty/${id}/all_outpass_requests`
 
       }
     ]

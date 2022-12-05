@@ -48,7 +48,6 @@ const loginSlice = createSlice({
                 state.loggedUser = action.payload.user 
                 state.token = action.payload.token 
                 state.isLoggedIn = true
-                console.log('accepted')
             })
             .addCase(loginUser.rejected, (state, action) => {
                 state.status = 'failed'
@@ -68,16 +67,9 @@ export const loginUser = createAsyncThunk('login/loginUser', async (logindetails
         API = "http://localhost:5000/api/faculty/";   
     if(logindetails.selectedUser.label === 'Student')
         API = "http://localhost:5000/api/student/";  
-    
 
-
-
-        
     try {
         const response = await axios.post(API + "login", {email: logindetails.email, password: logindetails.password});
-        // if (!response.ok) {
-        //     return rejectWithValue(response.status)
-        // }
         console.log(response)
         return response.data
         } catch (err) {

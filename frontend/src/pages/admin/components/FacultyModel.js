@@ -15,10 +15,14 @@ const FacultyModel = () => {
     const {facultyList} = useSelector(state => state.faculty) 
     const {token} = useSelector(state=>state.login);
 
-    useEffect(()=>{
-      dispatch(getFacultyServer({token:token}))
-    },[])
-    
+    // useEffect(()=>{
+    //   dispatch(getFacultyServer({token:token}))
+    // },[])
+    // console.log(facultyList)
+    if(facultyList.length === 0){
+        dispatch(getFacultyServer({token:token}))
+    }
+
     const actionBodyTemplate = (rowData) => {
         return (
           <>
@@ -40,6 +44,7 @@ const FacultyModel = () => {
 
   return (
     <>
+    {facultyList !== [] ?
     <DataTable
               value={facultyList}
               paginator
@@ -84,7 +89,7 @@ const FacultyModel = () => {
                 exportable={false}
                 style={{ minWidth: "8rem" }}
               ></Column>
-            </DataTable>
+            </DataTable> : <div>Fetching Data</div>}
             
     </>
   )
