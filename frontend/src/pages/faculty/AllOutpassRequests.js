@@ -1,30 +1,32 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
-import { Dialog } from "primereact/dialog";
-import { classNames } from "primereact/utils";
-import { InputText } from "primereact/inputtext";
-import { Card } from 'primereact/card';
+import Outpass from "./components/Outpass";
+
 
 const AllOutpassRequests = () => {
+  const emptyOutpass = {
+    name: "",
+    institute_id: "",
+    gender: "",
+    branch: "",
+    hostel_room: "",
+    contact_no: "",
+    date_of_leaving: "",
+    date_of_arriving: "",
+    time_of_leaving: "",
+    time_of_arrival: "",
+    reason: "",
+    status: "",
+    uploaded_document: "",
+  };
 
-    const emptyOutpass = {
-        name:"",
-        institute_id:"",
-        date_of_leaving:"",
-        date_of_arriving:"",
-        reason:"",
-        status:"",
-    }
+  const [outpass, setOutpass] = useState(emptyOutpass);
+  const [showOutpassDialog, setShowOutpassDialog] = useState(false);
 
-    const [outpass,setOutpass] = useState(emptyOutpass);
-    const [showOutpassDialog,setShowOutpassDialog] = useState(false);
-   const [selectedOutpass,setSelectedOutpass] =useState(null);
-   const [submitted,setSubmitted] = useState(false)
-   const statuses = [
-    'Pending', 'Approved', 'Rejected'
-];
+  
+ 
   const paginatorLeft = (
     <Button type="button" icon="pi pi-refresh" className="p-button-text" />
   );
@@ -35,36 +37,66 @@ const AllOutpassRequests = () => {
     {
       name: "Aman Gupta",
       institute_id: "20bds024@iiitdwd.ac.in",
+      gender: "Male",
+      branch: "DSAI",
+      semester: "5th",
+      hostel_room: "223",
+      contact_no: "9036986178",
       date_of_leaving: "20/12/22",
-      date_of_arriving: "08/01/23",
+      date_of_arriving: "22/12/22",
+      time_of_leaving: "9:00AM",
+      time_of_arrival: "9:00PM",
       reason: "Vacation",
       status: "Pending",
+      uploaded_document: "",
     },
     {
-      name: "Manan Sharma",
-      institute_id: "20bds025@iiitdwd.ac.in",
+      name: "Vipul Bawankar",
+      institute_id: "20bds063@iiitdwd.ac.in",
+      gender: "Male",
+      branch: "DSAI",
+      semester: "5th",
+      hostel_room: "216",
+      contact_no: "9653365589",
       date_of_leaving: "20/12/22",
-      date_of_arriving: "08/01/23",
+      date_of_arriving: "22/12/22",
+      time_of_leaving: "9:00AM",
+      time_of_arrival: "9:00PM",
       reason: "Vacation",
       status: "Approved",
+      uploaded_document: "",
+    },
+    {
+      name: "Aniket Raj",
+      institute_id: "20bds007@iiitdwd.ac.in",
+      gender: "Male",
+      branch: "DSAI",
+      semester: "5th",
+      hostel_room: "216",
+      contact_no: "9619513423",
+      date_of_leaving: "20/12/22",
+      date_of_arriving: "22/12/22",
+      time_of_leaving: "9:00AM",
+      time_of_arrival: "9:00PM",
+      reason: "Vacation",
+      status: "Rejected",
+      uploaded_document: "",
     },
   ];
-  const showOutpass = (rowData)=>{
-    setOutpass(rowData)
-    setShowOutpassDialog(true)
-
-  }
   
-  const showOutpassDialogFooter =(
-    <>
-            <Button icon="pi pi-check" label="Confirm" className="mr-2"></Button>
-            <Button icon="pi pi-times" label="Reject" className="p-button-danger p-button-outlined"></Button>
-        </>
-  );
+  const showOutpass = (rowData) => {
+    setOutpass(rowData);
+    setShowOutpassDialog(true);
+  };
+  
 
-  const statusbodytemplate = (rowData)=>{
-    return <span className={`customer-badge status-${rowData.status}`}>{rowData.status}</span>;
-  }
+  const statusbodytemplate = (rowData) => {
+    return (
+      <span className={`customer-badge status-${rowData.status}`}>
+        {rowData.status}
+      </span>
+    );
+  };
 
   return (
     <>
@@ -82,7 +114,7 @@ const AllOutpassRequests = () => {
           paginatorRight={paginatorRight}
           showGridlines
           selectionMode="single"
-          onSelectionChange={(e)=>showOutpass(e.value)}
+          onSelectionChange={(e) => showOutpass(e.value)}
         >
           <Column field="name" header="Name" />
           <Column field="institute_id" header="Institute Id" />
@@ -91,14 +123,8 @@ const AllOutpassRequests = () => {
           <Column field="date_of_arriving" header="Date of Arriving" />
           <Column field="status" header="Status" body={statusbodytemplate} />
         </DataTable>
-
-
-        <Dialog visible={showOutpassDialog} header="Outpass" footer={showOutpassDialogFooter} onHide={()=>setShowOutpassDialog(false)}>
-        <Card title="Outpass Info">
-          
-        </Card>
-
-        </Dialog>
+        <Outpass outpass={outpass} showOutpassDialog={showOutpassDialog} setShowOutpassDialog={setShowOutpassDialog}/>
+        
       </div>
     </>
   );

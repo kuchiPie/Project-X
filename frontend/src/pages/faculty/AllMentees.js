@@ -19,6 +19,10 @@ const AllMentees = () => {
       institute_id: "20bds024@iiitdwd.ac.in",
       phone_no: "9036986178",
       hometown: "Mumbai",
+      gender:'Male',
+      address:"Mumbai",
+      semester:'5th',
+      branch:'DSAI',
     },
   ];
 
