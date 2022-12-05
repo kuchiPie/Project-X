@@ -1,7 +1,6 @@
 import { useState } from "react";
 
 import Navbar from "../../widgets/NavBar";
-import Navbar2 from "../../widgets/Navbar2";
 import StudentSidebar from "../../widgets/StudentSidebar";
 import { Outlet } from "react-router-dom";
 import { Button } from "primereact/button";
