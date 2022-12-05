@@ -60,20 +60,14 @@ export const loginUser = createAsyncThunk('login/loginUser', async (logindetails
     // console.log(logindetails)
     if (logindetails.selectedUser.label === 'Admin')
         API = "http://localhost:5000/api/admin/";
-    if (logindetails.selectedUser.label === 'Faculty')
-        API = "http://localhost:5000/api/faculty/";
-    if (logindetails.selectedUser.label === 'Student')
-        API = "http://localhost:5000/api/student/";
-
-
-
+    if(logindetails.selectedUser.label === 'Faculty')
+        API = "http://localhost:5000/api/faculty/";   
+    if(logindetails.selectedUser.label === 'Student')
+        API = "http://localhost:5000/api/student/";  
 
     try {
-        const response = await axios.post(API + "login", { email: logindetails.email, password: logindetails.password });
-        console.log(response.data);
-        // if (!response.ok) {
-        //     return rejectWithValue(response.status)
-        // }
+        const response = await axios.post(API + "login", {email: logindetails.email, password: logindetails.password});
+        console.log(response)
         return response.data
     } catch (err) {
         if (!err.response) {

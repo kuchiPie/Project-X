@@ -15,6 +15,10 @@ const Navbar2 = () => {
         path:`/admin/${id}/`
       },
       {
+        title:"Manage Sessions",
+        path:`/admin/${id}/manage_sessions`
+      },
+      {
         title:"Manage Students",
         path:`/admin/${id}/manage_students`
       },

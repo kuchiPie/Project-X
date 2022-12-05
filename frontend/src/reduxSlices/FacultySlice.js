@@ -31,7 +31,6 @@ const facultySlice = createSlice({
             .addCase(getFacultyServer.pending,(state,action)=>{
                 state.isLoading=true
                 console.log(action);
-                console.log("Some error occured");
             })
             .addCase(getFacultyServer.fulfilled, (state,action) => {
                 action.payload.forEach(element => {

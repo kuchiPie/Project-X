@@ -17,7 +17,6 @@ export const createFaculty = async(body) => {
         numbers: true
     });
     const hash = bcrypt.hashSync(password, 10);
-    console.log('Hello')
     try{
         let faculty = new Faculty({ name : `${body.name}`, email : `${body.email}`, password : hash, department: body.department});
         await faculty.save()

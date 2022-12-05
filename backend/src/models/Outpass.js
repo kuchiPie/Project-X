@@ -29,11 +29,11 @@ const OutpassModel = new Schema(
             type:Date,
             required:true,
         },
-        leavetime:{
+        leaveTime:{
             type: String,
             required: true
         },
-        returntime:{
+        returnTime:{
             type: String,
             required: true,
         },
@@ -42,9 +42,14 @@ const OutpassModel = new Schema(
         },
         approvalStatus:{
             type:String,
-            default:'Faculty Advisor'
+            enum : ['notApproved','facApproved', 'warApproved', 'corApproved'],
+            default:'notApproved'
         },
         isApproved:{
+            type: Boolean,
+            default: false,
+        },
+        isRejected:{
             type: Boolean,
             default: false,
         }

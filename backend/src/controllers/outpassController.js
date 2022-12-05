@@ -1,5 +1,7 @@
 import 'express-async-handler';
 import Outpass from '../models/Outpass.js'
+import Student from '../models/Student.js'
+import Faculty from '../models/Faculty.js';
 
 //@description     Get all Outpass
 //@route           GET /api/outpass/
@@ -24,13 +26,12 @@ export const getAllOutpass = async(req,res)=>{
 //@route           POST /api/outpass/
 //@access          Now Open but make it protected
 export const createNewOutpass=async(req,res)=>{
-    const {studentId,dateofjourney,dateofreturn,ticket}=req.body;
+    const { studentId, dateofjourney, dateofreturn, ticket, contactNo, reason, hostelRoom, leaveTime, returnTime }=req.body;
 
-    // Bad Request
-    if(dateofjourney>dateofreturn){
-        res.status(400).json({message:"Date of Journey should be smaller than date of return"});
-        return;
-    }
+    const dateofJ = new Date(dateofjourney) 
+    const dateofR = new Date(dateofreturn)
+    console.log(dateofJ, dateofR)
+    console.log(req.body)
 
     // Bad Request
     if(!studentId||!dateofjourney||!dateofreturn){
@@ -38,18 +39,45 @@ export const createNewOutpass=async(req,res)=>{
         return;
     }
 
-    var outpass={
+    // Bad Request
+    if(dateofJ>dateofR){
+        res.status(400).json({message:"Date of Journey should be smaller than date of return"});
+        return;
+    }
+
+    const outpass={
         studentId:studentId,
         dateofjourney:dateofjourney,
         dateofreturn:dateofreturn,
-        ticket:ticket
+        ticket:ticket,
+        contactNo, reason, hostelRoom, leaveTime, returnTime
     };
 
     try{
-        var newOutpass = await Outpass.create(outpass);
+        const student = await Student.findById(studentId)
+        const faculty = await Faculty.findById(student.facultyAdvisor)
+        const newOutpass = await Outpass.create(outpass)
+        student.outpasses.push(newOutpass._id)
+        student.currOutpass = newOutpass._id
+        await student.save()
+        faculty.outpasses.push(newOutpass._id)
+        await faculty.save()
+        console.log(student)
         res.status(201).json(newOutpass);
     }
     catch(error){
-        res.status(400).json({message:"Some error occured"});
+        res.status(400).send({message:"Some error occured"});
     }
 };
+
+export const getcurrentOutpass = async(req, res) => {
+    try{
+        const studentid = req.params.id.replace(/"/g, '');
+        const student = await Student.findById(studentid)
+        const currentOutpass = await Outpass.findById(student.currOutpass)
+        res.status(200).send(currentOutpass)
+    } catch(e) {
+        console.log(e)
+        res.status(400).send(e)
+    }
+}
