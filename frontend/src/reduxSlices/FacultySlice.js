@@ -35,6 +35,7 @@ const facultySlice = createSlice({
                 console.log(action);
             })
             .addCase(getFacultyServer.fulfilled, (state,action) => {
+                state.facultyList = []
                 action.payload.forEach(element => {
                     state.facultyList.push(element)
                 });
