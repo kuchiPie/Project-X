@@ -1,6 +1,6 @@
 import React from "react";
 
-
+import { getFacultyServer } from "../../reduxSlices/FacultySlice";
 import FacultyModel from "./components/FacultyModel";
 import AddFaculty from "./components/AddFaculty";
 import WentWrongWidget from "../../widgets/WentWrongWidget";
@@ -13,7 +13,8 @@ import { useNavigate } from "react-router-dom";
 const Facultys = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const {hasFailed} = useSelector(state=>state.faculty);
+  const {hasFailed, facultyList} = useSelector(state=>state.faculty);
+  const {token} = useSelector(state=>state.login);
   const continueOnError=()=>{
     dispatch(continueOnErrorhandler());
   }
@@ -22,6 +23,10 @@ const Facultys = () => {
     console.log('exe');
     dispatch(logoutHandler());
     navigate('/');
+  }
+
+  if(facultyList.length === 0){
+    dispatch(getFacultyServer({token:token}))
   }
   return (
     <>
