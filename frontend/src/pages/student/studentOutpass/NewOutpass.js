@@ -36,7 +36,11 @@ function NewOutpass({newOutpassFunc}) {
         }
         newOutpassFunc(newOutpass)
     }
-
+    let isbtndisable = false
+    const current = useSelector(state => state.outpass.currentOutpass)
+    if(current === null || current !== ""){
+        isbtndisable = true
+    }
 
     const muUploader = async ({ files }) => {
         console.log(files[0]);
@@ -59,7 +63,7 @@ function NewOutpass({newOutpassFunc}) {
 
     return (
         <>
-            <Button type="button" label="New Outpass" icon="pi pi-plus" onClick={() => setDisplayBasic(true)} />
+            <Button type="button" disabled={isbtndisable} label="New Outpass" icon="pi pi-plus" onClick={() => setDisplayBasic(true)} />
             <Dialog header="New Outpass" visible={displayBasic} style={{ width: '80vw' }} modal footer={basicDialogFooter} onHide={() => setDisplayBasic(false)}>
                 <Card className="h-full mx-5 surface-100">
                     <div className="flex justify-content-between ">

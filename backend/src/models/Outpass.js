@@ -42,7 +42,8 @@ const OutpassModel = new Schema(
         },
         approvalStatus:{
             type:String,
-            default:'Faculty Advisor'
+            enum : ['notApproved','facApproved', 'warApproved', 'corApproved'],
+            default:'notApproved'
         },
         isApproved:{
             type: Boolean,

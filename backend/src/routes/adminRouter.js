@@ -7,7 +7,6 @@ import Session from '../models/Session.js'
 import adminAuth from '../middleware/adminAuth.js'
 import bcrypt from 'bcryptjs';
 import adminLoginController from '../controllers/adminLoginController.js';
-import isEmpty from 'is-empty';
 
 router.post('/admin/login', adminLoginController)
 
@@ -127,10 +126,12 @@ router.post('/mapStudentFaculty', async (req, res) => {
                     // console.log(studentId, 'pushed to mentees')
                     menteesArr.push(studentId)
                     let student = await Student.findById(studentId)
+                    console.log(student)
                     // Check if the student is already been assigned to some other faculty...
                     // If the student is assigned then we need to deassign him/her from other..
                     // faculty.
-                    if (student.facultyAdvisor != null){
+                    console.log(student.facultyAdvisor !== undefined)
+                    if (student.facultyAdvisor !== undefined){
                         let prevFaculty = await Faculty.findById(student.facultyAdvisor)
                         console.log('Found previos faculty', prevFaculty)
                         var index = prevFaculty.mentees.indexOf(studentId);
@@ -140,6 +141,7 @@ router.post('/mapStudentFaculty', async (req, res) => {
                         await prevFaculty.save()
                     }
                     student.facultyAdvisor = facultyId
+                    console.log(student)
                     await student.save()
                 }
               }

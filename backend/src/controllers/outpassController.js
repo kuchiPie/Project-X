@@ -1,5 +1,7 @@
 import 'express-async-handler';
 import Outpass from '../models/Outpass.js'
+import Student from '../models/Student.js'
+import Faculty from '../models/Faculty.js';
 
 //@description     Get all Outpass
 //@route           GET /api/outpass/
@@ -52,10 +54,30 @@ export const createNewOutpass=async(req,res)=>{
     };
 
     try{
-        const newOutpass = await Outpass.create(outpass);
+        const student = await Student.findById(studentId)
+        const faculty = await Faculty.findById(student.facultyAdvisor)
+        const newOutpass = await Outpass.create(outpass)
+        student.outpasses.push(newOutpass._id)
+        student.currOutpass = newOutpass._id
+        await student.save()
+        faculty.outpasses.push(newOutpass._id)
+        await faculty.save()
+        console.log(student)
         res.status(201).json(newOutpass);
     }
     catch(error){
         res.status(400).send({message:"Some error occured"});
     }
 };
+
+export const getcurrentOutpass = async(req, res) => {
+    try{
+        const studentid = req.params.id.replace(/"/g, '');
+        const student = await Student.findById(studentid)
+        const currentOutpass = await Outpass.findById(student.currOutpass)
+        res.status(200).send(currentOutpass)
+    } catch(e) {
+        console.log(e)
+        res.status(400).send(e)
+    }
+}

@@ -38,6 +38,10 @@ const studentSchema = new Schema({
         type: Number,
         default: 0
     },
+    currOutpass: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Outpass"
+    },
     facultyAdvisor: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Faculty"
