@@ -31,7 +31,7 @@ const Navbar2 = () => {
     return (
         <div className='flex py-2 px-2'>
         <Button icon="pi pi-bars" onClick={() => setVisibleLeft(true)} className="m-2 p-button-text p-button-plain" />
-        <Sidebar visible={visibleLeft} onHide={()=>setVisibleLeft(false)} maskStyle={{position:"absolute",top:'6.6vh'}}>
+        <Sidebar visible={visibleLeft} onHide={()=>setVisibleLeft(false)} maskStyle={{position:"absolute",top:'5rem'}}>
         {MenuItems.map((item,index)=>{
           return (
             <div key={index} className="py-3 text-xl font-semibold" style={{width:"100%",height:"5rem"}}>

@@ -123,7 +123,7 @@ const AllOutpassRequests = () => {
           <Column field="date_of_arriving" header="Date of Arriving" />
           <Column field="status" header="Status" body={statusbodytemplate} />
         </DataTable>
-        <Outpass outpass={outpass} showOutpassDialog={showOutpassDialog} setShowOutpassDialog={setShowOutpassDialog}/>
+        <Outpass outpass={outpass} showOutpassDialog={showOutpassDialog} setShowOutpassDialog={setShowOutpassDialog} controls={true}/>
         
       </div>
     </>
