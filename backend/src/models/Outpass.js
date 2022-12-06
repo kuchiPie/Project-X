@@ -55,6 +55,26 @@ const OutpassModel = new Schema(
         },
         remarks:{
             type: String,
+        },
+        warden:{
+            type: String
+        },
+        SWC:{
+            type: String
+        },
+        hasCheckedOut:{
+            type:Boolean,
+            default:false,
+        },
+        checkoutTime:{
+            type:Date,
+        },
+        hasArrived:{
+            type:Boolean,
+            default:false,
+        },
+        arrivalTime:{
+            type:Date,
         }
     },
     {
