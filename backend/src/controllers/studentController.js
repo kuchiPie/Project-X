@@ -2,6 +2,15 @@ import StudentService from "../services/studentServices.js";
 
 const studentService = new StudentService();
 
+export const getStudentByIDController = async (req, res) => {
+    try {
+        const student = await studentService.getStudentbyIDService(req)
+        res.status(200).send(student)
+    } catch (e) {
+        res.status(500).send(e)
+    }
+}
+
 export const getStudentListController = async (req, res) => {
     try {
         const student = await studentService.getStudentListService(req)
