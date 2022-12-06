@@ -49,6 +49,7 @@ const AllOutpassRequests = () => {
       reason: "Vacation",
       status: "Pending",
       uploaded_document: "",
+      remarks:"",
     },
     {
       name: "Vipul Bawankar",
@@ -65,6 +66,7 @@ const AllOutpassRequests = () => {
       reason: "Vacation",
       status: "Approved",
       uploaded_document: "",
+      remarks:"",
     },
     {
       name: "Aniket Raj",
@@ -81,6 +83,7 @@ const AllOutpassRequests = () => {
       reason: "Vacation",
       status: "Rejected",
       uploaded_document: "",
+      remarks:"",
     },
   ];
   
