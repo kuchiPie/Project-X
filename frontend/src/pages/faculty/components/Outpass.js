@@ -15,7 +15,7 @@ const Outpass = ({outpass,showOutpassDialog,setShowOutpassDialog, controls}) => 
         <Button label='Submit' onClick={()=>onSubmit()}/>
       </>
     )
-      const onConfirmStatus = (outpass) => {
+      const onConfirmStatus = () => {
         if(outpass.remarks===""){
           setRemarkDialog(true)
         }
@@ -23,10 +23,8 @@ const Outpass = ({outpass,showOutpassDialog,setShowOutpassDialog, controls}) => 
         setShowOutpassDialog(false);
         
       };
-      const onRejectStatus = (outpass) => {
-        if(outpass.remarks===""){
-          setRemarkDialog(true)
-        }
+      const onRejectStatus = () => {
+        setRemarkDialog(true)
         outpass.status = "Rejected";
         setShowOutpassDialog(false);
       };
@@ -38,6 +36,7 @@ const Outpass = ({outpass,showOutpassDialog,setShowOutpassDialog, controls}) => 
       }
 
   const color = outpass.status === 'Rejected' ?  'bg-red-600' : 'bg-green-300' 
+  const color2 = outpass.status === undefined ? '' : color
 
   return (
     <>
@@ -52,8 +51,8 @@ const Outpass = ({outpass,showOutpassDialog,setShowOutpassDialog, controls}) => 
         >
           <Card className="shadow-3 px-7">
             <div className='flex w-2 justify-content-center align-items-center' style={{position:'relative',left:'55rem'}}>
-            <div className={`border-2 border-round-2xl rounded ${color}`} style={{width:'1rem',height:'1rem'}} ></div>
-            <p className='ml-2 text-xl font-bold'>{outpass.status}</p>
+            <div className={`border-round-2xl rounded ${color2}`} style={{width:'1rem',height:'1rem'}} ></div>
+            <p className='ml-2 text-xl'>{outpass.status}</p>
             </div>
             <div className="flex justify-content-between ">
               <h1>{outpass.name}</h1>
@@ -149,19 +148,19 @@ const Outpass = ({outpass,showOutpassDialog,setShowOutpassDialog, controls}) => 
               icon="pi pi-check"
               label="Confirm"
               className="mr-2"
-              onClick={() => onConfirmStatus(outpass)}
+              onClick={() => onConfirmStatus()}
             ></Button>
             <Button
               icon="pi pi-times"
               label="Reject"
               className="p-button-danger p-button-outlined ml-3"
-              onClick={() => onRejectStatus(outpass)}
+              onClick={() => onRejectStatus()}
             ></Button>
               </div>):<></>
            }
           </Card>
         </Dialog>
-        <Dialog header="Remarks" className="w-3" visible={remarkDialog} footer ={remarksFooter} blockScroll={true} onHide={()=>setRemarkDialog(false)}>
+        <Dialog header="Remarks" style={{width:"30rem"}} visible={remarkDialog} footer ={remarksFooter} blockScroll={true} onHide={()=>setRemarkDialog(false)}>
         <InputTextarea value={remarks} onChange={(e)=>setRemarks(e.target.value)} cols={40} rows={5} autoResize/>
         </Dialog>
     </>

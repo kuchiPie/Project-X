@@ -102,6 +102,13 @@ const facultySlice = createSlice({
                 });
                 state.isLoading=false
             })
+            .addCase(approveOutpass.fulfilled, (state, action) => {
+                const index = state.pendingOutpassses.indexOf(action.payload._id)
+                state.pendingOutpassses.splice(index, 1)
+            })
+            .addCase(approveOutpass.rejected, (state, action) => {
+                console.log('Hhehehehhe Broke')
+            })
     }
 })
 
@@ -143,6 +150,11 @@ export const getHistoricOutpasses = createAsyncThunk('faculty/getHistoric', asyn
 export const getPendingOutpasses = createAsyncThunk('faculty/getPending', async (facultyId) => {
     const response = await axios.get(`http://localhost:5000/api/getAllPendingOutpasses/?id=${facultyId}`)
     console.log("Response is", response.data)
+    return response.data
+})
+
+export const approveOutpass = createAsyncThunk('faculty/approve', async(details) => {
+    const response = await axios.post('http://localhost:5000/api/faculty/approval', details)
     return response.data
 })
 
