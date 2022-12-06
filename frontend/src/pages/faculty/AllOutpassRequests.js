@@ -23,7 +23,6 @@ const AllOutpassRequests = () => {
       'date_of_leaving':outpass.dateofjourney.substring(0,10),
       'date_of_arriving':outpass.dateofreturn.substring(0,10),
       'reason':outpass.reason,
-      'status':outpass.isRejected?"Rejected":"Approved",
       'hostel_room':outpass.hostelRoom,
       'contact_no':outpass.contactNo,
       'time_of_leaving':outpass.leaveTime,
@@ -149,7 +148,6 @@ const AllOutpassRequests = () => {
           <Column field="date_of_leaving" header="Date of Leaving" />
           <Column field="reason" header="Reason" />
           <Column field="date_of_arriving" header="Date of Arriving" />
-          <Column field="status" header="Status" body={statusbodytemplate} />
         </DataTable>
         <Outpass outpass={outpass} showOutpassDialog={showOutpassDialog} setShowOutpassDialog={setShowOutpassDialog} controls={true}/>
         
