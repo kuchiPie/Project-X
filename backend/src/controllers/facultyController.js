@@ -116,6 +116,7 @@ export const outpassApproval = async (req, res) => {
             outpass.isRejected = true
             outpass.remarks = remark
             await outpass.save()
+            res.send({outpass}).status(200)
         }
 
         const index = faculty.outpasses.indexOf(outpass._id)
