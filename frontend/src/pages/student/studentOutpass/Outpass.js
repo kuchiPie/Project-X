@@ -9,6 +9,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import {createOutpass, getcurrentOutpass} from '../../../reduxSlices/outpassSlice'
 import NoCurrent from './NoCurrentOutpass.js';
 import ViewOutpassHistory from '../../faculty/components/ViewOutpassHistory.js';
+import { Button } from 'primereact/button';
+import pdfMake from "pdfmake/build/pdfmake";
+import pdfFonts from "pdfmake/build/vfs_fonts";
+import {outPassPdf} from './outPassPdf'
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
+
 
 function Output() {
     const dispatch = useDispatch()
@@ -16,7 +22,8 @@ function Output() {
     const toast = useRef(null);
 
     const {currentOutpass, status} = useSelector(state => state.outpass)
-    const id = useSelector(state => state.login.loggedUser._id) 
+    const id = useSelector(state => state.login.loggedUser._id)
+    const student = useSelector(state => state.login.loggedUser)
     
     const newOutpassSubmitHandler=(outpass)=>{
         dispatch(createOutpass(outpass))
@@ -64,6 +71,9 @@ function Output() {
                 <NoCurrent/> :
                 <Card className="m-3 p-0 border-2 border-gray-800">
                     {currentOutpass.isApproved?<h2 className='mt-0 flex justify-content-center'>OUTPASS APPROVED!!!</h2>:<></>}
+                    {currentOutpass.isApproved?<Button onClick={()=>{
+                        pdfMake.createPdf(outPassPdf(student, currentOutpass), 'Outpass').download();
+                    }}>Download Outpass</Button>:<></>}
                     {currentOutpass.isRejected?<h2 className='mt-0 flex justify-content-center'>Outpass Request Rejected. Check Remarks for reason.</h2>:<></>}
                     <div className="col">
                         <ProgressBar value={value} showValue={false} />
