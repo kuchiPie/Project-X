@@ -5,7 +5,7 @@ import {Sidebar} from 'primereact/sidebar'
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom"
 
-const FacultyNavBar = () => {
+const FacultySideBar = () => {
     const [visibleLeft, setVisibleLeft] = useState(false);
     const id = useSelector(state => state.login.loggedUser._id);
     const MenuItems = [
@@ -48,4 +48,4 @@ const FacultyNavBar = () => {
   )
 }
 
-export default FacultyNavBar
+export default FacultySideBar

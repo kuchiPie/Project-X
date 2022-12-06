@@ -6,7 +6,8 @@ const initialState = {
     menteeList:[],
     historicOutpasses:[],
     isLoading:false,
-    hasFailed:false
+    hasFailed:false,
+    pendingOutpassses:[]
 }
 
 const facultySlice = createSlice({
@@ -82,6 +83,17 @@ const facultySlice = createSlice({
                 });
                 state.isLoading=false
             })
+            .addCase(getPendingOutpasses.pending, (state, action) => {
+                state.isLoading=true
+            })
+            .addCase(getPendingOutpasses.fulfilled, (state, action) => {
+                state.pendingOutpassses = []
+                action.payload.forEach(element => {
+                    console.log(element)
+                    state.pendingOutpassses.push(element)
+                });
+                state.isLoading=false
+            })
     }
 })
 
@@ -116,7 +128,14 @@ export const deleteFacultyServer = createAsyncThunk('faculty/deletefaculty', asy
 // Approved or Rejected Outpasses
 export const getHistoricOutpasses = createAsyncThunk('faculty/getHistoric', async (studentId) => {
     const response = await axios.get(`http://localhost:5000/api/getHistoricOutpasses/?id=${studentId}`)
-    return response
+    console.log("Response is", response.data)
+    return response.data
+})
+
+export const getPendingOutpasses = createAsyncThunk('faculty/getPending', async (studentId) => {
+    const response = await axios.get(`http://localhost:5000/api/getHistoricOutpasses/?id=${studentId}`)
+    console.log("Response is", response.data)
+    return response.data
 })
 
 export const { continueOnErrorhandler } = facultySlice.actions

@@ -8,6 +8,7 @@ import OutpassHistory from './OutpassHistory.js';
 import { useDispatch, useSelector } from 'react-redux';
 import {createOutpass, getcurrentOutpass} from '../../../reduxSlices/outpassSlice'
 import NoCurrent from './NoCurrentOutpass.js';
+import ViewOutpassHistory from '../../faculty/components/ViewOutpassHistory.js';
 
 function Output() {
     const dispatch = useDispatch()
