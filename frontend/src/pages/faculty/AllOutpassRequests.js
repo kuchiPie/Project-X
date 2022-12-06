@@ -3,9 +3,24 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import Outpass from "./components/Outpass";
-
+import { useSelector, useDispatch } from "react-redux";
 
 const AllOutpassRequests = () => {
+  var dispatch = useDispatch()
+  var { pendingOutpassses } = useSelector(state => state.faculty)
+  const localPendingOutpasses = []
+  pendingOutpassses.forEach((element)=>{
+    localPendingOutpasses.push({
+      'date_of_leaving':outpass.dateofjourney.substring(0,10),
+      'date_of_arriving':outpass.dateofreturn.substring(0,10),
+      'reason':outpass.reason,
+      'status':outpass.isRejected?"Rejected":"Approved",
+      'hostel_room':outpass.hostelRoom,
+      'contact_no':outpass.contactNo,
+      'time_of_leaving':outpass.leaveTime,
+      'time_of_arrival':outpass.returnTime
+      })
+  })
   const emptyOutpass = {
     name: "",
     institute_id: "",
@@ -103,7 +118,7 @@ const AllOutpassRequests = () => {
       <div className="px-5">
         <h1>All Outpass Requests</h1>
         <DataTable
-          value={Requests}
+          value={localPendingOutpasses}
           paginator
           responsiveLayout="scroll"
           paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
@@ -123,7 +138,7 @@ const AllOutpassRequests = () => {
           <Column field="date_of_arriving" header="Date of Arriving" />
           <Column field="status" header="Status" body={statusbodytemplate} />
         </DataTable>
-        <Outpass outpass={outpass} showOutpassDialog={showOutpassDialog} setShowOutpassDialog={setShowOutpassDialog}/>
+        <Outpass outpass={outpass} showOutpassDialog={showOutpassDialog} setShowOutpassDialog={setShowOutpassDialog} controls={true}/>
         
       </div>
     </>

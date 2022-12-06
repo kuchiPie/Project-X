@@ -5,6 +5,7 @@ import Navbar2 from "../../widgets/Navbar2";
 import CustomSidebar from "../../widgets/CustomSidebar";
 import Student from "../student/Student";
 import { Outlet } from "react-router-dom";
+import AdminSidebar from "./widgets/AdminSidebar";
 
 
 
@@ -17,7 +18,7 @@ const Admin = () => {
     <>
       <div className="overflow-x-hidden">
         <Navbar />
-        <Navbar2 />  
+        <AdminSidebar />  
         <Outlet/>
 
       </div>

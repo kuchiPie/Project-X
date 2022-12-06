@@ -56,7 +56,12 @@ const OutpassModel = new Schema(
         remarks:{
             type: String,
         },
-        
+        warden:{
+            type: String
+        },
+        SWC:{
+            type: String
+        }
     },
     {
         timestamps:true,

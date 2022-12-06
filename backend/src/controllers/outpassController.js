@@ -81,3 +81,26 @@ export const getcurrentOutpass = async(req, res) => {
         res.status(400).send(e)
     }
 }
+
+export const withdrawOutpass = async(req, res) => {
+    try{
+        const studentId = req.params.id
+        const student = await Student.findById(studentId)
+        const outpassId = student.currOutpass
+        
+        const index = student.outpasses.indexOf(student.currOutpass)
+        student.outpasses.splice(index, 1)
+        student.currOutpass = undefined
+        await student.save()
+
+        const faculty = await Faculty.findById(student.facultyAdvisor)
+        const index2 = faculty.outpasses.indexOf(outpassId)
+        faculty.outpasses.splice(index2, 1)
+        await faculty.save()
+
+        await Outpass.findByIdAndDelete(outpassId)
+        res.status(200).send(student)
+    } catch(e) {
+        console.log(e)
+    }
+}

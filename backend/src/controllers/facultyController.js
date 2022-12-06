@@ -1,20 +1,3 @@
-// exports.clientes_get = function (req, res) {
-//     // the `function(err, params) {...}` here is your callback
-//     getFaculty(req, function(err, params) {
-//         if (err) {
-//             return res.send(err);
-//         }
-//         res.json(params);
-//     });
-// }
-// {service element} = require from service layer
-
-// exports.removeById = (req, res) => {
-//     UserModel.removeById(req.params.userId)
-//         .then((result)=>{
-//             res.status(204).send({});
-//         });
-//  };
 import Faculty from '../models/Faculty.js';
 import Outpass from '../models/Outpass.js';
 import FacultyService from '../services/facultyServices.js'
@@ -64,10 +47,11 @@ export const outpassApproval = async (req, res) => {
         const outpass = await Outpass.findById(req.body.outpassId)
         const faculty = await Faculty.findById(req.body.facultyId)
         const intent = req.body.intent
-        const remark = req.body.rejectreason
+        const remark = (req.body.rejectreason) ? req.body.rejectreason : req.body.acceptreason
 
         if(!faculty.outpasses.includes(outpass._id)){
             res.send("No outpasses found").status(400)
+            return
         }
 
         const date1 = new Date(outpass.dateofjourney);
@@ -79,6 +63,7 @@ export const outpassApproval = async (req, res) => {
         if(intent){
             if(outpass.approvalStatus === 'notApproved'){
                 outpass.approvalStatus = 'facApproved'
+                outpass.remarks = remark
             }
             else if(outpass.approvalStatus === 'facApproved'){
                 if(noofdays>10){
@@ -99,6 +84,8 @@ export const outpassApproval = async (req, res) => {
                 var length = role[0].warden.length
                 const wardenId = role[0].warden[Math.floor(Math.random()*length)]
                 const warden = await Faculty.findById(wardenId)
+                outpass.warden = warden.name
+                await outpass.save()
                 warden.outpasses.push(outpass)
                 await warden.save()
             }
@@ -106,6 +93,8 @@ export const outpassApproval = async (req, res) => {
                 var length = role[0].swe.length
                 const swcId = role[0].swe[Math.floor(Math.random()*length)]
                 const swc = await Faculty.findById(swcId)
+                outpass.SWC = swc.name
+                await outpass.save()
                 swc.outpasses.push(outpass)
                 await swc.save()
             }

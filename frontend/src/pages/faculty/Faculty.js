@@ -1,6 +1,6 @@
 import React from 'react'
 import Navbar from '../../widgets/NavBar'
-import FacultyNavBar from './widgets/FacultyNavBar'
+import FacultySideBar from './widgets/FacultySideBar'
 import { Outlet } from 'react-router-dom'
 
 
@@ -9,7 +9,7 @@ const Faculty = () => {
     <>
     <div className="overflow-x-hidden">
         <Navbar />
-        <FacultyNavBar/>
+        <FacultySideBar/>
         <Outlet/>
 
       </div>
