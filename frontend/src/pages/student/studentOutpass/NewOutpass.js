@@ -11,7 +11,8 @@ import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { FileUpload } from 'primereact/fileupload';
 import { v4 } from 'uuid'
 import { Image } from 'primereact/image';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { getcurrentOutpass } from '../../../reduxSlices/outpassSlice'
 
 
 function NewOutpass({newOutpassFunc}) {
@@ -29,18 +30,31 @@ function NewOutpass({newOutpassFunc}) {
     const [contactNo, setContactNo] = useState(null);
     const [reason, setreason] = useState(null);
     const [hostelRoom, sethostelRoom] = useState(null);
+    // const id = useSelector(state => state.login.loggedUser._id) 
+    // const dispatch = useDispatch()
+
 
     const newOutpassSubmitHandler = () => {
         const newOutpass = {
             dateofjourney: leaveDate, dateofreturn: returnDate, ticket: ticketUrl, studentId, contactNo, reason, hostelRoom, leaveTime, returnTime
         }
         newOutpassFunc(newOutpass)
+        setDisplayBasic(false)
+        // dispatch(getcurrentOutpass(id))
     }
+
+
     let isbtndisable = false
     const current = useSelector(state => state.outpass.currentOutpass)
     if(current === null || current !== ""){
         isbtndisable = true
+        if(current !== null){
+            if(current.isApproved || current.isRejected){
+                isbtndisable = false
+            }
+        }
     }
+    
 
     const muUploader = async ({ files }) => {
         console.log(files[0]);

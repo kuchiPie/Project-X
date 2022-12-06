@@ -4,7 +4,8 @@ import { Dialog } from 'primereact/dialog';
 import { Button } from 'primereact/button';
 import { Divider } from 'primereact/divider';
 import { InputTextarea } from 'primereact/inputtextarea';
-import {useSelector} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
+import { withdrawOutpass } from '../../../reduxSlices/outpassSlice';
 
 function CurrentOutpass() {
 
@@ -23,13 +24,27 @@ function CurrentOutpass() {
             contactNo: "",
             reason: "",
             leaveTime: "",
-            returnTime: ""
+            returnTime: "",
+            remarks: ""
         }
     }
+    const dispatch = useDispatch()
+    const withdraw = () => {
+        dispatch(withdrawOutpass(user._id))
+        setDisplayCurrent(false)
+    }
+    let withdrawbtndisable = false
+    if(current.approvalStatus !== 'notApproved'){
+        withdrawbtndisable = true
+    }
+
+    
 
     console.log(current)
 
-    const currentDialogFooter = <Button type="button" label="Withdraw" onClick={() => setDisplayBasic(false)} icon="pi pi-arrow-circle-right" className="p-button-secondary" />;
+    const currentDialogFooter = <div className='pt-5 flex justify-content-end align-items-center' style={{position:"relative", right:"1rem"}}>
+    {withdrawbtndisable?<div className='text-xl font-bold'>Too late my brotha/sista</div>:<></>} <Button type="button" label="Withdraw" onClick={withdraw} disabled={withdrawbtndisable} icon="pi pi-arrow-circle-right" className="p-button-secondary ml-3"/>
+    </div>
 
     return (
         <>
@@ -98,7 +113,7 @@ function CurrentOutpass() {
                         </div>
                         <div className="field col-12 flex justify-content-between ">
                             <h3 className="mr-5 mt-0 w-1">Remarks</h3>
-                            <InputTextarea className="w-full" id="address" rows="4" disabled={true} value="fkbskpnfsofokvmf,v fkdvs" />
+                            <InputTextarea className="w-full" id="address" rows="4" disabled={true} value={current.remarks} />
                         </div>
                     </div>
                 </Card>
