@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import {React, useState} from 'react'
 import { Dialog } from "primereact/dialog";
 import { classNames } from "primereact/utils";
 import { InputTextarea } from 'primereact/inputtextarea';
@@ -34,14 +34,13 @@ const Outpass = ({outpass,showOutpassDialog,setShowOutpassDialog, controls}) => 
         outpass.status = "Rejected";
         setShowOutpassDialog(false);
       };
+
       const onSubmit = ()=>{
         setRemarkDialog(false);
         outpass.remarks = remarks
         setRemarks("")
       }
   return (
-
-
     <>
         <Dialog
           position="top"
