@@ -37,19 +37,25 @@ router.get('/getHistoricOutpasses', async (req, res) => {
 })
 
 router.get('/getAllPendingOutpasses', async (req,res) => {
-    const facultyId = req.body.id
-
-    Faculty.findById(facultyId).populate('outpasses').exec((_err, post) => {
-        // console.log(post, "Done??");
-        // var allOutpasses = post.outpasses;
-        // var historicOutpasses = []
-        // allOutpasses.forEach((element)=>{
-        //     if (element.isApproved == true || element.isRejected == true){
-        //         historicOutpasses.push(element)
-        //     }
-        // })
-        res.send(post.outpasses)
-    })
+    const facultyId = req.query.id
+    try{
+        // console.log(Faculty.findById(facultyId).islean())
+        Faculty.findById(facultyId).populate('outpasses').exec((_err, post) => {
+            // console.log(post, "Done??");
+            // var allOutpasses = post.outpasses;
+            // var historicOutpasses = []
+            // allOutpasses.forEach((element)=>{
+            //     if (element.isApproved == true || element.isRejected == true){
+            //         historicOutpasses.push(element)
+            //     }
+            // })
+            res.send(post.outpasses)
+        })
+    }
+    catch(err){
+        res.send('Error').status(400)
+    }
+    
 })
 
 
