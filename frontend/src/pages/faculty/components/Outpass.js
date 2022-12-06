@@ -1,6 +1,5 @@
 import {React, useState} from 'react'
 import { Dialog } from "primereact/dialog";
-import { classNames } from "primereact/utils";
 import { InputTextarea } from 'primereact/inputtextarea';
 import { Card } from "primereact/card";
 import { Divider } from "primereact/divider";
@@ -8,9 +7,6 @@ import { Button } from "primereact/button";
 
 const Outpass = ({outpass,showOutpassDialog,setShowOutpassDialog, controls}) => {
     
-    const [selectedOutpass, setSelectedOutpass] = useState(null);
-    const [submitted, setSubmitted] = useState(false);
-    const statuses = ["Pending", "Approved", "Rejected"];
     const [remarkDialog,setRemarkDialog] = useState(false)
     const [remarks,setRemarks] = useState("")
 
@@ -20,7 +16,7 @@ const Outpass = ({outpass,showOutpassDialog,setShowOutpassDialog, controls}) => 
       </>
     )
       const onConfirmStatus = (outpass) => {
-        if(outpass.remarks==""){
+        if(outpass.remarks===""){
           setRemarkDialog(true)
         }
         outpass.status = "Accepted";
@@ -28,7 +24,7 @@ const Outpass = ({outpass,showOutpassDialog,setShowOutpassDialog, controls}) => 
         
       };
       const onRejectStatus = (outpass) => {
-        if(outpass.remarks==""){
+        if(outpass.remarks===""){
           setRemarkDialog(true)
         }
         outpass.status = "Rejected";
@@ -40,6 +36,9 @@ const Outpass = ({outpass,showOutpassDialog,setShowOutpassDialog, controls}) => 
         outpass.remarks = remarks
         setRemarks("")
       }
+
+  const color = outpass.status === 'Rejected' ?  'bg-red-600' : 'bg-green-300' 
+
   return (
     <>
         <Dialog
@@ -53,8 +52,8 @@ const Outpass = ({outpass,showOutpassDialog,setShowOutpassDialog, controls}) => 
         >
           <Card className="shadow-3 px-7">
             <div className='flex w-2 justify-content-center align-items-center' style={{position:'relative',left:'55rem'}}>
-            <div className='border-2 border-round-2xl rounded bg-yellow-300' style={{width:'1rem',height:'1rem'}} ></div>
-            <p className='ml-2'>Pending</p>
+            <div className={`border-2 border-round-2xl rounded ${color}`} style={{width:'1rem',height:'1rem'}} ></div>
+            <p className='ml-2 text-xl font-bold'>{outpass.status}</p>
             </div>
             <div className="flex justify-content-between ">
               <h1>{outpass.name}</h1>
@@ -76,7 +75,7 @@ const Outpass = ({outpass,showOutpassDialog,setShowOutpassDialog, controls}) => 
                   Hostel Room No<span className="px-1"></span>:
                 </h2>
                 <p className="w-14rem text-xl border-bottom-2 border-x-none border-top-none text-center pb-2 ml-3 ">
-                  {outpass.hostel_room}
+                  {outpass.hostelRoom}
                 </p>
               </div>
               <div className="flex justify-content-evenly">
@@ -84,7 +83,7 @@ const Outpass = ({outpass,showOutpassDialog,setShowOutpassDialog, controls}) => 
                   Contact No <span className="px-4"></span>:
                 </h2>
                 <p className="w-14rem text-xl border-bottom-2 border-x-none border-top-none text-center pb-2 ml-3">
-                  {outpass.contact_no}
+                  {outpass.contactNo}
                 </p>
               </div>
             </div>
@@ -94,7 +93,7 @@ const Outpass = ({outpass,showOutpassDialog,setShowOutpassDialog, controls}) => 
                   Date of Leaving<span className="px-1"></span>:
                 </h2>
                 <p className="w-14rem text-xl border-bottom-2 border-x-none border-top-none text-center pb-2 ml-3 ">
-                  {outpass.date_of_leaving}
+                  {outpass.dateofjourney}
                 </p>
               </div>
               <div className="flex justify-content-evenly">
@@ -102,7 +101,7 @@ const Outpass = ({outpass,showOutpassDialog,setShowOutpassDialog, controls}) => 
                   Time of Leaving<span className="px-1"></span>:
                 </h2>
                 <p className="w-14rem text-xl border-bottom-2 border-x-none border-top-none text-center pb-2 ml-3 ">
-                  {outpass.time_of_leaving}
+                  {outpass.leaveTime}
                 </p>
               </div>
             </div>
@@ -112,7 +111,7 @@ const Outpass = ({outpass,showOutpassDialog,setShowOutpassDialog, controls}) => 
                   Date of Arriving<span className="px-1"></span>:
                 </h2>
                 <p className="w-14rem text-xl border-bottom-2 border-x-none border-top-none text-center pb-2 ml-3 ">
-                  {outpass.date_of_arriving}
+                  {outpass.dateofreturn}
                 </p>
               </div>
               <div className="flex justify-content-evenly">
@@ -120,7 +119,7 @@ const Outpass = ({outpass,showOutpassDialog,setShowOutpassDialog, controls}) => 
                   Time of Arriving<span className="px-1"></span>:
                 </h2>
                 <p className="w-14rem text-xl border-bottom-2 border-x-none border-top-none text-center pb-2 ml-3 ">
-                  {outpass.time_of_arrival}
+                  {outpass.returnTime}
                 </p>
               </div>
             </div>
