@@ -26,11 +26,17 @@ const outpassSlice = createSlice({
                 console.log(action.error.message)
             })
             .addCase(getcurrentOutpass.fulfilled, (state, action) => {
-                if(action.payload === undefined){
-                    action.payload = ""
-                }
+                // if(action.payload === undefined){
+                //     action.payload = ""
+                // }
                 state.currentOutpass = action.payload
                 state.status = 'succeded'
+            })
+            .addCase(getAllOutpass.fulfilled, (state, action) => {
+                state.outpassList = action.payload
+            })
+            .addCase(getAllOutpass.rejected, (state, action) => {
+                console.log('hello')
             })
             .addCase(getcurrentOutpass.rejected, (state, action) => {
                 state.status = 'failed'
@@ -59,6 +65,10 @@ export const withdrawOutpass = createAsyncThunk('outpass/withdrawOutpass', async
     return response.data
 })
 
+export const getAllOutpass = createAsyncThunk('outpass/getAllOutpasses', async(id) => {
+    const response = await axios.get(`http://localhost:5000/api/outpass/${id}`)
+    return response.data
+})
 export const { clearOutpass } = outpassSlice.actions
 
 export default outpassSlice.reducer

@@ -1,31 +1,44 @@
-import React,{useState} from 'react'
+import {React, useState} from 'react'
 import { Dialog } from "primereact/dialog";
-import { classNames } from "primereact/utils";
-import { InputText } from "primereact/inputtext";
+import { InputTextarea } from 'primereact/inputtextarea';
 import { Card } from "primereact/card";
 import { Divider } from "primereact/divider";
 import { Button } from "primereact/button";
 
 const Outpass = ({outpass,showOutpassDialog,setShowOutpassDialog, controls}) => {
     
-    const [selectedOutpass, setSelectedOutpass] = useState(null);
-    const [submitted, setSubmitted] = useState(false);
-    const statuses = ["Pending", "Approved", "Rejected"];
+    const [remarkDialog,setRemarkDialog] = useState(false)
+    const [remarks,setRemarks] = useState("")
 
-    
-      const onConfirmStatus = (outpass) => {
+    const remarksFooter = (
+      <>
+        <Button label='Submit' onClick={()=>onSubmit()}/>
+      </>
+    )
+      const onConfirmStatus = () => {
+        if(outpass.remarks===""){
+          setRemarkDialog(true)
+        }
+        outpass.status = "Accepted";
+        setShowOutpassDialog(false);
+        
+      };
+      const onRejectStatus = () => {
+        setRemarkDialog(true)
         outpass.status = "Rejected";
         setShowOutpassDialog(false);
       };
-      const onRejectStatus = (outpass) => {
-        outpass.status = "Rejected";
-        setShowOutpassDialog(false);
-      };
 
-    
+      const onSubmit = ()=>{
+        setRemarkDialog(false);
+        outpass.remarks = remarks
+        setRemarks("")
+      }
+
+  const color = outpass.status === 'Rejected' ?  'bg-red-600' : 'bg-green-300' 
+  const color2 = outpass.status === undefined ? '' : color
+
   return (
-
-
     <>
         <Dialog
           position="top"
@@ -36,10 +49,10 @@ const Outpass = ({outpass,showOutpassDialog,setShowOutpassDialog, controls}) => 
           blockScroll={true}
 
         >
-          <Card className="shadow-6 px-7">
+          <Card className="shadow-3 px-7">
             <div className='flex w-2 justify-content-center align-items-center' style={{position:'relative',left:'55rem'}}>
-            <div className='border-2 border-round-2xl rounded bg-yellow-300' style={{width:'1rem',height:'1rem'}} ></div>
-            <p className='ml-2'>Pending</p>
+            <div className={`border-round-2xl rounded ${color2}`} style={{width:'1rem',height:'1rem'}} ></div>
+            <p className='ml-2 text-xl'>{outpass.status}</p>
             </div>
             <div className="flex justify-content-between ">
               <h1>{outpass.name}</h1>
@@ -61,7 +74,7 @@ const Outpass = ({outpass,showOutpassDialog,setShowOutpassDialog, controls}) => 
                   Hostel Room No<span className="px-1"></span>:
                 </h2>
                 <p className="w-14rem text-xl border-bottom-2 border-x-none border-top-none text-center pb-2 ml-3 ">
-                  {outpass.hostel_room}
+                  {outpass.hostelRoom}
                 </p>
               </div>
               <div className="flex justify-content-evenly">
@@ -69,7 +82,7 @@ const Outpass = ({outpass,showOutpassDialog,setShowOutpassDialog, controls}) => 
                   Contact No <span className="px-4"></span>:
                 </h2>
                 <p className="w-14rem text-xl border-bottom-2 border-x-none border-top-none text-center pb-2 ml-3">
-                  {outpass.contact_no}
+                  {outpass.contactNo}
                 </p>
               </div>
             </div>
@@ -79,7 +92,7 @@ const Outpass = ({outpass,showOutpassDialog,setShowOutpassDialog, controls}) => 
                   Date of Leaving<span className="px-1"></span>:
                 </h2>
                 <p className="w-14rem text-xl border-bottom-2 border-x-none border-top-none text-center pb-2 ml-3 ">
-                  {outpass.date_of_leaving}
+                  {outpass.dateofjourney}
                 </p>
               </div>
               <div className="flex justify-content-evenly">
@@ -87,7 +100,7 @@ const Outpass = ({outpass,showOutpassDialog,setShowOutpassDialog, controls}) => 
                   Time of Leaving<span className="px-1"></span>:
                 </h2>
                 <p className="w-14rem text-xl border-bottom-2 border-x-none border-top-none text-center pb-2 ml-3 ">
-                  {outpass.time_of_leaving}
+                  {outpass.leaveTime}
                 </p>
               </div>
             </div>
@@ -97,7 +110,7 @@ const Outpass = ({outpass,showOutpassDialog,setShowOutpassDialog, controls}) => 
                   Date of Arriving<span className="px-1"></span>:
                 </h2>
                 <p className="w-14rem text-xl border-bottom-2 border-x-none border-top-none text-center pb-2 ml-3 ">
-                  {outpass.date_of_arriving}
+                  {outpass.dateofreturn}
                 </p>
               </div>
               <div className="flex justify-content-evenly">
@@ -105,7 +118,7 @@ const Outpass = ({outpass,showOutpassDialog,setShowOutpassDialog, controls}) => 
                   Time of Arriving<span className="px-1"></span>:
                 </h2>
                 <p className="w-14rem text-xl border-bottom-2 border-x-none border-top-none text-center pb-2 ml-3 ">
-                  {outpass.time_of_arrival}
+                  {outpass.returnTime}
                 </p>
               </div>
             </div>
@@ -115,6 +128,14 @@ const Outpass = ({outpass,showOutpassDialog,setShowOutpassDialog, controls}) => 
               </h2>
               <p className="px-4 text-xl border-bottom-2 border-x-none border-top-none text-center pb-2 ml-3 ">
                 {outpass.reason}
+              </p>
+            </div>
+            <div className="flex">
+              <h2>
+                Remarks<span style={{padding:"5rem 5rem 0 0"}}></span>:
+              </h2>
+              <p className="px-4 text-xl border-bottom-2 border-x-none border-top-none text-center pb-2 ml-3 ">
+                {outpass.remarks}
               </p>
             </div>
             <div>
@@ -127,17 +148,20 @@ const Outpass = ({outpass,showOutpassDialog,setShowOutpassDialog, controls}) => 
               icon="pi pi-check"
               label="Confirm"
               className="mr-2"
-              onClick={() => onConfirmStatus(outpass)}
+              onClick={() => onConfirmStatus()}
             ></Button>
             <Button
               icon="pi pi-times"
               label="Reject"
               className="p-button-danger p-button-outlined ml-3"
-              onClick={() => onRejectStatus(outpass)}
+              onClick={() => onRejectStatus()}
             ></Button>
               </div>):<></>
            }
           </Card>
+        </Dialog>
+        <Dialog header="Remarks" style={{width:"30rem"}} visible={remarkDialog} footer ={remarksFooter} blockScroll={true} onHide={()=>setRemarkDialog(false)}>
+        <InputTextarea value={remarks} onChange={(e)=>setRemarks(e.target.value)} cols={40} rows={5} autoResize/>
         </Dialog>
     </>
   )
