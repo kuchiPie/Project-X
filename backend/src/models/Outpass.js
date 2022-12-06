@@ -55,7 +55,8 @@ const OutpassModel = new Schema(
         },
         remarks:{
             type: String,
-        }
+        },
+        
     },
     {
         timestamps:true,
