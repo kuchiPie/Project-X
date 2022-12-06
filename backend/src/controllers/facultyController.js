@@ -68,6 +68,7 @@ export const outpassApproval = async (req, res) => {
 
         if(!faculty.outpasses.includes(outpass._id)){
             res.send("No outpasses found").status(400)
+            return
         }
 
         const date1 = new Date(outpass.dateofjourney);

@@ -22,22 +22,7 @@ const Outpass = ({outpass,showOutpassDialog,setShowOutpassDialog}) => {
         setShowOutpassDialog(false);
       };
 
-    const showOutpassDialogFooter = (
-        <>
-          <Button
-            icon="pi pi-check"
-            label="Confirm"
-            className="mr-2"
-            onClick={() => onConfirmStatus(outpass)}
-          ></Button>
-          <Button
-            icon="pi pi-times"
-            label="Reject"
-            className="p-button-danger p-button-outlined"
-            onClick={() => onRejectStatus(outpass)}
-          ></Button>
-        </>
-      );
+    
   return (
 
 
@@ -46,7 +31,6 @@ const Outpass = ({outpass,showOutpassDialog,setShowOutpassDialog}) => {
           position="top"
           visible={showOutpassDialog}
           header="Outpass Info"
-          footer={showOutpassDialogFooter}
           onHide={() => setShowOutpassDialog(false)}
           style={{ width: "75rem" }}
           blockScroll={true}
@@ -66,32 +50,6 @@ const Outpass = ({outpass,showOutpassDialog,setShowOutpassDialog}) => {
             </div>
             <Divider />
             <div className=""></div>
-            <div className="flex justify-content-between">
-              <div className="flex justify-content-evenly">
-                <h2>
-                  Branch<span className="px-1"></span>:
-                </h2>
-                <p className="w-14rem text-xl border-bottom-2 border-x-none border-top-none text-center pb-2 ml-2 ">
-                  {outpass.branch}
-                </p>
-              </div>
-              <div className="flex justify-content-evenly mx-3">
-                <h2>
-                  Semester<span className="px-1"></span>:
-                </h2>
-                <p className="w-7rem text-xl border-bottom-2 border-x-none border-top-none text-center pb-2 mx-3 ">
-                  {outpass.semester}
-                </p>
-              </div>
-              <div className="flex justify-content-evenly">
-                <h2>
-                  Gender<span className="px-3"></span>:
-                </h2>
-                <p className="w-14rem text-xl border-bottom-2 border-x-none border-top-none text-center pb-2 ml-2 ">
-                  {outpass.gender}
-                </p>
-              </div>
-            </div>
             <div className="flex justify-content-between">
               <div className="flex justify-content-evenly">
                 <h2>
