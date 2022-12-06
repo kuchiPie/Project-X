@@ -140,8 +140,8 @@ export const getHistoricOutpasses = createAsyncThunk('faculty/getHistoric', asyn
     return response.data
 })
 
-export const getPendingOutpasses = createAsyncThunk('faculty/getPending', async (studentId) => {
-    const response = await axios.get(`http://localhost:5000/api/getHistoricOutpasses/?id=${studentId}`)
+export const getPendingOutpasses = createAsyncThunk('faculty/getPending', async (facultyId) => {
+    const response = await axios.get(`http://localhost:5000/api/getAllPendingOutpasses/?id=${facultyId}`)
     console.log("Response is", response.data)
     return response.data
 })
