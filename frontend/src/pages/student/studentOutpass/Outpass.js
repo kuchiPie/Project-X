@@ -6,7 +6,7 @@ import NewOutpass from './NewOutpass.js';
 import CurrentOutpass from './CurrentOutpass.js';
 import OutpassHistory from './OutpassHistory.js';
 import { useDispatch, useSelector } from 'react-redux';
-import {createOutpass, getcurrentOutpass} from '../../../reduxSlices/outpassSlice'
+import {createOutpass, getAllOutpass, getcurrentOutpass} from '../../../reduxSlices/outpassSlice'
 import NoCurrent from './NoCurrentOutpass.js';
 import ViewOutpassHistory from '../../faculty/components/ViewOutpassHistory.js';
 
@@ -26,6 +26,7 @@ function Output() {
     if(status === 'toRun'){
         console.log('h')
         dispatch(getcurrentOutpass(id))
+        dispatch(getAllOutpass(id))
     }
 
     let noofdays, value=0

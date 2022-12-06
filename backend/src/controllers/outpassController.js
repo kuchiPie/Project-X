@@ -7,16 +7,20 @@ import Faculty from '../models/Faculty.js';
 //@route           GET /api/outpass/
 //@access          Now Open but make it protected
 export const getAllOutpass = async(req,res)=>{
-    const {studentId} = req.body;
+    const studentId = req.params.id;
     if(!studentId){
         res.status(400).json({message:"Provide a student ID"})
         return;
     }
     try{
-        const outpasses = await Outpass.find({studentId:studentId});
+        const student = await Student.findById(studentId)
+        console.log(student)
+        const { outpasses } = await student.populate('outpasses')
+        console.log(outpasses)
         res.status(200).json(outpasses);
     }
     catch(error){
+        console.log(error)
         res.status(400).json({message:error.message});
     }
 };

@@ -1,17 +1,10 @@
-import React,{useState} from 'react'
+import React from 'react'
 import { Dialog } from "primereact/dialog";
-import { classNames } from "primereact/utils";
-import { InputText } from "primereact/inputtext";
 import { Card } from "primereact/card";
 import { Divider } from "primereact/divider";
 import { Button } from "primereact/button";
 
 const Outpass = ({outpass,showOutpassDialog,setShowOutpassDialog, controls}) => {
-    
-    const [selectedOutpass, setSelectedOutpass] = useState(null);
-    const [submitted, setSubmitted] = useState(false);
-    const statuses = ["Pending", "Approved", "Rejected"];
-
     
       const onConfirmStatus = (outpass) => {
         outpass.status = "Rejected";
@@ -22,10 +15,7 @@ const Outpass = ({outpass,showOutpassDialog,setShowOutpassDialog, controls}) => 
         setShowOutpassDialog(false);
       };
 
-    
   return (
-
-
     <>
         <Dialog
           position="top"
