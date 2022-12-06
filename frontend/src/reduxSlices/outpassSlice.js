@@ -10,7 +10,13 @@ const initialState = {
 const outpassSlice = createSlice({
     name: 'outpass',
     initialState,
-    reducers: {},
+    reducers: {
+        clearOutpass(state,action){
+            state.currentOutpass=null
+            state.outpassList=[]
+            state.status='toRun'
+        }
+    },
     extraReducers(builder) {
         builder
             .addCase(createOutpass.fulfilled, (state, action) => {
@@ -52,5 +58,7 @@ export const withdrawOutpass = createAsyncThunk('outpass/withdrawOutpass', async
     const response = await axios.delete(`http://localhost:5000/api/outpass/withdraw/${id}`)
     return response.data
 })
+
+export const { clearOutpass } = outpassSlice.actions
 
 export default outpassSlice.reducer

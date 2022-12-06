@@ -4,6 +4,10 @@ import "./Navbar.css";
 import { Link ,useNavigate} from "react-router-dom";
 import 'primeicons/primeicons.css';
 import { logoutHandler } from '../reduxSlices/LoginSlice';
+import {clearFaculty} from '../reduxSlices/FacultySlice';
+import {clearOutpass} from '../reduxSlices/outpassSlice';
+import {clearMapping} from '../reduxSlices/StudentFacultyMappingSlice';
+import {clearStudent} from '../reduxSlices/studentSlice';
 import { useDispatch, useSelector } from "react-redux";
 
 const Navbar = () => {
@@ -12,6 +16,10 @@ const Navbar = () => {
   
   const logout=()=>{
     dispatch(logoutHandler());
+    dispatch(clearFaculty());
+    dispatch(clearOutpass());
+    dispatch(clearMapping());
+    dispatch(clearStudent());
   }
 
   const items = [

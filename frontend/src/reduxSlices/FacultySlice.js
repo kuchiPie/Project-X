@@ -16,6 +16,14 @@ const facultySlice = createSlice({
     reducers:{
         continueOnErrorhandler(state,action){
             state.hasFailed=false
+        },
+        clearFaculty(state,action){
+            state.facultyList=[]
+            state.menteeList=[]
+            state.historicOutpasses=[]
+            state.isLoading=false
+            state.hasFailed=false 
+            state.pendingOutpassses=[]
         }
     },
     extraReducers(builder) {
@@ -138,6 +146,6 @@ export const getPendingOutpasses = createAsyncThunk('faculty/getPending', async 
     return response.data
 })
 
-export const { continueOnErrorhandler } = facultySlice.actions
+export const { continueOnErrorhandler,clearFaculty } = facultySlice.actions
 
 export default facultySlice.reducer 

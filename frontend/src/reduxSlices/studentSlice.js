@@ -11,6 +11,11 @@ const studentSlice = createSlice({
     name: 'Student',
     initialState,
     reducers:{
+        clearStudent(state,action){
+            state.isLoading=false 
+            state.students=[]
+            state.mentees=[]
+        }
     },
     extraReducers(builder) {
         builder
@@ -81,5 +86,7 @@ export const mapSelectedStudents = createAsyncThunk('StudentFacultyMapping/map',
     console.log(response)
     // return response.data
 })
+
+export const { clearStudent } = studentSlice.actions
 
 export default studentSlice.reducer 

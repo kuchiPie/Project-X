@@ -10,6 +10,10 @@ const StudentFacultyMappingSlice = createSlice({
     name: 'StudentFacultyMapping',
     initialState,
     reducers:{
+        clearMapping(state,action){
+            state.isLoading=false 
+            state.students=[]
+        }
     },
     extraReducers(builder) {
         builder
@@ -38,5 +42,7 @@ export const mapSelectedStudents = createAsyncThunk('StudentFacultyMapping/map',
     console.log(response)
     // return response.data
 })
+
+export const { clearMapping } = StudentFacultyMappingSlice.actions
 
 export default StudentFacultyMappingSlice.reducer 
