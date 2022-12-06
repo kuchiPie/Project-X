@@ -1,6 +1,11 @@
 import Student from "../models/Student.js";
 import bcrypt from 'bcryptjs';
 
+export const getStudentByID = async(id) => {
+    const data = await Student.findById(id);
+    return { success:true, data:data }
+}
+
 //get and search,pagination, may add sort 
 export const getStudentList = async(keyword, batch, branch, limit, skip) => {
     if(!keyword && !batch && !branch){

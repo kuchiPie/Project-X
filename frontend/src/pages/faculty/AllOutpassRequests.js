@@ -4,12 +4,21 @@ import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import Outpass from "./components/Outpass";
 import { useSelector, useDispatch } from "react-redux";
+import { getPendingOutpasses } from "../../reduxSlices/FacultySlice";
+import { useEffect } from "react";
 
 const AllOutpassRequests = () => {
   var dispatch = useDispatch()
   var { pendingOutpassses } = useSelector(state => state.faculty)
+  const {loggedUser} = useSelector(state=>state.login);
+
+  useEffect(() => {
+    dispatch(getPendingOutpasses(loggedUser._id))
+  }, [])
+  
+
   const localPendingOutpasses = []
-  pendingOutpassses.forEach((element)=>{
+  pendingOutpassses.forEach((outpass)=>{
     localPendingOutpasses.push({
       'date_of_leaving':outpass.dateofjourney.substring(0,10),
       'date_of_arriving':outpass.dateofreturn.substring(0,10),
@@ -21,6 +30,7 @@ const AllOutpassRequests = () => {
       'time_of_arrival':outpass.returnTime
       })
   })
+  console.log(pendingOutpassses)
   const emptyOutpass = {
     name: "",
     institute_id: "",
@@ -64,6 +74,7 @@ const AllOutpassRequests = () => {
       reason: "Vacation",
       status: "Pending",
       uploaded_document: "",
+      remarks:"",
     },
     {
       name: "Vipul Bawankar",
@@ -80,6 +91,7 @@ const AllOutpassRequests = () => {
       reason: "Vacation",
       status: "Approved",
       uploaded_document: "",
+      remarks:"",
     },
     {
       name: "Aniket Raj",
@@ -96,6 +108,7 @@ const AllOutpassRequests = () => {
       reason: "Vacation",
       status: "Rejected",
       uploaded_document: "",
+      remarks:"",
     },
   ];
   

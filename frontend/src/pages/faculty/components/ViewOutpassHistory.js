@@ -25,6 +25,7 @@ const ViewOutpassHistory = ({rowData}) => {
     reason: "",
     status: "",
     uploaded_document: "",
+    remarks:"",
   };
 
   const [outpassHistoryDialog,setOutpassHistoryDialog] = useState(false);

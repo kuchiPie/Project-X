@@ -1,20 +1,45 @@
-import React from 'react'
+import {React, useState} from 'react'
 import { Dialog } from "primereact/dialog";
+import { classNames } from "primereact/utils";
+import { InputTextarea } from 'primereact/inputtextarea';
 import { Card } from "primereact/card";
 import { Divider } from "primereact/divider";
 import { Button } from "primereact/button";
 
 const Outpass = ({outpass,showOutpassDialog,setShowOutpassDialog, controls}) => {
     
+    const [selectedOutpass, setSelectedOutpass] = useState(null);
+    const [submitted, setSubmitted] = useState(false);
+    const statuses = ["Pending", "Approved", "Rejected"];
+    const [remarkDialog,setRemarkDialog] = useState(false)
+    const [remarks,setRemarks] = useState("")
+
+    const remarksFooter = (
+      <>
+        <Button label='Submit' onClick={()=>onSubmit()}/>
+      </>
+    )
       const onConfirmStatus = (outpass) => {
-        outpass.status = "Rejected";
+        if(outpass.remarks==""){
+          setRemarkDialog(true)
+        }
+        outpass.status = "Accepted";
         setShowOutpassDialog(false);
+        
       };
       const onRejectStatus = (outpass) => {
+        if(outpass.remarks==""){
+          setRemarkDialog(true)
+        }
         outpass.status = "Rejected";
         setShowOutpassDialog(false);
       };
 
+      const onSubmit = ()=>{
+        setRemarkDialog(false);
+        outpass.remarks = remarks
+        setRemarks("")
+      }
   return (
     <>
         <Dialog
@@ -26,7 +51,7 @@ const Outpass = ({outpass,showOutpassDialog,setShowOutpassDialog, controls}) => 
           blockScroll={true}
 
         >
-          <Card className="shadow-6 px-7">
+          <Card className="shadow-3 px-7">
             <div className='flex w-2 justify-content-center align-items-center' style={{position:'relative',left:'55rem'}}>
             <div className='border-2 border-round-2xl rounded bg-yellow-300' style={{width:'1rem',height:'1rem'}} ></div>
             <p className='ml-2'>Pending</p>
@@ -107,6 +132,14 @@ const Outpass = ({outpass,showOutpassDialog,setShowOutpassDialog, controls}) => 
                 {outpass.reason}
               </p>
             </div>
+            <div className="flex">
+              <h2>
+                Remarks<span style={{padding:"5rem 5rem 0 0"}}></span>:
+              </h2>
+              <p className="px-4 text-xl border-bottom-2 border-x-none border-top-none text-center pb-2 ml-3 ">
+                {outpass.remarks}
+              </p>
+            </div>
             <div>
               <h2>Uploaded Document</h2>
             </div>
@@ -128,6 +161,9 @@ const Outpass = ({outpass,showOutpassDialog,setShowOutpassDialog, controls}) => 
               </div>):<></>
            }
           </Card>
+        </Dialog>
+        <Dialog header="Remarks" className="w-3" visible={remarkDialog} footer ={remarksFooter} blockScroll={true} onHide={()=>setRemarkDialog(false)}>
+        <InputTextarea value={remarks} onChange={(e)=>setRemarks(e.target.value)} cols={40} rows={5} autoResize/>
         </Dialog>
     </>
   )

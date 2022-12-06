@@ -108,3 +108,51 @@ export const withdrawOutpass = async(req, res) => {
         console.log(e)
     }
 }
+
+export const toggleCheckedInOutStatus=async(req,res)=>{
+    try{
+        const outpassId=req.query.id;
+        const outpass = await Outpass.findById(outpassId);
+        // console.log(outpass);
+        if(outpass===undefined){
+            // console.log('if');
+            res.status(401).send({message:'The scanned document is invalid'});
+            return;
+        }
+        else if(outpass.isApproved){
+            // console.log('else if 1');
+            if(outpass.hasCheckedOut===false){
+                // console.log(new Date);
+                // console.log(new Date());
+                if(new Date>=outpass.dateofjourney){
+                    await Outpass.findByIdAndUpdate(outpassId,{hasCheckedOut:true,checkoutTime:new Date()});
+                    res.status(200).send({message:'The student is allowed to go now'});
+                    return;
+                }
+                else{
+                    res.status(400).send({message:'Today date is less than the leaving date on the outpass'})
+                    return;
+                }
+            }
+            else if(outpass.hasArrived===false){
+                // console.log('else if 2');
+                await Outpass.findByIdAndUpdate(outpassId,{hasArrived:true,arrivalTime:new Date()});
+                res.status(200).send({message:'The student is allowed to enter the campus'});
+                return;
+            }
+            else{
+                // console.log('else');
+                res.status(400).send({message:'Invalid Request'});
+                return;
+            }
+        }
+        else{
+            // console.log('error')
+            res.status(400).send({message:'Outpass is not verified yet'});
+            return;
+        }
+    }
+    catch(e){
+        res.status(400).send({message:'Some error occured'});
+    }
+}
