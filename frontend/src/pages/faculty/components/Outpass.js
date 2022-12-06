@@ -74,32 +74,6 @@ const Outpass = ({outpass,showOutpassDialog,setShowOutpassDialog, controls}) => 
             <div className="flex justify-content-between">
               <div className="flex justify-content-evenly">
                 <h2>
-                  Branch<span className="px-1"></span>:
-                </h2>
-                <p className="w-14rem text-xl border-bottom-2 border-x-none border-top-none text-center pb-2 ml-2 ">
-                  {outpass.branch}
-                </p>
-              </div>
-              <div className="flex justify-content-evenly mx-3">
-                <h2>
-                  Semester<span className="px-1"></span>:
-                </h2>
-                <p className="w-7rem text-xl border-bottom-2 border-x-none border-top-none text-center pb-2 mx-3 ">
-                  {outpass.semester}
-                </p>
-              </div>
-              <div className="flex justify-content-evenly">
-                <h2>
-                  Gender<span className="px-3"></span>:
-                </h2>
-                <p className="w-14rem text-xl border-bottom-2 border-x-none border-top-none text-center pb-2 ml-2 ">
-                  {outpass.gender}
-                </p>
-              </div>
-            </div>
-            <div className="flex justify-content-between">
-              <div className="flex justify-content-evenly">
-                <h2>
                   Hostel Room No<span className="px-1"></span>:
                 </h2>
                 <p className="w-14rem text-xl border-bottom-2 border-x-none border-top-none text-center pb-2 ml-3 ">

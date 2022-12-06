@@ -21,6 +21,7 @@ function Output() {
     const newOutpassSubmitHandler=(outpass)=>{
         dispatch(createOutpass(outpass))
     }
+    
     console.log(currentOutpass)
     if(status === 'toRun'){
         console.log('h')
@@ -62,6 +63,8 @@ function Output() {
                 { (currentOutpass === null || currentOutpass === "" || currentOutpass === {}) ?
                 <NoCurrent/> :
                 <Card className="m-3 p-0 border-2 border-gray-800">
+                    {currentOutpass.isApproved?<h2 className='mt-0 flex justify-content-center'>OUTPASS APPROVED!!!</h2>:<></>}
+                    {currentOutpass.isRejected?<h2 className='mt-0 flex justify-content-center'>Outpass Request Rejected. Check Remarks for reason.</h2>:<></>}
                     <div className="col">
                         <ProgressBar value={value} showValue={false} />
                     </div>
@@ -73,10 +76,10 @@ function Output() {
                                 <h3 className="m-0 font-semibold">Faculty Advisor</h3>
                             </div>
                             <div className="col-12 mb-2 lg:col lg:mb-0 flex justify-content-center">
-                                <h3 className="m-0 font-semibold">SWC</h3>
+                                <h3 className="m-0 font-semibold">{value === 34 ? currentOutpass.SWC : 'SWC'}</h3>
                             </div>
                             <div className="col-12 mb-2 lg:col lg:mb-0 flex justify-content-center">
-                                <h3 className="m-0 font-semibold">Warden</h3>
+                                <h3 className="m-0 font-semibold">{value === 66 ? currentOutpass.warden : 'Warden'}</h3>
                             </div>
                         </>
                         :
@@ -85,7 +88,7 @@ function Output() {
                                 <h3 className="m-0 font-semibold">Faculty Advisor</h3>
                             </div>
                             <div className="col-12 mb-2 lg:col lg:mb-0 flex justify-content-center">
-                                <h3 className="m-0 font-semibold">Warden</h3>
+                                <h3 className="m-0 font-semibold">{value === 50 ? currentOutpass.warden : 'Warden'}</h3>
                             </div>
                         </>
                         }

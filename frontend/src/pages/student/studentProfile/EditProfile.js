@@ -11,7 +11,7 @@ function EditProfile() {
 
     return (
         <><Button type="button" label="Edit Profile" icon="pi pi-pencil" onClick={() => setDisplayEditProfile(true)} />
-            <Dialog header="Edit Profile" visible={displayEditProfile} style={{ width: '80vw' }} modal footer={basicDialogFooter} onHide={() => setDisplayEditProfile(false)}>
+            <Dialog blockScroll header="Edit Profile" visible={displayEditProfile} style={{ width: '80vw' }} modal footer={basicDialogFooter} onHide={() => setDisplayEditProfile(false)}>
                 <div className="col">
                     <h2 className="my-2 font-bold mt-6">Parents Details</h2>
                     <Divider className="mb-7" layout="horizontal"></Divider>

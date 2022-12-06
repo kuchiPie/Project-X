@@ -5,12 +5,13 @@ import { InputText } from 'primereact/inputtext';
 import { Toast } from 'primereact/toast';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import { Card } from 'primereact/card';
+import { Dialog } from 'primereact/dialog';
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate } from 'react-router-dom';
 import { SelectButton } from 'primereact/selectbutton';
+import { passReset } from '../constants/passwordResetActions';
 
 import Form from "react-validation/build/form";
-// import Input from "react-validation/build/input";
 import { loginUser } from '../reduxSlices/LoginSlice';
 
 const required = (value) => {
@@ -24,13 +25,14 @@ const required = (value) => {
 };
 
 const Login = () => {
-    // let navigate = useNavigate();
     const toast = useRef(null);
 
     const form = useRef();
+    const forgotPWForm = useRef();
     const [showPassword,setShowPassword] = useState(false)
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [FPvisible, setFPVisible] = useState(false)
     
 
     const { isLoggedIn, status, loggedUser, userType, token, error} = useSelector(state => state.login);
@@ -64,23 +66,50 @@ const Login = () => {
         setPassword(e.target.value);
     };
 
-    const showError = () => {
-        if(error === 'Email is not registered'){
-            toast.current.show({severity:'error', summary: 'Select Correct Role', detail:'Email is not registored', life: 3000});
-        }
-        if(error === 'Password incorrect'){
-            toast.current.show({severity:'error', summary: 'Incorrect Password', detail:'Re-enter Password', life: 3000});
-        }
+    // const showError = () => {
+    //     if(error === 'Email is not registered'){
+    //         toast.current.show({severity:'error', summary: 'Select Correct Role', detail:'Email is not registored', life: 3000});
+    //     }
+    //     if(error === 'Password incorrect'){
+    //         toast.current.show({severity:'error', summary: 'Incorrect Password', detail:'Re-enter Password', life: 3000});
+    //     }
         
+    // }
+
+    const forgotPasswordVisibleDialog = () => {
+        setFPVisible(true);
+    }
+    const hideForgotPasswordDialog = () => {
+        setFPVisible(false);
+    }
+
+    const handleFPSubmit = (e) => {
+        e.preventDefault();
+        const body = {
+            username: `${username}`,
+            userType: `${selectedUser.label}`
+        }
+        dispatch(passReset(body));
+        setFPVisible(false);
+        toast.current.show({severity:'success', summary: 'Password Reset', detail:'Successful', life: 3000})
     }
 
     const handleLogin = (e) => {
         e.preventDefault();
         dispatch(loginUser({email: username, password, selectedUser}))
         if(status === 'failed') {
-            showError()
+            switch(error) {
+                case 'Email is not registered':
+                    toast.current.show({severity:'error', summary: 'Select Correct Role', detail:'Email is not registored', life: 3000});
+                    break;
+                
+                case 'Password incorrect':
+                    toast.current.show({severity:'error', summary: 'Incorrect Password', detail:'Re-enter Password', life: 3000});
+                    break;
+                
+                default: toast.current.show({severity:'success', summary: 'Login Successful', detail:'Welcome', life: 3000})
+            }
         }
-        // dispatch(setUserType({userType: selectedUser.label}))
     };
 
     if (isLoggedIn) {
@@ -134,19 +163,43 @@ const Login = () => {
                         )}
                         <Button className="my-4 w-full" label="Login"></Button>
                         </Form>
-                        {/* {(status === 'failed') && (
-                        <div className="form-group">
-                            <div className="alert alert-danger" role="alert">
-                                {showError()}
-                            </div>
-                        </div>
-                        )} */}
+                        <Button label="Forgot Password?" className="p-button-link" onClick={forgotPasswordVisibleDialog} />                      
                     </Card>
                     </div>
-            </div></>
+            </div>
+            { FPvisible && (
+                <Dialog
+                    visible={FPvisible}
+                    style={{ width: "600px" }}
+                    header="Reset Password"
+                    modal
+                    onHide={hideForgotPasswordDialog}
+                    className="p-fluid"
+                    position='right'
+                    closeOnEscape
+                >
+                    <div className="field">
+                    <Form onSubmit={handleFPSubmit} ref={forgotPWForm}>
+                        <InputText className='mt-1 w-full' value={username} onChange={(e)=>setUsername(e.target.value) } required />
+                        <SelectButton className ="w-full"  value={selectedUser} options={users} onChange={(e) => setSelectedUser(e.value)} itemTemplate={justifyTemplate}></SelectButton>
+                        <Button label="Send E-mail to Reset Password" className="my-4 w-full"/>
+                    </Form>
+                    </div>
+            </Dialog>
+            )}
+                 
+        </>
 
     )
 }
 
 
 export default React.memo(Login);
+
+/* {(status === 'failed') && (
+                        <div className="form-group">
+                            <div className="alert alert-danger" role="alert">
+                                {showError()}
+                            </div>
+                        </div>
+                        )} */

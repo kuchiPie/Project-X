@@ -1,7 +1,14 @@
-import { getStudentList, createStudent, updateStudent, deleteStudent } from "../repository/studentsRepository.js";
+import { getStudentList, createStudent, updateStudent, deleteStudent, getStudentByID } from "../repository/studentsRepository.js";
 
 
 export default class StudentService{
+
+    async getStudentbyIDService(req) {
+        const {id} = req.params;
+        const data = await getStudentByID(id);
+        return { success: true, data: data.data};
+    }
+
     async getStudentListService(req) {
         const {keyword,batch, branch, limit, skip} = req.query;
         const data = await getStudentList(

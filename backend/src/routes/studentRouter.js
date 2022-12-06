@@ -1,9 +1,11 @@
 import { Router } from 'express';
 const router = new Router();
-import { getStudentListController, createStudentController, updateStudentController, deleteStudentController } from '../controllers/studentController.js'
+import { getStudentListController, createStudentController, updateStudentController, deleteStudentController, getStudentByIDController } from '../controllers/studentController.js'
 import studentLoginController from '../controllers/studentLoginController.js';
 
 router.post('/student/login', studentLoginController)
+
+router.get('/student/:id', getStudentByIDController)
 
 router.get('/student', getStudentListController)
 

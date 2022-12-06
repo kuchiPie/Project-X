@@ -7,6 +7,7 @@ import Outpass from './Outpass'
 import { getHistoricOutpasses } from '../../../reduxSlices/FacultySlice'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 const ViewOutpassHistory = ({rowData}) => {
 
@@ -33,9 +34,10 @@ const ViewOutpassHistory = ({rowData}) => {
 
   const [OutpassHistory, setOutpassHistory] = useState([]);
   const dispatch = useDispatch()
-  useEffect(() => {
-    dispatch(getHistoricOutpasses(rowData._id))
-  }, [])
+  // useEffect(() => {
+  //   dispatch(getHistoricOutpasses(rowData._id))
+  //   console.log("Historic Outpasses", rowData._id)
+  // }, [])
   
 
   // const OutpassHistory = [
@@ -56,17 +58,45 @@ const ViewOutpassHistory = ({rowData}) => {
   //     uploaded_document: "",
   //   },
   // ]
+  // const OutpassHistory = 
+  
+  const {historicOutpasses} = useSelector(state => state.faculty)
+  
+  const localHistoricOutpasses = []
+  historicOutpasses.forEach(
+    outpass=>{
+      localHistoricOutpasses.push(
+        {
+        'date_of_leaving':outpass.dateofjourney.substring(0,10),
+        'date_of_arriving':outpass.dateofreturn.substring(0,10),
+        'reason':outpass.reason,
+        'status':outpass.isRejected?"Rejected":"Approved",
+        'hostel_room':outpass.hostelRoom,
+        'contact_no':outpass.contactNo,
+        'time_of_leaving':outpass.leaveTime,
+        'time_of_arrival':outpass.returnTime
+        })
+      }
+    )
+
+  const showOutpassHistoryDiaog = () => {
+    dispatch(getHistoricOutpasses(rowData._id))
+    // console.log()
+    setOutpassHistoryDialog(true)
+    console.log(historicOutpasses)
+  }
 
   const showOutpass = (rowData) => {
     setOutpass(rowData);
+    
     setShowOutpassDialog(true);
   };
   
   return (
     <>
-      <Button label="View Outpass History" className="mx-2" onClick={()=>setOutpassHistoryDialog(true)}/>
+      <Button label="View Outpass History" className="mx-2" onClick={()=>showOutpassHistoryDiaog()}/>
       <Dialog visible={outpassHistoryDialog} onHide={()=>setOutpassHistoryDialog(false)} >
-        <DataTable value={OutpassHistory} selectionMode="single" onSelectionChange={(e)=>showOutpass(e.value)}>
+        <DataTable value={localHistoricOutpasses} selectionMode="single" onSelectionChange={(e)=>showOutpass(e.value)}>
           <Column field="date_of_leaving" header="Date of Leaving"></Column>
           <Column field="date_of_arriving" header="Date of Arriving"></Column>
           <Column field="reason" header="Reason"></Column>
