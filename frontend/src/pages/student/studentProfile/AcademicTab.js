@@ -1,7 +1,16 @@
 import React from 'react'
 import { Divider } from 'primereact/divider';
 
+// import { useDispatch, useSelector } from 'react-redux';
+// import { getStudentByID } from '../../../reduxSlices/studentSlice';
+
 function AcademicTab() {
+
+    // const dispatch = useDispatch()
+
+    // const { loggedUser } = useSelector(state=> state.login)
+ 
+    // const student = dispatch(getStudentByID(loggedUser._id))
     return (
         <>
             <div className="grid p-fluid">

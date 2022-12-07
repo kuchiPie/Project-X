@@ -1,50 +1,86 @@
-import React, { useState, useEffect } from 'react';
-import { Card } from 'primereact/card';
-import { Dialog } from 'primereact/dialog';
-import { Button } from 'primereact/button';
-import { DataView } from 'primereact/dataview';
-
+import React, { useState } from "react";
+import { Dialog } from "primereact/dialog";
+import { Button } from "primereact/button";
+import { DataTable } from "primereact/datatable";
+import { Column } from "primereact/column";
+import Outpass from "../../faculty/components/Outpass";
+import {useSelector} from 'react-redux'
 
 function OutpassHistory() {
+  // const user = useSelector(state => state.login.loggedUser)
+  const alloutpasses = useSelector(state => state.outpass.outpassList)
+  let filteredOutpasses = []
+  if(alloutpasses !== 0){
+    const OutpassesHistory = alloutpasses.filter((outpass) => outpass.isApproved || outpass.isRejected)
 
-    const [displayHistory, setDisplayHistory] = useState(false);
-    const [dataviewValue, setDataviewValue] = useState(null);
+    filteredOutpasses = OutpassesHistory.map((outpass) => {
+      let status
+        if(outpass.isApproved){
+          status = 'Approved'
+        } else {
+          status = 'Rejected'
+        }
+      return {...outpass, dateofjourney: outpass.dateofjourney.slice(0,10), dateofreturn: outpass.dateofreturn.slice(0,10), status}     
+    });
+  }
 
-    const data = {
-        name : "affnv",
-        description : "bfsdb",
-        date : "43848",
-        approvalStatus : "fojwv"
-    }
-    
-    const dataviewListItem = (data) => {
-        return (
-            <div className="col-12">
-                <div className="flex flex-column md:flex-row align-items-center p-3 w-full">
-                    <div className="flex-1 text-center md:text-left">
-                        <div className="font-bold text-2xl">{data.name}</div>
-                        <div className="mb-3">{data.description}</div>
-                    </div>
-                    <div className="flex flex-row md:flex-column justify-content-between w-full md:w-auto align-items-center md:align-items-end mt-5 md:mt-0">
-                        <span className="text-2xl font-semibold mb-2 align-self-center md:align-self-end">${data.date}</span>
-                        <Button label="View" className="mb-2"></Button>
-                        <span>{data.approvalStatus}</span>
-                    </div>
-                </div>
-            </div>
-        );
-    };
+  const emptyOutpass = {
+    name: "",
+    institute_id: "",
+    gender: "",
+    branch: "",
+    hostel_room: "",
+    contact_no: "",
+    date_of_leaving: "",
+    date_of_arriving: "",
+    time_of_leaving: "",
+    time_of_arrival: "",
+    reason: "",
+    status: "",
+    uploaded_document: "",
+  };
 
-    return (
-        <>
-            <Button type="button" label="Outpass History" icon="pi pi-folder-open" onClick={() => setDisplayHistory(true)} />
-            <Dialog header="History" visible={displayHistory} style={{ width: '80vw' }} modal onHide={() => setDisplayHistory(false)}>
-                {/* <Card className="h-full mx-5 border-2 border-gray-800 surface-100"> */}
-                    <DataView value={dataviewValue} paginator rows={9} itemTemplate={dataviewListItem(data)}></DataView>
-                {/* </Card> */}
-            </Dialog>
-        </>
-    );
+  const [displayHistory, setDisplayHistory] = useState(false);
+  // const [dataviewValue, setDataviewValue] = useState(null);
+ 
+  const [outpass, setOutpass] = useState(emptyOutpass);
+  const [showOutpassDialog, setShowOutpassDialog] = useState(false);
+  
+
+  const showOutpass = (rowData) => {
+    setOutpass(rowData);
+    setShowOutpassDialog(true);
+  };
+
+  return (
+    <>
+      <Button
+        type="button"
+        label="Outpass History"
+        icon="pi pi-folder-open"
+        onClick={() => setDisplayHistory(true)}
+      />
+      <Dialog
+        header="History"
+        visible={displayHistory}
+        style={{ width: "80vw" }}
+        modal
+        onHide={() => setDisplayHistory(false)}
+      >
+        <DataTable
+          value={filteredOutpasses}
+          selectionMode="single"
+          onSelectionChange={(e) => showOutpass(e.value)}
+        >
+          <Column field="dateofjourney" header="Date of Leaving"></Column>
+          <Column field="dateofreturn" header="Date of Arriving"></Column>
+          <Column field="reason" header="Reason"></Column>
+          <Column field="status" header="Status"></Column>
+        </DataTable>
+      </Dialog>
+      <Outpass outpass={outpass} showOutpassDialog={showOutpassDialog} setShowOutpassDialog={setShowOutpassDialog} controls={false} />
+    </>
+  );
 }
 
 export default OutpassHistory;

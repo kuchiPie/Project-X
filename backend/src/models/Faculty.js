@@ -24,10 +24,10 @@ let Faculty = new Schema({
   token: {
     type: String
   },
-  outpasses: {
+  outpasses: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: "Outpass"
-  },
+  }],
   mentees: {
     type: [{ type : _Schema.Types.ObjectId, ref: 'student' }]
   }

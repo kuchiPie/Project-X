@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
@@ -11,14 +11,16 @@ import Mentees from "./Mentees";
 const FacultyModel = () => {
     // var token = localStorage.getItem('token');
     const [selectedFaculty, setSelectedFaculty] = useState(null);
-    const dispatch = useDispatch()
     const {facultyList} = useSelector(state => state.faculty) 
-    const {token} = useSelector(state=>state.login);
 
-    useEffect(()=>{
-      dispatch(getFacultyServer({token:token}))
-    },[])
-    
+    // useEffect(()=>{
+    //   dispatch(getFacultyServer({token:token}))
+    // },[])
+    // console.log(facultyList)
+    // if(facultyList.length === 0){
+    //     dispatch(getFacultyServer({token:token}))
+    // }
+
     const actionBodyTemplate = (rowData) => {
         return (
           <>
@@ -40,6 +42,7 @@ const FacultyModel = () => {
 
   return (
     <>
+    {facultyList !== [] ?
     <DataTable
               value={facultyList}
               paginator
@@ -84,7 +87,7 @@ const FacultyModel = () => {
                 exportable={false}
                 style={{ minWidth: "8rem" }}
               ></Column>
-            </DataTable>
+            </DataTable> : <div>Fetching Data</div>}
             
     </>
   )

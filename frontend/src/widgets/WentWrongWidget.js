@@ -2,6 +2,11 @@ import React, { useState } from 'react';
 import { Dialog } from 'primereact/dialog';
 import { Button } from 'primereact/button';
 import { useDispatch } from 'react-redux';
+import { logoutHandler } from '../reduxSlices/LoginSlice';
+import {clearFaculty} from '../reduxSlices/FacultySlice';
+import {clearOutpass} from '../reduxSlices/outpassSlice';
+import {clearMapping} from '../reduxSlices/StudentFacultyMappingSlice';
+import {clearStudent} from '../reduxSlices/studentSlice';
 
 const WentWrongWidget = (props) => {
     const dispatch = useDispatch();
@@ -14,6 +19,11 @@ const WentWrongWidget = (props) => {
     }
 
     const yesHandler=()=>{
+        dispatch(logoutHandler());
+        dispatch(clearFaculty());
+        dispatch(clearOutpass());
+        dispatch(clearMapping());
+        dispatch(clearStudent());
         dispatch(props.yesFunction());
     }
 

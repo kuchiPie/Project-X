@@ -3,8 +3,11 @@ import axios from 'axios'
 
 const initialState = {
     facultyList:[],
+    menteeList:[],
+    historicOutpasses:[],
     isLoading:false,
-    hasFailed:false
+    hasFailed:false,
+    pendingOutpassses:[]
 }
 
 const facultySlice = createSlice({
@@ -13,6 +16,14 @@ const facultySlice = createSlice({
     reducers:{
         continueOnErrorhandler(state,action){
             state.hasFailed=false
+        },
+        clearFaculty(state,action){
+            state.facultyList=[]
+            state.menteeList=[]
+            state.historicOutpasses=[]
+            state.isLoading=false
+            state.hasFailed=false 
+            state.pendingOutpassses=[]
         }
     },
     extraReducers(builder) {
@@ -31,9 +42,9 @@ const facultySlice = createSlice({
             .addCase(getFacultyServer.pending,(state,action)=>{
                 state.isLoading=true
                 console.log(action);
-                console.log("Some error occured");
             })
             .addCase(getFacultyServer.fulfilled, (state,action) => {
+                state.facultyList = []
                 action.payload.forEach(element => {
                     state.facultyList.push(element)
                 });
@@ -69,6 +80,35 @@ const facultySlice = createSlice({
                 const index = state.facultyList.findIndex((element) => action.payload._id === element._id)
                 state.facultyList.splice(index, 1)
             })
+            .addCase(getHistoricOutpasses.pending, (state, action) => {
+                state.isLoading=true
+            })
+            .addCase(getHistoricOutpasses.fulfilled, (state, action) => {
+                state.historicOutpasses = []
+                action.payload.forEach(element => {
+                    console.log(element)
+                    state.historicOutpasses.push(element)
+                });
+                state.isLoading=false
+            })
+            .addCase(getPendingOutpasses.pending, (state, action) => {
+                state.isLoading=true
+            })
+            .addCase(getPendingOutpasses.fulfilled, (state, action) => {
+                state.pendingOutpassses = []
+                action.payload.forEach(element => {
+                    console.log(element)
+                    state.pendingOutpassses.push(element)
+                });
+                state.isLoading=false
+            })
+            .addCase(approveOutpass.fulfilled, (state, action) => {
+                const index = state.pendingOutpassses.indexOf(action.payload._id)
+                state.pendingOutpassses.splice(index, 1)
+            })
+            .addCase(approveOutpass.rejected, (state, action) => {
+                console.log('Hhehehehhe Broke')
+            })
     }
 })
 
@@ -89,6 +129,7 @@ export const getFacultyServer = createAsyncThunk('faculty/getfaculty', async (da
 
 export const editFacultyServer = createAsyncThunk('faculty/editfaculty', async (facultyData) => {
     const {token,faculty} = facultyData;
+    console.log(faculty);
     const response = await axios.patch(`http://localhost:5000/api/faculty/${faculty._id}`, faculty,{headers: {Authorization: "Bearer " + token}})
     return response.data
 })
@@ -99,6 +140,24 @@ export const deleteFacultyServer = createAsyncThunk('faculty/deletefaculty', asy
     return faculty
 })
 
-export const { continueOnErrorhandler } = facultySlice.actions
+// Approved or Rejected Outpasses
+export const getHistoricOutpasses = createAsyncThunk('faculty/getHistoric', async (studentId) => {
+    const response = await axios.get(`http://localhost:5000/api/getHistoricOutpasses/?id=${studentId}`)
+    console.log("Response is", response.data)
+    return response.data
+})
+
+export const getPendingOutpasses = createAsyncThunk('faculty/getPending', async (facultyId) => {
+    const response = await axios.get(`http://localhost:5000/api/getAllPendingOutpasses/?id=${facultyId}`)
+    console.log("Response is", response.data)
+    return response.data
+})
+
+export const approveOutpass = createAsyncThunk('faculty/approve', async(details) => {
+    const response = await axios.post('http://localhost:5000/api/faculty/approval', details)
+    return response.data
+})
+
+export const { continueOnErrorhandler,clearFaculty } = facultySlice.actions
 
 export default facultySlice.reducer 
