@@ -19,6 +19,7 @@ function NewOutpass({newOutpassFunc}) {
     const toast = useRef(null);
     const [displayBasic, setDisplayBasic] = useState(false);
     const studentId = useSelector(state => state.login.loggedUser._id)
+    const student = useSelector(state => state.login.loggedUser)
 
     // All data fields
     const [leaveDate, setLeaveDate] = useState(null);
@@ -74,6 +75,15 @@ function NewOutpass({newOutpassFunc}) {
 
     const basicDialogFooter = <Button type="button" label="Create Outpass" onClick={newOutpassSubmitHandler} icon="pi pi-check" className=" mt-4 p-button-secondary" />;
 
+    const branch =()=> {
+        if (student.branch === 'bds') {
+            return 'DSAI'
+        } else if (student.branch === 'bcs') {
+            return 'CSE'
+        } else if (student.branch === 'bec') {
+            return 'ECE'
+        }
+    }
 
     return (
         <>
@@ -81,14 +91,14 @@ function NewOutpass({newOutpassFunc}) {
             <Dialog header="New Outpass" visible={displayBasic} style={{ width: '80vw' }} modal footer={basicDialogFooter} onHide={() => setDisplayBasic(false)} blockScroll={true}>
                 <Card className="h-full mx-5 border-2 border-gray-800 surface-100">
                     <div className="flex justify-content-between ">
-                        <h2 className="m-0 font-semibold">Shichan Nohara</h2>
-                        <h2 className="m-0">20BDS022</h2>
+                        <h2 className="m-0 font-semibold">{student.name}</h2>
+                        <h2 className="m-0">{student.rollno}</h2>
                     </div>
                     <Divider layout="horizontal"></Divider>
                     <div className="grid formgrid">
                         <div className="col-12 mb-2 lg:col-4 lg:mb-0 pr-5 flex justify-content-between">
                             <h3 className="m-0 font-bold">Branch</h3>
-                            <h3 className="m-0 font-semibold">DSAI</h3>
+                            <h3 className="m-0 font-semibold">{branch()}</h3>
                         </div>
                         <div className="col-12 mb-2 lg:col-4 lg:mb-0 flex justify-content-between">
                             <h3 className="m-0 font-bold">Semester</h3>

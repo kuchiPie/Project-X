@@ -62,15 +62,15 @@ function EditProfile(props) {
     }
 
     const genders = [
-        { gender: 'Male' },
-        { gender: 'Female' },
-        { gender: 'Other' }
+        { 'Male': 'Male' },
+        { 'Female': 'Female' },
+        { 'Other': 'Other' }
     ];
 
     const cats = [
-        { cat: 'General' },
-        { cat: 'OBC' },
-        { cat: 'SC' }
+        { 'General': 'General' },
+        { 'OBC': 'OBC' },
+        { 'SC': 'SC' }
     ];
 
     const onHide = ()=>{
@@ -136,7 +136,7 @@ function EditProfile(props) {
                         <div className="col-12 md:col-6">
                             <div className="flex justify-content-between">
                                 <h4 className="m-0">Gender</h4>
-                                <Dropdown className="w-15rem" optionLabel="gender" value={gender} options={genders} onChange={(e) => setGender(e.target.value)} />
+                                <Dropdown className="w-15rem" optionLabel="gender" value={gender} options={genders} onChange={(e) => setGender(e.value)} />
                             </div>
                             <Divider layout="horizontal"></Divider>
                             <div className="flex justify-content-between">

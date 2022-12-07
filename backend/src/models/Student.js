@@ -93,7 +93,7 @@ const studentSchema = new Schema({
     },
     guideFrom:{
         type:Date,
-    }
+    },    
 },{
     timestamps: true
 }
