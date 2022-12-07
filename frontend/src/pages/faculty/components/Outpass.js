@@ -4,35 +4,48 @@ import { InputTextarea } from 'primereact/inputtextarea';
 import { Card } from "primereact/card";
 import { Divider } from "primereact/divider";
 import { Button } from "primereact/button";
+import { useDispatch, useSelector } from 'react-redux';
+import { approveOutpass } from '../../../reduxSlices/FacultySlice';
 
 const Outpass = ({outpass,showOutpassDialog,setShowOutpassDialog, controls}) => {
+    console.log(outpass.remarks)
     
     const [remarkDialog,setRemarkDialog] = useState(false)
-    const [remarks,setRemarks] = useState("")
+    const [remarks,setRemarks] = useState()
+    const [intent, setIntent] = useState()
+    const dispatch = useDispatch()
+    const user = useSelector(state => state.login.loggedUser)
 
+    let rejectreason = '', acceptreason = ''
     const remarksFooter = (
       <>
         <Button label='Submit' onClick={()=>onSubmit()}/>
       </>
     )
+
       const onConfirmStatus = () => {
-        if(outpass.remarks===""){
-          setRemarkDialog(true)
-        }
-        outpass.status = "Accepted";
-        setShowOutpassDialog(false);
-        
-      };
-      const onRejectStatus = () => {
+        setRemarks(outpass.remarks)
         setRemarkDialog(true)
-        outpass.status = "Rejected";
+        setIntent(true)
+        setShowOutpassDialog(false);
+      };
+
+      const onRejectStatus = () => {
+        setRemarks(outpass.remarks)
+        setRemarkDialog(true)
+        setIntent(false)
         setShowOutpassDialog(false);
       };
 
       const onSubmit = ()=>{
         setRemarkDialog(false);
-        outpass.remarks = remarks
-        setRemarks("")
+        if(intent){
+          acceptreason = remarks
+        } else {
+          rejectreason = remarks
+        }
+        const id = outpass._id
+        dispatch(approveOutpass({acceptreason, rejectreason, intent, outpassId: id, facultyId: user._id}))
       }
 
   const color = outpass.status === 'Rejected' ?  'bg-red-600' : 'bg-green-300' 

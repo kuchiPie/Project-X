@@ -27,7 +27,8 @@ const AllOutpassRequests = () => {
       contactNo:outpass.contactNo,
       leaveTime:outpass.leaveTime,
       returnTime:outpass.returnTime,
-      remarks: outpass.remarks === undefined ? "" : outpass.remarks
+      remarks: outpass.remarks === undefined ? "" : outpass.remarks,
+      _id: outpass._id
       })
   })
 
@@ -59,73 +60,12 @@ const AllOutpassRequests = () => {
   const paginatorRight = (
     <Button type="button" icon="pi pi-cloud" className="p-button-text" />
   );
-  // const Requests = [
-  //   {
-  //     name: "Aman Gupta",
-  //     institute_id: "20bds024@iiitdwd.ac.in",
-  //     gender: "Male",
-  //     branch: "DSAI",
-  //     semester: "5th",
-  //     hostel_room: "223",
-  //     contact_no: "9036986178",
-  //     date_of_leaving: "20/12/22",
-  //     date_of_arriving: "22/12/22",
-  //     time_of_leaving: "9:00AM",
-  //     time_of_arrival: "9:00PM",
-  //     reason: "Vacation",
-  //     status: "Pending",
-  //     uploaded_document: "",
-  //     remarks:"",
-  //   },
-  //   {
-  //     name: "Vipul Bawankar",
-  //     institute_id: "20bds063@iiitdwd.ac.in",
-  //     gender: "Male",
-  //     branch: "DSAI",
-  //     semester: "5th",
-  //     hostel_room: "216",
-  //     contact_no: "9653365589",
-  //     date_of_leaving: "20/12/22",
-  //     date_of_arriving: "22/12/22",
-  //     time_of_leaving: "9:00AM",
-  //     time_of_arrival: "9:00PM",
-  //     reason: "Vacation",
-  //     status: "Approved",
-  //     uploaded_document: "",
-  //     remarks:"",
-  //   },
-  //   {
-  //     name: "Aniket Raj",
-  //     institute_id: "20bds007@iiitdwd.ac.in",
-  //     gender: "Male",
-  //     branch: "DSAI",
-  //     semester: "5th",
-  //     hostel_room: "216",
-  //     contact_no: "9619513423",
-  //     date_of_leaving: "20/12/22",
-  //     date_of_arriving: "22/12/22",
-  //     time_of_leaving: "9:00AM",
-  //     time_of_arrival: "9:00PM",
-  //     reason: "Vacation",
-  //     status: "Rejected",
-  //     uploaded_document: "",
-  //     remarks:"",
-  //   },
-  // ];
   
   const showOutpass = (rowData) => {
     setOutpass(rowData);
     setShowOutpassDialog(true);
   };
   
-
-  // const statusbodytemplate = (rowData) => {
-  //   return (
-  //     <span className={`customer-badge status-${rowData.status}`}>
-  //       {rowData.status}
-  //     </span>
-  //   );
-  // };
 
   return (
     <>
