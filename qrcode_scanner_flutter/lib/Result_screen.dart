@@ -49,7 +49,7 @@ class _ResultScreenState extends State<ResultScreen> {
       body: Center(
         child: _isloading
             ? CircularProgressIndicator()
-            : Text(response.toString()),
+            : Text(response?'Scanning':response.toString()),
       ),
     );
   }
