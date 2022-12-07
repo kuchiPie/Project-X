@@ -21,9 +21,6 @@ function Profile() {
         dispatch(getStudentByID(loggedUser._id))
     }, [])
  
-    
-
-    const { student } = useSelector( state => state.student)
 
     const [displayEditProfile, setDisplayEditProfile] = useState(false)
 
@@ -42,13 +39,13 @@ function Profile() {
                     <Card className=" flex justify-content-center border-2 border-gray-800">
                         <div className="flex flex-column">
                             <Image src="/images/shin.jpg" alt="profile-photo" width="250rem" preview />
-                            <h4 className="flex justify-content-center my-1">{student.name  || '---'}</h4>
-                            <h5 className="flex justify-content-center my-1">{student.degree  || 'Degree Type'}</h5>
-                            <h5 className="flex justify-content-center my-1">{student.branch  || 'branch'}</h5>
+                            <h4 className="flex justify-content-center my-1">{loggedUser.name  || '---'}</h4>
+                            <h5 className="flex justify-content-center my-1">{loggedUser.degree  || 'Degree Type'}</h5>
+                            <h5 className="flex justify-content-center my-1">{loggedUser.branch  || 'branch'}</h5>
                             <Button type="button" label="Edit Profile" icon="pi pi-pencil" onClick={() => setDisplayEditProfile(true)} />
                             {
                                 displayEditProfile && (
-                                    <EditProfile setDisplayEditProfile={setDisplayEditProfile} student={student} displayEditProfile/>
+                                    <EditProfile setDisplayEditProfile={setDisplayEditProfile} student={loggedUser} displayEditProfile/>
                                 )
                             }
                         </div>

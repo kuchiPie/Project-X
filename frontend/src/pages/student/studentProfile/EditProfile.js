@@ -11,7 +11,6 @@ import { editStudentDetails } from '../../../reduxSlices/studentSlice';
 import { Dialog } from 'primereact/dialog';
 
 function EditProfile(props) {
-    console.log(props)
     const dispatch = useDispatch()   
 
     const {student} = props
@@ -62,15 +61,15 @@ function EditProfile(props) {
     }
 
     const genders = [
-        { 'Male': 'Male' },
-        { 'Female': 'Female' },
-        { 'Other': 'Other' }
+        { gender: 'Male' },
+        { gender: 'Female' },
+        { gender: 'Other' }
     ];
 
     const cats = [
-        { 'General': 'General' },
-        { 'OBC': 'OBC' },
-        { 'SC': 'SC' }
+        { cat: 'General' },
+        { cat: 'OBC' },
+        { cat: 'SC' }
     ];
 
     const onHide = ()=>{
@@ -136,7 +135,7 @@ function EditProfile(props) {
                         <div className="col-12 md:col-6">
                             <div className="flex justify-content-between">
                                 <h4 className="m-0">Gender</h4>
-                                <Dropdown className="w-15rem" optionLabel="gender" value={gender} options={genders} onChange={(e) => setGender(e.value)} />
+                                <Dropdown className="w-15rem" optionLabel="gender" optionValue='gender' placeHolder={gender} value={gender} options={genders} onChange={(e) => setGender(e.value)} />
                             </div>
                             <Divider layout="horizontal"></Divider>
                             <div className="flex justify-content-between">
@@ -161,7 +160,7 @@ function EditProfile(props) {
                             <Divider layout="horizontal"></Divider>
                             <div className="flex justify-content-between">
                                 <h4 className="m-0">Category</h4>
-                                <Dropdown className="w-15rem" optionLabel="cat" value={category} options={cats} onChange={(e) => setCategory(e.target.value)} />
+                                <Dropdown className="w-15rem" optionLabel="cat" optionValue='cat' placeHolder={category} value={category} options={cats} onChange={(e) => setCategory(e.value)} />
                             </div>
                             <Divider layout="horizontal"></Divider>
                         </div>
