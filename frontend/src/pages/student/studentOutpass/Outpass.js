@@ -87,7 +87,7 @@ function Output() {
                                 <h3 className="m-0 font-semibold">Faculty Advisor</h3>
                             </div>
                             <div className="col-12 mb-2 lg:col lg:mb-0 flex justify-content-center">
-                                <h3 className="m-0 font-semibold">{value === 34 ? currentOutpass.SWC : 'SWC'}</h3>
+                                <h3 className="m-0 font-semibold">{value === 34 || 66 ? currentOutpass.SWC : 'SWC'}</h3>
                             </div>
                             <div className="col-12 mb-2 lg:col lg:mb-0 flex justify-content-center">
                                 <h3 className="m-0 font-semibold">{value === 66 ? currentOutpass.warden : 'Warden'}</h3>

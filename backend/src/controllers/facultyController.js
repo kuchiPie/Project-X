@@ -47,7 +47,8 @@ export const outpassApproval = async (req, res) => {
         const outpass = await Outpass.findById(req.body.outpassId)
         const faculty = await Faculty.findById(req.body.facultyId)
         const intent = req.body.intent
-        const remark = (req.body.rejectreason) ? req.body.rejectreason : req.body.acceptreason
+        const remark = (req.body.rejectreason !== '') ? req.body.rejectreason : req.body.acceptreason
+        console.log(req.body)
 
         if(!faculty.outpasses.includes(outpass._id)){
             res.send("No outpasses found").status(400)
@@ -63,7 +64,6 @@ export const outpassApproval = async (req, res) => {
         if(intent){
             if(outpass.approvalStatus === 'notApproved'){
                 outpass.approvalStatus = 'facApproved'
-                outpass.remarks = remark
             }
             else if(outpass.approvalStatus === 'facApproved'){
                 if(noofdays>10){
@@ -76,6 +76,7 @@ export const outpassApproval = async (req, res) => {
                 outpass.approvalStatus = 'warApproved'
             }
             
+            outpass.remarks = remark
             await outpass.save()
 
             const role = await Role.find({})
