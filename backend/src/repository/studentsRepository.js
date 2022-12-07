@@ -133,13 +133,13 @@ export const createStudent = async(body) => {
 
 //update 
 export const updateStudent = async(id, body) => {
-    const data = await Faculty.findByIdAndUpdate({ _id: id }, body);
+    const data = await Student.findByIdAndUpdate({ _id: id }, body);
     return console.log(data);
 }
 
 //delete
 export const deleteStudent = async (id) => {
-    const data = await Faculty.findByIdAndDelete({ _id: id})
+    const data = await Student.findByIdAndDelete({ _id: id})
     return console.log(data)
 }
 

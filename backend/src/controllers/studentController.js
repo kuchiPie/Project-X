@@ -31,7 +31,7 @@ export const createStudentController = async (req, res) => {
 
 export const updateStudentController = async (req, res) => {
     try {
-        await studentService.updateStudentService(req)
+        const response = await studentService.updateStudentService(req)
         res.status(200).send({success: true, message: "updated successfully"})
     } catch (e) {
         res.status(500).send(e)

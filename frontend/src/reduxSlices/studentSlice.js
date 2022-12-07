@@ -4,7 +4,9 @@ import axios from 'axios'
 const initialState = {
     isLoading:false,
     students:[],
-    mentees:[]
+    mentees:[],
+    student:{},
+    error:''
 }
 
 const studentSlice = createSlice({
@@ -51,9 +53,10 @@ const studentSlice = createSlice({
             })
             .addCase(getStudentByID.fulfilled, (state, action) => {
                 state.isLoading=false;
+                state.student = action.payload.data
             })
             .addCase(getStudentByID.rejected, (state, action) => {
-                state.error=action.payload.error;
+                state.error=action.payload;
             })
             .addCase(editStudentDetails.pending, (state, action) => {
                 state.isLoading=true;
@@ -62,7 +65,7 @@ const studentSlice = createSlice({
                 state.isLoading=false;
             })
             .addCase(editStudentDetails.rejected, (state, action) => {
-                state.error=action.payload.error;
+                state.error=action.payload;
             })
     }
 })
@@ -76,9 +79,8 @@ export const getAllStudents = createAsyncThunk('student/getStudentList', async (
 })
 
 export const getStudentByID = createAsyncThunk('student/getStudentByID', async (queryParameters) => {
-    const { id } = queryParameters;
     // console.log()
-    const response = await axios.patch(`http://localhost:5000/api/student/${id}`);
+    const response = await axios.get(`http://localhost:5000/api/student/${queryParameters}`);
     // console.log(response.data)
     return response.data
 })

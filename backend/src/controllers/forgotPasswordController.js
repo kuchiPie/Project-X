@@ -47,8 +47,9 @@ function forgotPasswordController(req, res) {
                 }
         
                 const responseAdmin = await sendMail(reqA, res);
+                res.status(200).send(responseAdmin)
         
-                return { success: true, message: responseAdmin }
+                break;
             
             case 'Student':
                 const student = await Student.findOne({ email: email });
@@ -71,8 +72,9 @@ function forgotPasswordController(req, res) {
                 }
         
                 const responseStudent = await sendMail(reqS, res);
+                res.status(200).send(responseStudent)
         
-                return { success: true, message: responseStudent }
+                break;
 
             case 'Faculty':
                 const faculty = Faculty.findOne({ email: email })
@@ -96,7 +98,8 @@ function forgotPasswordController(req, res) {
         
                 const responseFaculty = await sendMail(reqF, res);
         
-                return { success: true, message: responseFaculty }
+                res.status(200).send(responseFaculty)
+                break;
 
             default: return {message: "Role is not Selected"}
         }

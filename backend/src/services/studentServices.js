@@ -31,7 +31,8 @@ export default class StudentService{
 
     async updateStudentService(req) {
         const {id} = req.params;
-        const data = await updateStudent(id, req.body);
+        const {body} = req;
+        const data = await updateStudent(id, body);
         return { success: true, data: data};
     }
 

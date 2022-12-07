@@ -1,31 +1,65 @@
 import React, { useState } from 'react'
 import { Divider } from 'primereact/divider';
-import { Dialog } from 'primereact/dialog';
+// import { Dialog } from 'primereact/dialog';
 import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
 import { Dropdown } from 'primereact/dropdown';
 import { Calendar } from 'primereact/calendar';
+import Form from "react-validation/build/form";
+import { useDispatch } from 'react-redux';
+import { editStudentDetails } from '../../../reduxSlices/studentSlice';
+import { Dialog } from 'primereact/dialog';
 
-function EditProfile() {
-    const [displayEditProfile, setDisplayEditProfile] = useState(false);
-    const [fatherName, setFatherName] = useState('');
-    const [motherName, setMotherName] = useState('');
-    const [dateOfBirth, setDateOfBirth] = useState('');
-    const [email, setEmail] = useState('');
-    const [nationality, setNationality] = useState('');
-    const [altEmail, setAltEmail] = useState('');
-    const [mobileNo, setMobileNo] = useState('');
-    const [name, setname] = useState('');
-    const [gender, setGender] = useState('');
-    const [bloodGroup, setBloodGroup] = useState('');
-    const [category, setCategory] = useState('');
-    const [motherTongue, setMotherTongue] = useState('');
-    const [gardiansName, setGaurdiansName] = useState('');
-    const [gardiansEmail, setGaurdiansEmail] = useState('');
-    const [gardiansRelation, setgaurdiansRelation] = useState('');
-    const [gardiansMobile, setGaurdiansMobile] = useState('');
-    const [gardiansAltMobile, setGaurdiansAltMobile] = useState('');
-    const [guideFrom, setGuideFrom] = useState('');
+function EditProfile(props) {
+    console.log(props)
+    const dispatch = useDispatch()   
+
+    const {student} = props
+
+    const [visible, setVisible] = useState(props.displayEditProfile);
+    const [fatherName, setFatherName] = useState(student.fatherName);
+    const [motherName, setMotherName] = useState(student.maotherName);
+    const [dateOfBirth, setDateOfBirth] = useState(student.dateOfBirth);
+    const [email, setEmail] = useState(student.email);
+    const [nationality, setNationality] = useState(student.nationality);
+    const [altEmail, setAltEmail] = useState(student.altEmail);
+    const [mobileNo, setMobileNo] = useState(student.mobileNo);
+    const [name, setname] = useState(student.name);
+    const [gender, setGender] = useState(student.gender);
+    const [bloodGroup, setBloodGroup] = useState(student.bloodGroup);
+    const [category, setCategory] = useState(student.category);
+    const [motherTongue, setMotherTongue] = useState(student.motherTongue);
+    const [gardiansName, setGaurdiansName] = useState(student.gardiansName);
+    const [gardiansEmail, setGaurdiansEmail] = useState(student.gaudiansEmail);
+    const [gardiansRelation, setgaurdiansRelation] = useState(student.gardiansRelation);
+    const [gardiansMobile, setGaurdiansMobile] = useState(student.gardiansMobile);
+    const [gardiansAltMobile, setGaurdiansAltMobile] = useState(student.gardiansAltMobile);
+
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const parameters = { 
+            body : 
+            {
+                fatherName : `${fatherName}`,
+                motherName : `${motherName}`,
+                dateOfBirth : `${dateOfBirth}`,
+                email : `${email}`,
+                nationality : `${nationality}`,
+                altEmail : `${altEmail}`,
+                mobileNo : `${mobileNo}`,
+                name : `${name}`,
+                gender : `${gender}`,
+                bloodGroup : `${bloodGroup}`,
+                category : `${category}`,
+                motherTongue : `${motherTongue}`
+            },
+            id: `${student._id}`
+        }
+        dispatch(editStudentDetails(parameters));
+        setVisible(false);
+        props.setDisplayEditProfile(false);
+    }
 
     const genders = [
         { gender: 'Male' },
@@ -39,18 +73,31 @@ function EditProfile() {
         { cat: 'SC' }
     ];
 
-    const basicDialogFooter = <Button type="button" label="Save" icon="pi pi-check" className="p-button-secondary" />;
+    const onHide = ()=>{
+        setVisible(false);
+        props.setDisplayEditProfile(false);
+    }
 
     return (
-        <><Button type="button" label="Edit Profile" icon="pi pi-pencil" onClick={() => setDisplayEditProfile(true)} />
-            <Dialog blockScroll header="Edit Profile" visible={displayEditProfile} style={{ width: '80vw' }} modal footer={basicDialogFooter} onHide={() => setDisplayEditProfile(false)}>
+        <div>
+            <Dialog
+            visible={visible}
+            onHide={onHide}
+            style={{ width: "80rem" }}
+            header={`Edit ${student.rollno} Details`}
+            modal
+            className="p-fluid"
+            closeOnEscape
+            blockScroll
+            >
+                <Form onSubmit = {handleSubmit}>
                 <div className="col">
                     <div className="flex justify-content-between ">
                         <h2 className="m-0">Name</h2>
                         <InputText className="w-25rem" value={name} onChange={(e) => setname(e.target.value)}></InputText>
                     </div>
                     <Divider className="mb-7" layout="horizontal"></Divider>
-                    <h2 className="my-2 font-bold mt-6">Parents Details</h2>
+                        <h2 className="my-2 font-bold mt-6">Parents Details</h2>
                     <Divider className="mb-7" layout="horizontal"></Divider>
                     <div className="grid text-xl">
                         <div className="col-12 md:col-6">
@@ -156,10 +203,11 @@ function EditProfile() {
                         <Divider layout="horizontal"></Divider>
                     </div>
                 </div>
+                <Button type="submit" label="Save" icon="pi pi-check" className="p-button-secondary"/>
+            </Form>
             </Dialog>
-
-        </>
-    );
+        </div>
+        );
 }
 
 export default EditProfile;
