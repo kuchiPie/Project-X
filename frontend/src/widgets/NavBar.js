@@ -49,6 +49,7 @@ const Navbar = () => {
         <i className="pi pi-envelope"></i>
       </Link>
       <Link
+        to='profile'
         style={{ textDecoration: "none" }}
         className="text-bluegray-50 p-3"
       >

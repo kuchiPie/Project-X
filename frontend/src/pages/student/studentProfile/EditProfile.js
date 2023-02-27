@@ -10,14 +10,14 @@ import { useDispatch } from 'react-redux';
 import { editStudentDetails } from '../../../reduxSlices/studentSlice';
 import { Dialog } from 'primereact/dialog';
 
-function EditProfile(props) {
+function EditProfile({student,setDisplayEditProfile,displayEditProfile}) {
     const dispatch = useDispatch()   
 
-    const {student} = props
+  
 
-    const [visible, setVisible] = useState(props.displayEditProfile);
+    const [visible, setVisible] = useState(displayEditProfile);
     const [fatherName, setFatherName] = useState(student.fatherName);
-    const [motherName, setMotherName] = useState(student.maotherName);
+    const [motherName, setMotherName] = useState(student.motherName);
     const [dateOfBirth, setDateOfBirth] = useState(student.dateOfBirth);
     const [email, setEmail] = useState(student.email);
     const [nationality, setNationality] = useState(student.nationality);
@@ -51,13 +51,19 @@ function EditProfile(props) {
                 gender : `${gender}`,
                 bloodGroup : `${bloodGroup}`,
                 category : `${category}`,
-                motherTongue : `${motherTongue}`
+                motherTongue : `${motherTongue}`,
+                gardiansEmail:`${gardiansEmail}`,
+                gardiansRelation:`${gardiansRelation}`,
+                gardiansMobile:`${gardiansMobile}`,
+                gardiansAltMobile:`${gardiansAltMobile}`,
+                
+
             },
             id: `${student._id}`
         }
         dispatch(editStudentDetails(parameters));
         setVisible(false);
-        props.setDisplayEditProfile(false);
+        setDisplayEditProfile(false);
     }
 
     const genders = [
@@ -74,7 +80,7 @@ function EditProfile(props) {
 
     const onHide = ()=>{
         setVisible(false);
-        props.setDisplayEditProfile(false);
+        setDisplayEditProfile(false);
     }
 
     return (

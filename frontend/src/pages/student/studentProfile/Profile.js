@@ -23,7 +23,7 @@ function Profile() {
  
 
     const [displayEditProfile, setDisplayEditProfile] = useState(false)
-
+    const branch = loggedUser.branch
     
 
     return (
@@ -33,15 +33,16 @@ function Profile() {
             <div className="grid w-full m-1">
                 <div className="col-12 lg:col-3 xl:col-3">
 
-                    <h1 className="my-1">Welcome, Shinchan</h1>
+                    {/* <h1 className="my-1">Welcome, {loggedUser.name}</h1> */}
 
                     {/* Profile Card */}
                     <Card className=" flex justify-content-center border-2 border-gray-800">
                         <div className="flex flex-column">
                             <Image src="/images/shin.jpg" alt="profile-photo" width="250rem" preview />
                             <h4 className="flex justify-content-center my-1">{loggedUser.name  || '---'}</h4>
-                            <h5 className="flex justify-content-center my-1">{loggedUser.degree  || 'Degree Type'}</h5>
-                            <h5 className="flex justify-content-center my-1">{loggedUser.branch  || 'branch'}</h5>
+                            {/* <h5 className="flex justify-content-center my-1">{loggedUser.degree  || 'Degree Type'}</h5> */}
+
+                            <h5 className="flex justify-content-center my-1">{loggedUser.branch==="bds"?"DSAI":loggedUser.branch==='bec'?"ECE":"CSE"  || 'branch'}</h5>
                             <Button type="button" label="Edit Profile" icon="pi pi-pencil" onClick={() => setDisplayEditProfile(true)} />
                             {
                                 displayEditProfile && (
@@ -51,7 +52,7 @@ function Profile() {
                         </div>
                     </Card>
                 </div>
-                <div className="col-12 lg:col-9 xl:col-9">
+                <div className="col-12 lg:col-9 xl:col-8">
 
                     {/* TabView Card */}
                     {/* <Card className=""> */}
@@ -59,17 +60,17 @@ function Profile() {
 
                             {/* Personal Info Tab */}
                             <TabPanel header="Personal" width="100%">
-                                <PersonalTab/>
+                                <PersonalTab student={loggedUser}/>
                             </TabPanel>
 
                             {/* Academic Info Tab */}
                             <TabPanel header="Academic">
-                                <AcademicTab/>
+                                <AcademicTab student = {loggedUser}/>
                             </TabPanel>
 
                             {/* Other Info Tab */}
                             <TabPanel header="Other">
-                                <OtherTab/>
+                                <OtherTab student = {loggedUser}/>
                             </TabPanel>
 
                         </TabView>

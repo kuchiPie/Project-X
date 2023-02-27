@@ -133,6 +133,7 @@ export const createStudent = async(body) => {
 
 //update 
 export const updateStudent = async(id, body) => {
+    console.log(body)
     const data = await Student.findByIdAndUpdate({ _id: id }, body);
     return console.log(data);
 }
