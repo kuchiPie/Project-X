@@ -7,6 +7,7 @@ import Outpass from './pages/student/studentOutpass/Outpass'
 import Profile from './pages/student/studentProfile/Profile'
 import Login from './pages/Login'
 import Sessions from './pages/admin/Sessions'
+import NotFoundPage from './pages/NotFoundPage';
 import { useDispatch } from 'react-redux'
 import { setLoginStatus } from './reduxSlices/LoginSlice'
 
@@ -30,18 +31,22 @@ function App(){
     return (
         <BrowserRouter>
             <Routes>
+                
                 <Route path='/' element={<Login/>}/>
                 <Route path='/admin/:id' element={<Admin/>}>
+                    <Route path='*' element={<NotFoundPage/>}/>
                     <Route path="manage_sessions" element={<Sessions/>}></Route>
                     <Route path='manage_faculty' element={<Facultys/>}/>
                     <Route path='manage_students' element={<Students/>}/>
                 </Route>
                 <Route path='/faculty/:id' element={<Faculty/>}>
+                    <Route path='*' element={<NotFoundPage/>}/>
                     <Route path="all_mentees" element={<AllMentees/>}></Route>
                     <Route path="all_outpass_requests" element={<AllOutpassRequests/>}/>
                     <Route path="profile" element={<Profile/>}/>
                 </Route>
                 <Route path='/student/:id' element={<Student/>}>
+                    <Route path='*' element={<NotFoundPage/>}/>
                     <Route path="profile" element={<Profile/>}></Route>
                     <Route path='outpass' element={<Outpass/>}/>
                 </Route>
