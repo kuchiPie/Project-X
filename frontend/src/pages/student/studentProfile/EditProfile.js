@@ -6,7 +6,7 @@ import { InputText } from 'primereact/inputtext';
 import { Dropdown } from 'primereact/dropdown';
 import { Calendar } from 'primereact/calendar';
 import Form from "react-validation/build/form";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { editStudentDetails, getStudentByID } from '../../../reduxSlices/studentSlice';
 import { Dialog } from 'primereact/dialog';
 
@@ -34,6 +34,8 @@ function EditProfile({student,setDisplayEditProfile,displayEditProfile}) {
     const [gardiansMobile, setGaurdiansMobile] = useState(student.gardiansMobile);
     const [gardiansAltMobile, setGaurdiansAltMobile] = useState(student.gardiansAltMobile);
 
+    const { _id } = useSelector(state => state.login.loggedUser)
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -59,12 +61,14 @@ function EditProfile({student,setDisplayEditProfile,displayEditProfile}) {
                 
 
             },
-            id: `${student._id}`
+            id: `${_id}`
         }
         dispatch(editStudentDetails(parameters));
-        dispatch(getStudentByID(student._id))
+        
         setVisible(false);
         setDisplayEditProfile(false);
+
+        dispatch(getStudentByID(_id));
     }
 
     const genders = [

@@ -13,20 +13,19 @@ import { getStudentByID } from '../../../reduxSlices/studentSlice';
 
 
 function Profile() {
+    const [displayEditProfile, setDisplayEditProfile] = useState(false)
     const dispatch = useDispatch()
 
-    const { loggedUser } = useSelector(state=> state.login)
-
-    const { student } = useSelector(state=> state.student)
-
+    const { _id } = useSelector(state=> state.login.loggedUser)
 
     
     useEffect(()=>{
-        dispatch(getStudentByID(loggedUser._id))
-    }, [])
- 
+        dispatch(getStudentByID(_id))
+    }, [displayEditProfile])
 
-    const [displayEditProfile, setDisplayEditProfile] = useState(false)
+    const { student } = useSelector(state=> state.student)
+
+    
     // const branch = student.branch;
 
     // console.log(branch);
