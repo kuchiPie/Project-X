@@ -7,7 +7,7 @@ import { Dropdown } from 'primereact/dropdown';
 import { Calendar } from 'primereact/calendar';
 import Form from "react-validation/build/form";
 import { useDispatch } from 'react-redux';
-import { editStudentDetails } from '../../../reduxSlices/studentSlice';
+import { editStudentDetails, getStudentByID } from '../../../reduxSlices/studentSlice';
 import { Dialog } from 'primereact/dialog';
 
 function EditProfile({student,setDisplayEditProfile,displayEditProfile}) {
@@ -62,6 +62,7 @@ function EditProfile({student,setDisplayEditProfile,displayEditProfile}) {
             id: `${student._id}`
         }
         dispatch(editStudentDetails(parameters));
+        dispatch(getStudentByID(student._id))
         setVisible(false);
         setDisplayEditProfile(false);
     }

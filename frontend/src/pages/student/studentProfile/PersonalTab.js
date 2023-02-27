@@ -4,7 +4,6 @@ import { Divider } from 'primereact/divider';
 function PersonalTab({student}) {
     const dob = new Date(student.dateOfBirth)
     const [day,month,year] = [dob.getDate(),dob.getMonth()+1,dob.getFullYear()]
-    console.log(year)
     return (
         <>
             <div className="grid p-fluid">

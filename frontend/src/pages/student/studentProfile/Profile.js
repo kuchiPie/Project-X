@@ -17,13 +17,19 @@ function Profile() {
 
     const { loggedUser } = useSelector(state=> state.login)
 
+    const { student } = useSelector(state=> state.student)
+
+
+    
     useEffect(()=>{
         dispatch(getStudentByID(loggedUser._id))
     }, [])
  
 
     const [displayEditProfile, setDisplayEditProfile] = useState(false)
-    const branch = loggedUser.branch
+    // const branch = student.branch;
+
+    // console.log(branch);
     
 
     return (
@@ -39,14 +45,14 @@ function Profile() {
                     <Card className=" flex justify-content-center border-2 border-gray-800">
                         <div className="flex flex-column">
                             <Image src="/images/shin.jpg" alt="profile-photo" width="250rem" preview />
-                            <h4 className="flex justify-content-center my-1">{loggedUser.name  || '---'}</h4>
+                            <h4 className="flex justify-content-center my-1">{student.name  || '---'}</h4>
                             {/* <h5 className="flex justify-content-center my-1">{loggedUser.degree  || 'Degree Type'}</h5> */}
 
-                            <h5 className="flex justify-content-center my-1">{loggedUser.branch==="bds"?"DSAI":loggedUser.branch==='bec'?"ECE":"CSE"  || 'branch'}</h5>
+                            <h5 className="flex justify-content-center my-1">{student.branch==="bds"?"DSAI":student.branch==='bec'?"ECE":"CSE"  || 'branch'}</h5>
                             <Button type="button" label="Edit Profile" icon="pi pi-pencil" onClick={() => setDisplayEditProfile(true)} />
                             {
                                 displayEditProfile && (
-                                    <EditProfile setDisplayEditProfile={setDisplayEditProfile} student={loggedUser} displayEditProfile/>
+                                    <EditProfile setDisplayEditProfile={setDisplayEditProfile} student={student} displayEditProfile/>
                                 )
                             }
                         </div>
@@ -60,17 +66,17 @@ function Profile() {
 
                             {/* Personal Info Tab */}
                             <TabPanel header="Personal" width="100%">
-                                <PersonalTab student={loggedUser}/>
+                                <PersonalTab student={student}/>
                             </TabPanel>
 
                             {/* Academic Info Tab */}
                             <TabPanel header="Academic">
-                                <AcademicTab student = {loggedUser}/>
+                                <AcademicTab student = {student}/>
                             </TabPanel>
 
                             {/* Other Info Tab */}
                             <TabPanel header="Other">
-                                <OtherTab student = {loggedUser}/>
+                                <OtherTab student = {student}/>
                             </TabPanel>
 
                         </TabView>
