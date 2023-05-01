@@ -16,6 +16,14 @@ const StudentSidebar = () => {
       {
         title: "Outpass",
         path: `/student/${id}/outpass`,
+      },
+      {
+        title:"Scholarship",
+        path:''
+      },
+      {
+        title:"CGC Portal",
+        path:''
       }
     ];
   

@@ -36,7 +36,7 @@ const AllMentees = () => {
   const {loggedUser} = useSelector(state => state.login)
   // console.log(loggedUser.mentees,122)
   const localMentees=[];
-  mentees.forEach(mentee=>{localMentees.push({'name':mentee.name?mentee.name:"Some Student",'institute_id':mentee.rollno,'phone_no':mentee.mobileNo?mentee.mobileNo:"No Data", 'branch':mentee.branch, 'gender':mentee.gender?mentee.gender:"No Data", 'email':mentee.email, '_id':mentee._id})})
+  mentees.forEach(mentee=>{localMentees.push({'name':mentee.name?mentee.name:"Some Student",'institute_id':mentee.rollno,'phone_no':mentee.mobileNo?mentee.mobileNo:"No Data", 'branch':mentee.branch==="bec"? "ECE": mentee.branch==="bcs"?"CSE":"DSAI", 'gender':mentee.gender?mentee.gender:"No Data", 'email':mentee.email, '_id':mentee._id})})
 
 
   const actionBodyTemplate = (rowData)=> {

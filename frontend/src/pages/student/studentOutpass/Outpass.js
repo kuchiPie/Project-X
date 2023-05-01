@@ -44,7 +44,7 @@ function Output() {
         let Difference_In_Time = date2.getTime() - date1.getTime();
         noofdays = Difference_In_Time / (1000 * 3600 * 24);
         if(currentOutpass.approvalStatus === "notApproved"){
-            value = 0
+            value = 10
         }
         else if(currentOutpass.approvalStatus === "facApproved"){
             if(noofdays>10){

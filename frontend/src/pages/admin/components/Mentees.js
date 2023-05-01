@@ -41,7 +41,7 @@ const Mentees = (props) => {
   // const 
 
   const localMentees=[];
-  mentees.forEach(mentee=>{localMentees.push({'name':mentee.name?mentee.name:"Some Student",'institute_id':mentee.rollno,'department':mentee.branch})})
+  mentees.forEach(mentee=>{localMentees.push({'name':mentee.name?mentee.name:"Some Student",'institute_id':mentee.rollno,'department':mentee.branch==="bec"? "ECE": mentee.branch==="bcs"?"CSE":"DSAI"})})
   
 
   const viewMenteesDialogFooter = (

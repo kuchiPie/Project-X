@@ -8,7 +8,7 @@ export const store = configureStore({
   reducer: {
         login: loginReducer,
         faculty: facultyReducer,
-        student:studentReducer,
+        student: studentReducer,
         outpass: outpassReducer
     }
 })

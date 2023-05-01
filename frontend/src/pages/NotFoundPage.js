@@ -2,8 +2,11 @@ import React from 'react';
 import { Button } from 'primereact/button';
 import { Card } from 'primereact/card';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const NotFoundPage = (props) => {
+
+  const { userType, loggedUser } = useSelector(state=> state.login)
   return (
     <Card title="404 - Page Not Found" >
       <div class="container">
@@ -19,11 +22,11 @@ const NotFoundPage = (props) => {
                 </h3>
                 <p>the page you are looking for is not avaible!</p>
                 <div>
-                    {props.isID == "student" ? (
-                      <Link to='/student/profile'><Button label="Go to Home" /></Link>
-                    ) : props.isID == "admin" ? (
+                    {userType == "Student" ? (
+                      <Link to='/student/'><Button label="Go to Home" /></Link>
+                    ) : userType == "Admin" ? (
                       <Link to='/admin/'><Button label="Go to Home" /></Link>
-                    ) : props.isID == "faculty" ? (
+                    ) : userType == "Faculty" ? (
                       <Link to='/faculty/'><Button label="Go to Home" /></Link>
                     ) : (
                       <Link to='/'><Button label="Login" /></Link>
