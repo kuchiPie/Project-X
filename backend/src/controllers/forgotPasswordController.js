@@ -1,6 +1,7 @@
 import Student from '../models/Student.js';
 import Faculty from '../models/Faculty.js';
 import Admin from '../models/Admin.js';
+import Token from '../models/Token.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import config from 'config';
@@ -58,21 +59,74 @@ function forgotPasswordController(req, res) {
                         error: "Email is not registered"
                     });
                 }
-                // console.log(`user ===== ${student}, user.rollno ===== ${student.name, student.rollno}`)
-                student.password = hashedPassword
-                await student.save();
-                // await student.save({password: hashedPassword})
+                //token
+
+                let token = await Token.findOne({ userId: user._id });
+                if (token) { 
+                    await token.deleteOne();
+                };
+
+                let resetToken = crypto.randomBytes(32).toString("hex");
+                const hashedToken = await bcrypt.hash(resetToken, Number(bcryptSalt));
+
+                await new Token({
+                    userId: student._id,
+                    token: hash,
+                    createdAt: Date.now(),
+                }).save();
+
+                  
+                const link = `http://localhost:3000/student/passwordReset?token=${resetToken}&id=${user._id}`;
+                // sendEmail(user.email,"Password Reset Request",{name: user.name,link: link,},"./template/requestResetPassword.handlebars");
                 const reqS = {
                     body:
                     {
                         receiver:`${email}`,
-                        subject:'Password Reset',
-                        text:`Dear ${student.rollno}, \n\nYour new Password for Project-X login is ${newPassword}.\nFrom\nProject-X` ,
+                        subject:'Password Reset request - Project-X',
+                        text:`Hola ${student.rollno}!, \n\nYou requested for a password Reset.\nPlease click the link below to reset your password,\n"Password <a href='${link}'>Reset</a>.".\nFrom\nProject-X` ,
                     }
                 }
+                
+
+
+                // console.log(`user ===== ${student}, user.rollno ===== ${student.name, student.rollno}`)
+                // student.password = hashedPassword
+                // await student.save();
+                // await student.save({password: hashedPassword})
+                
         
                 const responseStudent = await sendMail(reqS, res);
                 res.status(200).send(responseStudent)
+
+                
+
+                const resetPassword = async (userId, token, password) => {
+                    let passwordResetToken = await Token.findOne({ userId });
+                    if (!passwordResetToken) {
+                      throw new Error("Invalid or expired password reset token");
+                    }
+                    const isValid = await bcrypt.compare(token, passwordResetToken.token);
+                    if (!isValid) {
+                      throw new Error("Invalid or expired password reset token");
+                    }
+                    const hash = await bcrypt.hash(password, Number(bcryptSalt));
+                    await student.updateOne(
+                      { _id: userId },
+                      { $set: { password: hash } },
+                      { new: true }
+                    );
+                    const reqS = {
+                        body:
+                        {
+                            receiver:`${email}`,
+                            subject:'Password Reset Successfull',
+                            text:`Hola ${student.rollno}!, \n\nYour Password has been reset successfully.\nFrom\nProject-X` ,
+                        }
+                    }
+                    await sendMail(reqS, res);
+                    await passwordResetToken.deleteOne();
+                    return true;
+                };
         
                 break;
 

@@ -40,8 +40,9 @@ async function sendMail(req, res) {
   
       const result = await transport.sendMail(mailOptions);
       res.send(result);
+      console.log(result, "sent successfully");
     } catch (error) {
-      console.log(error);
+      console.log(error, "email not sent");
       res.send(error);
     }
   }
